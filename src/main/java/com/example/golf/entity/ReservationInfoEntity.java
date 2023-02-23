@@ -1,0 +1,105 @@
+package com.example.golf.entity;
+
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
+@Table(name = "test_reservation_info")
+public class ReservationInfoEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "RI_NO")
+    private Long rino;
+
+    @Column(name = "RI_CA_NO")
+    private Long ricano;
+
+    @Column(name = "RI_UI_NO")
+    private Long riuino;
+
+    @Column(name = "RI_CC_NO")
+    private Long riccno;
+
+    @Column(name = "RI_CA_ID")
+    private String ricaid;
+
+    @Column(name = "RI_CA_PASSWORD")
+    private String ricapassword;
+
+    @Column(name = "RI_YEAR")
+    private int riyear;
+
+    @Column(name = "RI_MONTH")
+    private int rimonth;
+
+    @Column(name = "RI_DAY")
+    private int riday;
+
+    @Column(name = "RI_START_TIME")
+    private int ristarttime;
+
+    @Column(name = "RI_END_TIME")
+    private int riendtime;
+
+    @Column(name = "RI_HALL")
+    private int rihall;
+
+    @Column(name = "RI_COURSE")
+    private int ricourse;
+
+    @Column(name = "RI_PERSON")
+    private int riperson;
+
+    @Column(name = "RI_SEX")
+    private int risex;
+
+    @Column(name = "RI_STATE")
+    private int ristate;
+
+    @Column(name = "RI_CHOICE")
+    private int richoice;
+
+    @Column(name = "RI_CANCLE_DAY")
+    private String ricancelday;
+
+    @Column(name = "RI_IDATETIME")
+    private String riidatetime;
+
+    @Column(name = "RI_UDATETIME")
+    private String riudatetime;
+
+    @Builder
+    public ReservationInfoEntity(Long Ri_no, Long Ri_ca_no, Long Ri_ui_no, Long Ri_cc_no, String Ri_ca_id, String Ri_ca_password, int Ri_year,
+                                 int Ri_month, int Ri_day, int Ri_start_time, int Ri_end_time, int Ri_hall, int Ri_course, int Ri_person, int Ri_sex,
+                                 int Ri_state, int Ri_choice, String Ri_cancel_day, String Ri_idatetime, String Ri_udatetime) {
+        rino = Ri_no;
+        ricano = Ri_ca_no;
+        riuino = Ri_ui_no;
+        riccno = Ri_cc_no;
+        ricaid = Ri_ca_id;
+        ricapassword = Ri_ca_password;
+        riyear = Ri_year;
+        rimonth = Ri_month;
+        riday = Ri_day;
+        ristarttime = Ri_start_time;
+        riendtime = Ri_end_time;
+        rihall = Ri_hall;
+        ricourse = Ri_course;
+        riperson = Ri_person;
+        risex = Ri_sex;
+        ristate = Ri_state;
+        richoice = Ri_choice;
+        ricancelday = Ri_cancel_day;
+        riidatetime = Ri_idatetime;
+        riudatetime = Ri_udatetime;
+    }
+}
