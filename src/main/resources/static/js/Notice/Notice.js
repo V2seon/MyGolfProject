@@ -3,8 +3,9 @@ function Notice(){
 }
 
 function inNotice(){
-    const title = document.getElementById('title');
-    const content = document.getElementById('content');
+
+    var title = document.getElementById('title').value;
+    var content = document.getElementById('content').value;
 
     let sendData = {
         "title" : title,
