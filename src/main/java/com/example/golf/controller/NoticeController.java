@@ -1,17 +1,18 @@
 package com.example.golf.controller;
 
+import com.example.golf.common.Pagination;
 import com.example.golf.common.SessionCheck;
 import com.example.golf.dto.NoticeDto;
 import com.example.golf.entity.NoticeEntity;
 import com.example.golf.repository.NoticeRepository;
 import com.example.golf.service.NoticeService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,23 +28,67 @@ public class NoticeController {
     private NoticeRepository noticeRepository;
 
     @GetMapping("/Notice")
-    public String main(Model m, HttpServletRequest request){
+    public String main(Model model, HttpServletRequest request, Pageable pageable,
+                       @RequestParam(required = false, defaultValue = "0", value = "page") int page){
         String returnValue = "";
-        HttpSession session = request.getSession();
         if(new SessionCheck().loginSessionCheck(request)){
-            returnValue = "Notice";
+            HttpSession session = request.getSession();
+
+            pageable = PageRequest.of(page, 10);
+            Page<NoticeEntity> s1 = noticeService.selectALLTable0(pageable);
+
+            Pagination pagination = new Pagination(s1.getTotalPages(), page);
+
+            model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
+            model.addAttribute("isNextSection", pagination.isNextSection()); //다음버튼 유무 확인하기 위함
+            model.addAttribute("isPrevSection", pagination.isPrevSection()); //이전버튼 유무 확인하기 위함
+            model.addAttribute("firstBtnIndex", pagination.getFirstBtnIndex()); //버튼 페이징 - 첫시작 인덱스
+            model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
+            model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
+
+            model.addAttribute("userlist", s1); //페이지 객체 리스트
+            model.addAttribute("nowurl0","/Notice");
+            returnValue = "/Notice/NoticeList";
         }else{
             returnValue = "login";
         }
         return returnValue;
     }
 
+    @RequestMapping(value = "/notice_search", method = RequestMethod.POST)
+    public String notice_search(Model model, HttpServletRequest request,
+                                  @RequestParam(required = false ,defaultValue = "0" , value="page") int page,
+                                  @RequestParam(required = false ,defaultValue = "" , value="selectKey") String selectKey,
+                                  @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText){
+        HttpSession session = request.getSession();
+
+        Pageable pageable = PageRequest.of(page, 10);
+        int totalPages = noticeService.selectALLTable(selectKey, titleText, pageable).getTotalPages();
+        Pagination pagination = new Pagination(totalPages, page);
+
+        model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
+        model.addAttribute("isNextSection", pagination.isNextSection()); //다음버튼 유무 확인하기 위함
+        model.addAttribute("isPrevSection", pagination.isPrevSection()); //이전버튼 유무 확인하기 위함
+        model.addAttribute("firstBtnIndex", pagination.getFirstBtnIndex()); //버튼 페이징 - 첫시작 인덱스
+        model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
+        model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
+
+        //서비스 엔티티 추가후 주석 풀고 사용
+        Page<NoticeEntity> pageList = noticeService.selectALLTable(selectKey, titleText, pageable);
+
+        model.addAttribute("userlist", pageList); //페이지 객체 리스트
+        model.addAttribute("nowurl0","/Notice");
+
+        return "/Notice/NoticeList :: #intable";
+    }
+
     @GetMapping("/NoticeRegister")
-    public String Register(Model m, HttpServletRequest request){
+    public String Register(Model model, HttpServletRequest request){
         String returnValue = "";
         HttpSession session = request.getSession();
         if(new SessionCheck().loginSessionCheck(request)){
-            returnValue = "NoticeRegister";
+            model.addAttribute("nowurl0","/Notice");
+            returnValue = "/Notice/NoticeRegister";
         }else{
             returnValue = "login";
         }
@@ -51,11 +96,12 @@ public class NoticeController {
     }
 
     @GetMapping("/NoticeModify")
-    public String Modify(Model m, HttpServletRequest request){
+    public String Modify(Model model, HttpServletRequest request){
         String returnValue = "";
         HttpSession session = request.getSession();
         if(new SessionCheck().loginSessionCheck(request)){
-            returnValue = "NoticeModify";
+            model.addAttribute("nowurl0","/Notice");
+            returnValue = "/Notice/NoticeModify";
         }else{
             returnValue = "login";
         }
@@ -67,6 +113,7 @@ public class NoticeController {
                             @RequestParam(required = false, defaultValue = "", value = "title") String title,
                             @RequestParam(required = false, defaultValue = "", value = "content") String content){
         LocalDateTime sdf1 = LocalDateTime.now();
+        System.out.println(sdf1);
         NoticeDto noticeDto = new NoticeDto(null,title,content,sdf1,null);
         noticeService.save(noticeDto);
         return "redirect:";
@@ -79,6 +126,7 @@ public class NoticeController {
         HttpSession session = request.getSession();
         if(new SessionCheck().loginSessionCheck(request)){
             session.setAttribute("seq",seq);
+            model.addAttribute("nowurl0","/Notice");
             returnValue = "redirect:";
         }else{
             returnValue = "login";
@@ -92,8 +140,11 @@ public class NoticeController {
         String returnValue = "";
         if(new SessionCheck().loginSessionCheck(request)){
             Optional<NoticeEntity> s1 = noticeRepository.findById((Long) session.getAttribute("seq"));
-            model.addAttribute(s1);
-            returnValue = "NoticeModify";
+            model.addAttribute("title",s1.get().getNtitle());
+            model.addAttribute("content",s1.get().getNcontent());
+            model.addAttribute("seq",s1.get().getNno());
+            model.addAttribute("nowurl0","/Notice");
+            returnValue = "/Notice/NoticeModify";
         }else{
             returnValue = "login";
         }

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>골프 예약 사이트</title>
+
+    <!-- Bootstrap -->
+    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-wysiwyg -->
+    <link href="/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- starrr -->
+    <link href="/vendors/starrr/dist/starrr.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="/css/custom.min.css" rel="stylesheet">
+    <style>
+    #title1 {width:800px;
+    resize: none;
+    }
+
+    #content1 {width:800px; height:300px;
+    resize: vertical;
+    }
+    </style>
+
+
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div th:insert="nav/nav.html"></div>
+        </div>
+
+        <!-- top navigation -->
+        <div th:insert="nav/top.html"></div>
+        <!-- /top navigation -->
+        <div class="right_col" role="main" style="min-height: 1272px;">
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3>공지사항</h3>
+                    </div>
+
+                    <div class="title_right">
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 ">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>공지사항 수정<small>Modify Announcement</small></h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <br />
+                                <div class="container">
+                                    <div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2 col-sm-3 label-align" for="title"> 제목
+                                            </label>
+                                            <div class="col-md-9 col-sm-9 ">
+                                                <input th:value="${title}" type="text" id="title" required="required" class="form-control  ">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-2 col-sm-3 label-align" for="content"> 내용
+                                            </label>
+                                            <div class="col-md-9 col-sm-9 ">
+                                                <!--                                                <input type="text" id="content" required="required" class="form-control  ">-->
+                                                <textarea th:value="${content}" th:text="${content}" class="form-control" id="content" rows="3" ></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="ln_solid">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <div class="offset-md-11">
+                                            <button onclick="Notice()" class="btn btn-primary" ><a>목록</a></button>
+                                            <button th:onclick="|javascript:EditNotice(${seq})|" class="btn btn-primary" ><a>수정</a></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="pull-right">
+                Gentelella - Bootstrap Admin Template by Colorlib
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="/js/Notice/Notice.js"></script>
+</body></html>

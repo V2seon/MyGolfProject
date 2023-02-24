@@ -1,22 +1,49 @@
-function Notice(){
-    location.href="/Notice";
+function CC(){
+    location.href = "/Countryclub";
 }
 
-function NoticeRe(){
-    location.href="/NoticeRegister";
+function inCC(){
+    location.href = "/CountryclubRegister";
 }
 
-function inNotice(){
-    var title = document.getElementById('title').value;
-    var content = document.getElementById('content').value;
+function ModifyCCgo(seq){
+let sendData = {
+        "seq" : seq
+    }
+
+$.ajax({
+        url      : "/Countryclubgo",
+        data     : sendData,
+        type     : "GET",
+        success : function(result) {
+            location.href = "/CountryclubModify";
+        },
+        error:function(request,status,error){
+        }
+    });
+}
+
+function SaveCC(){
+    const name = document.getElementById('ccname').value;
+    const address = document.getElementById('ccaddress').value;
+    const url = document.getElementById('ccurl').value;
+    const day = document.getElementById('day').value;
+    const opentime = document.getElementById('time').value;
+    var retype = $("input[name='retype']:checked").val();
+    var possible = $("input[name='possible']:checked").val();
 
     let sendData = {
-        "title" : title,
-        "content" : content
+        "name" : name,
+        "address" : address,
+        "url" : url,
+        "day" : day,
+        "opentime" : opentime,
+        "retype" : retype,
+        "possible" : possible
     }
 
     $.ajax({
-                url      : "/inNotice",
+                url      : "/SaveCC",
                 data     : sendData,
                 type     : "POST",
                 success : function(result) {
@@ -25,7 +52,7 @@ function inNotice(){
                           closeOnClickOutside : false,
                           icon: "success",
                         }).then(function(){
-                            location.href = "/Notice";
+                            location.href = "/Countryclub";
                         });
                 },
                 error:function(request,status,error){
@@ -33,36 +60,62 @@ function inNotice(){
             });
 }
 
-function ModifyNoticego(seq){
 
-    let sendData = {
-        "seq" : seq
-    }
-
-    $.ajax({
-                url      : "/Noticego",
-                data     : sendData,
-                type     : "GET",
-                success : function(result) {
-                    location.href = "/NoticeModifygo";
-                },
-                error:function(request,status,error){
-                }
-            });
+function DelCCgo(seq){
+swal({
+  title: "CC정보 삭제",
+  text: "해당 CC정보를 삭제하시겠습니까?",
+  icon: "warning",
+  closeOnClickOutside : false,
+  buttons : ["취소", "삭제"],
+  dangerMode: true
+}).then((result) => {
+  if (result) {
+        let sendData = {
+            "seq" : seq
+        };
+        $.ajax({
+            url : "/DelCC",
+            data : sendData,
+            type : "POST",
+            success : function(result){
+                swal({
+                      title : "삭제되었습니다.",
+                      closeOnClickOutside : false,
+                      icon: "success",
+                    }).then(function(){
+                        location.href = "/Countryclub";
+                    });
+            },
+            error: function (e) {
+            }
+        });
+  }
+});
 }
 
-function EditNotice(seq){
-    const title = document.getElementById('title').value;
-    const content = document.getElementById('content').value;
+function EditCC(seq){
+    const name = document.getElementById('ccname').value;
+    const address = document.getElementById('ccaddress').value;
+    const url = document.getElementById('ccurl').value;
+    const day = document.getElementById('day').value;
+    const opentime = document.getElementById('time').value;
+    var retype = $("input[name='retype']:checked").val();
+    var possible = $("input[name='possible']:checked").val();
 
     let sendData = {
         "seq" : seq,
-        "title" : title,
-        "content" : content
+        "name" : name,
+        "address" : address,
+        "url" : url,
+        "day" : day,
+        "opentime" : opentime,
+        "retype" : retype,
+        "possible" : possible
     }
 
     $.ajax({
-                url      : "/EditNotice",
+                url      : "/EditCC",
                 data     : sendData,
                 type     : "POST",
                 success : function(result) {
@@ -71,13 +124,14 @@ function EditNotice(seq){
                           closeOnClickOutside : false,
                           icon: "success",
                         }).then(function(){
-                            location.href = "/Notice";
+                            location.href = "/Countryclub";
                         });
                 },
                 error:function(request,status,error){
                 }
             });
 }
+
 
 // 검색필터
 function searching(){
@@ -104,7 +158,7 @@ function searching(){
     var querydata = { "page" : myPageQuery.get('page'), "selectKey":myPageQuery.get('selectKey'),"titleText":myPageQuery.get('titleText')};
 
     $.ajax({
-        url: "/notice_search",
+        url: "/Countryclub_search",
         data: querydata,
         type:"POST",
     }).done(function (fragment) {
@@ -147,7 +201,7 @@ function paging(pageValue){
 
 
     $.ajax({
-        url: "/notice_search",
+        url: "/Countryclub_search",
         data: querydata,
         type:"POST",
     }).done(function (fragment) {

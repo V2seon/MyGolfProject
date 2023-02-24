@@ -61,8 +61,9 @@ public class UserinfoController {
             model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
 
             model.addAttribute("userlist", s1); //페이지 객체 리스트
+            model.addAttribute("nowurl0","/Userinfo");
 
-            return "UserInfo";
+            returnValue = "/Userinfo/UserInfo";
         }else{
             returnValue = "login";
         }
@@ -89,11 +90,12 @@ public class UserinfoController {
 
         //서비스 엔티티 추가후 주석 풀고 사용
         Page<ViewUserInfoEntity> pageList = userinfoService.selectALLTable(selectKey, titleText, pageable);
+        model.addAttribute("nowurl0","/Userinfo");
 
 
         model.addAttribute("userlist", pageList); //페이지 객체 리스트
 
-        return "UserInfo :: #infotable";
+        return "/Userinfo/UserInfo :: #infotable";
     }
 
     @GetMapping("/userinfo_detailgo")
@@ -101,6 +103,7 @@ public class UserinfoController {
                                   @RequestParam(required = false ,defaultValue = "" , value="seq") Long seq){
         HttpSession session = request.getSession();
         session.setAttribute("seq",seq);
+        model.addAttribute("nowurl0","/Userinfo");
 
        return "redirect:";
     }
@@ -125,8 +128,9 @@ public class UserinfoController {
         cclist.add(ad);
         model.addAttribute("cc",cclist);
         model.addAttribute("userdata",s1);
+        model.addAttribute("nowurl0","/Userinfo");
 
-        return "DetailUserinfo";
+        return "/Userinfo/DetailUserinfo";
     }
 
 }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<div class="left_col scroll-view">
+    <div class="navbar nav_title" style="border: 0;">
+        <a href="/Main" class="site_title"><span>골프예약관리사이트</span></a>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <!-- menu profile quick info -->
+    <div class="profile clearfix">
+        <div class="profile_pic">
+        </div>
+        <div class="profile_info">
+        </div>
+    </div>
+
+    <br />
+
+    <!-- sidebar menu -->
+    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+        <div class="menu_section">
+            <ul class="nav side-menu">
+                <li th:class="${nowurl0 == '/Userinfo' ? 'current-page' : ''}">
+                    <a href="/Userinfo"><!--<i class="fa fa-home"></i>--> 사용자 정보 <!--<span class="fa fa-chevron-down"></span>--></a>
+                </li>
+                <li th:class="${nowurl0 == '/Countryclub' ? 'current-page' : ''}">
+                    <a href="/Countryclub"><!--<i class="fa fa-edit"></i>--> CC 정보 <!--<span class="fa fa-chevron-down"></span>--></a>
+                </li>
+                <li th:class="${nowurl0 == '/Cource' ? 'current-page' : ''}">
+                    <a href="/Cource"><!--<i class="fa fa-edit"></i>--> 코스 정보 <!--<span class="fa fa-chevron-down"></span>--></a>
+                </li>
+                <li th:class="${nowurl0 == '/Reservation' ? 'current-page' : ''}">
+                    <a href="Reservation"><!--<i class="fa fa-desktop"></i>--> 예약정보 <!--<span class="fa fa-chevron-down"></span>--></a>
+                </li>
+                <li th:class="${nowurl0 == '/Notice' ? 'current-page' : ''}">
+                    <a href="/Notice"><!--<i class="fa fa-table"></i>--> 공지 사항 <!--<span class="fa fa-chevron-down"></span>--></a>
+                </li>
+                <li th:class="${nowurl0 == '/Question' ? 'current-page' : ''}">
+                    <a href="/Question"><!--<i class="fa fa-bar-chart-o"></i>--> 문의 정보 <!--<span class="fa fa-chevron-down"></span>--></a>
+                </li>
+                <li th:class="${nowurl0 == '/Log' ? 'current-page' : ''}">
+                    <a href="/Log"><!--<i class="fa fa-clone"></i>--> 로그 <!--<span class="fa fa-chevron-down"></span>--></a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

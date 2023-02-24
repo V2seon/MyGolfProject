@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
@@ -22,6 +23,9 @@ public class CountryClubEntity {
 
     @Column(name = "CC_NAME")
     private String ccname;
+
+    @Column(name = "CC_ADDRESS")
+    private String ccaddress;
 
     @Column(name = "CC_URL")
     private String ccurl;
@@ -39,16 +43,17 @@ public class CountryClubEntity {
     private int ccreservation;
 
     @Column(name="CC_IDATETIME")
-    private String ccidatetime;
+    private LocalDateTime ccidatetime;
 
     @Column(name="CC_UDATETIME")
-    private String ccudatetime;
+    private LocalDateTime ccudatetime;
 
     @Builder
-    public CountryClubEntity(Long Cc_no, String Cc_name, String Cc_url, int Cc_cancel_day, int Cc_opentime, int Cc_type, int Cc_reservation,
-                             String Cc_idatetime, String Cc_udatetime) {
+    public CountryClubEntity(Long Cc_no, String Cc_name, String Cc_address, String Cc_url, int Cc_cancel_day, int Cc_opentime, int Cc_type, int Cc_reservation,
+                             LocalDateTime Cc_idatetime, LocalDateTime Cc_udatetime) {
         ccno = Cc_no;
         ccname = Cc_name;
+        ccaddress = Cc_address;
         ccurl = Cc_url;
         cccancelday = Cc_cancel_day;
         ccopentime = Cc_opentime;
