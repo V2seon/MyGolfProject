@@ -91,7 +91,8 @@ public class MainController {
     }
 
     @GetMapping("/formRI")
-    public String formRI(){
+    public String formRI(HttpServletRequest request, Model model){
+        model.addAttribute("nowurl0","/formRI");
         return "formRI";
     }
 
@@ -210,12 +211,10 @@ public class MainController {
                             @RequestParam(required = false, defaultValue = "", value = "hope_y") int hope_y,
                             @RequestParam(required = false, defaultValue = "", value = "hope_m") int hope_m,
                             @RequestParam(required = false, defaultValue = "", value = "hope_d") int hope_d,
-                            @RequestParam(required = false, defaultValue = "", value = "hope_c") int hope_c,
                             @RequestParam(required = false, defaultValue = "", value = "hope_t1") int hope_t1,
                             @RequestParam(required = false, defaultValue = "", value = "hope_t2") int hope_t2,
                             @RequestParam(required = false, defaultValue = "", value = "hope_h") int hope_h,
-                            @RequestParam(required = false, defaultValue = "", value = "user_id") String user_id,
-                            @RequestParam(required = false, defaultValue = "", value = "user_pw") String user_pw){
+                            @RequestParam(required = false, defaultValue = "", value = "hope_c") int hope_c){
         System.out.println("11");
         HttpSession session = request.getSession();
         String sessioninid = (String) session.getAttribute("user_signature");
@@ -228,8 +227,8 @@ public class MainController {
         String caid = bbb.get().getCaid();
         String capw = bbb.get().getCapassword();
         System.out.println(caid);
-        ReservationInfoDto golfDto = new ReservationInfoDto(null, cano, uino, mountin, caid, capw, hope_y, hope_m, hope_d, hope_t1, hope_t2, hope_h, hope_c, 0, 0, 0, 0, null, null, null);
-        reservationInfoService.insertData1(golfDto);
+        ReservationInfoDto reservationInfoDto = new ReservationInfoDto(null, cano, uino, mountin, caid, capw, hope_y, hope_m, hope_d, hope_t1, hope_t2, hope_h, hope_c, 0, 0, 0, null, 0, null, null, null);
+        reservationInfoService.insertData1(reservationInfoDto);
         String ipmsg = cano+"/"+uino+"/"+uino;
         System.out.println(ipmsg);
 
@@ -247,7 +246,7 @@ public class MainController {
                     ProcessBuilder builder;
                     BufferedReader br;
 
-                    arg1 = "C:/Users/abcd/Desktop/selenium/selenium/golftest4.py";
+                    arg1 = "C:/Users/abcd/Desktop/selenium/selenium/어등산0221.py";
                     System.out.println("여긴 안오는거니?");
                     builder = new ProcessBuilder("python", arg1);
 

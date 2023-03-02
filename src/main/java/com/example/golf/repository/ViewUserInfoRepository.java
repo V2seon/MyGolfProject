@@ -12,5 +12,4 @@ public interface ViewUserInfoRepository extends JpaRepository<ViewUserInfoEntity
     @Query(value = "SELECT * FROM view_user_info " , nativeQuery = true)
     Page<ViewUserInfoEntity> findAll(Pageable pageable);
 
-
 }
