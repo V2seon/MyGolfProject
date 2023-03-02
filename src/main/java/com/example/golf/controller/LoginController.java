@@ -41,7 +41,7 @@ public class LoginController {
         return msg;
     }
 
-    @GetMapping("/glogout")
+    @GetMapping("/logout")
     public String logout(Model m, HttpServletRequest request){
         HttpSession session = request.getSession();
         // 세션에 담겨진 값 초기화
