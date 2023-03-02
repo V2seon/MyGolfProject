@@ -25,6 +25,7 @@ public class ReservationInfoDto {
     private int riperson;
     private int risex;
     private int ristate;
+    private String riresdatetime;
     private int richoice;
     private String ricancelday;
     private String riidatetime;
@@ -33,7 +34,7 @@ public class ReservationInfoDto {
     @Builder
     public ReservationInfoDto(Long Ri_no, Long Ri_ca_no, Long Ri_ui_no, Long Ri_cc_no, String Ri_ca_id, String Ri_ca_password, int Ri_year,
                               int Ri_month, int Ri_day, int Ri_start_time, int Ri_end_time, int Ri_hall, int Ri_course, int Ri_person, int Ri_sex,
-                              int Ri_state, int Ri_choice, String Ri_cancel_day, String Ri_idatetime, String Ri_udatetime) {
+                              int Ri_state, String Ri_resdatetime, int Ri_choice, String Ri_cancel_day, String Ri_idatetime, String Ri_udatetime) {
         rino = Ri_no;
         ricano = Ri_ca_no;
         riuino = Ri_ui_no;
@@ -50,6 +51,7 @@ public class ReservationInfoDto {
         riperson = Ri_person;
         risex = Ri_sex;
         ristate = Ri_state;
+        riresdatetime = Ri_resdatetime;
         richoice = Ri_choice;
         ricancelday = Ri_cancel_day;
         riidatetime = Ri_idatetime;
@@ -74,6 +76,7 @@ public class ReservationInfoDto {
                 .Ri_person(riperson)
                 .Ri_sex(risex)
                 .Ri_state(ristate)
+                .Ri_resdatetime(riresdatetime)
                 .Ri_choice(richoice)
                 .Ri_cancel_day(ricancelday)
                 .Ri_idatetime(riidatetime)
