@@ -174,8 +174,8 @@
                                                                 th:text="${Co.Riccno}"></td>
                                                             <td th:if="${Co.Ricourse}!= null"
                                                                 th:text="${Co.Ricourse}"></td>
-                                                            <td th:if="${Co.Riyear}!= null and ${Co.Rimonth}!= null and ${Co.Riday}!= null"
-                                                                th:text="${Co.Riyear}+'.'+${Co.Rimonth}+'.'+${Co.Riday}"></td>
+                                                            <td th:if="${Co.Riresdatetime}!= null"
+                                                                th:text="${Co.Riresdatetime}"></td>
                                                             <td th:if="${Co.Ristarttime}!= null and ${Co.Riendtime}!= null"
                                                                 th:text="${Co.Ristarttime} + ' ~ ' +${Co.Riendtime}"></td>
                                                         </tr>
