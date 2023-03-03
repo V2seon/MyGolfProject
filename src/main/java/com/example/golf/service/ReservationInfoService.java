@@ -4,8 +4,12 @@ import com.example.golf.dto.CountryAccountDto;
 import com.example.golf.dto.CountryClubDto;
 import com.example.golf.dto.CourseDto;
 import com.example.golf.dto.ReservationInfoDto;
+import com.example.golf.entity.ReservationInfoEntity;
+import com.example.golf.predicate.ReservationinfoPredicate;
 import com.example.golf.repository.*;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,10 +28,6 @@ public class ReservationInfoService {
         return reservationInfoRepository.save(golfDto.toEntity()).getRino();
     }
 
-
-
-
-
     @Transactional
     public Long Ccinsert(CountryClubDto countryClubDto){
         return countryClubRepository.save(countryClubDto.toEntity()).getCcno();
@@ -41,6 +41,16 @@ public class ReservationInfoService {
     @Transactional
     public Long Cainsert(CountryAccountDto countryAccountDto){
         return countryAccountRepository.save(countryAccountDto.toEntity()).getCano();
+    }
+
+    @Transactional
+    public Page<ReservationInfoEntity> selectALLTable0(Pageable pageable){
+        return reservationInfoRepository.findAll0(pageable);
+    }
+
+    @Transactional
+    public Page <ReservationInfoEntity> seALLTable(String selectKey, String titleText, Pageable pageable){
+        return reservationInfoRepository.findAll(ReservationinfoPredicate.search0(selectKey, titleText),pageable);
     }
 
 

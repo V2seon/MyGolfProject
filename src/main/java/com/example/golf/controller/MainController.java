@@ -222,7 +222,7 @@ public class MainController {
         Optional<UserinfoEntity> aaa = userinfoRepository.findByUiid(sessioninid);
         Long uino = aaa.get().getUino();
         System.out.println(uino);
-        Optional<CountryAccountEntity> bbb = countryAccountRepository.findByCanoAndCauino(uino, mountin);
+        Optional<CountryAccountEntity> bbb = countryAccountRepository.findByCauinoAndCaccno(uino, mountin);
         Long cano = bbb.get().getCano();
         String caid = bbb.get().getCaid();
         String capw = bbb.get().getCapassword();
@@ -246,7 +246,7 @@ public class MainController {
                     ProcessBuilder builder;
                     BufferedReader br;
 
-                    arg1 = "C:/Users/abcd/Desktop/selenium/selenium/어등산0221.py";
+                    arg1 = "C:/Users/eb/주피터/어등산0221.py";
                     System.out.println("여긴 안오는거니?");
                     builder = new ProcessBuilder("python", arg1);
 
