@@ -65,12 +65,12 @@ public class ReservationInfoService {
 
     @Transactional
     public Page<ReservationInfoEntity> selectALLTable3(Pageable pageable){
-        return reservationInfoRepository.findAll3(pageable);
+        return reservationInfoRepository.findAll2(pageable);
     }
 
     @Transactional
     public Page<ReservationInfoEntity> seALLTable3(String selectKey, String titleText, Pageable pageable){
-        return reservationInfoRepository.findAll(ReservationinfoPredicate.search3(selectKey, titleText),pageable);
+        return reservationInfoRepository.findAll(ReservationinfoPredicate.search2(selectKey, titleText),pageable);
     }
 
 }
