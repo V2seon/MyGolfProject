@@ -24,7 +24,7 @@ function searching(){
     var querydata = { "page" : myPageQuery.get('page'), "selectKey":myPageQuery.get('selectKey'),"titleText":myPageQuery.get('titleText')};
 
     $.ajax({
-        url: "/search_Reservation",
+        url: "/search_Reservation1",
         data: querydata,
         type:"POST",
     }).done(function (fragment) {
@@ -67,7 +67,7 @@ function paging(pageValue){
 
 
     $.ajax({
-        url: "/search_Reservation",
+        url: "/search_Reservation1",
         data: querydata,
         type:"POST",
     }).done(function (fragment) {
@@ -77,4 +77,3 @@ function paging(pageValue){
     });
 
 }
-

@@ -49,9 +49,28 @@ public class ReservationInfoService {
     }
 
     @Transactional
-    public Page <ReservationInfoEntity> seALLTable(String selectKey, String titleText, Pageable pageable){
+    public Page<ReservationInfoEntity> seALLTable(String selectKey, String titleText, Pageable pageable){
         return reservationInfoRepository.findAll(ReservationinfoPredicate.search0(selectKey, titleText),pageable);
     }
 
+    @Transactional
+    public Page<ReservationInfoEntity> selectALLTable1(Pageable pageable){
+        return reservationInfoRepository.findAll1(pageable);
+    }
+
+    @Transactional
+    public Page<ReservationInfoEntity> seALLTable1(String selectKey, String titleText, Pageable pageable){
+        return reservationInfoRepository.findAll(ReservationinfoPredicate.search1(selectKey, titleText),pageable);
+    }
+
+    @Transactional
+    public Page<ReservationInfoEntity> selectALLTable3(Pageable pageable){
+        return reservationInfoRepository.findAll3(pageable);
+    }
+
+    @Transactional
+    public Page<ReservationInfoEntity> seALLTable3(String selectKey, String titleText, Pageable pageable){
+        return reservationInfoRepository.findAll(ReservationinfoPredicate.search3(selectKey, titleText),pageable);
+    }
 
 }

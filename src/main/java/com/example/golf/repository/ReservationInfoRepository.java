@@ -23,7 +23,7 @@ public interface ReservationInfoRepository extends JpaRepository<ReservationInfo
     @Query(value = "SELECT * FROM test_reservation_info where RI_STATE=0" , nativeQuery = true)
     Page<ReservationInfoEntity> findAll0(Pageable pageable);
 
-    // 예약 중 정보 가져오기
+    // 미확정 예약 정보 가져오기
     @Query(value = "SELECT * FROM test_reservation_info where RI_STATE=1" , nativeQuery = true)
     Page<ReservationInfoEntity> findAll1(Pageable pageable);
 

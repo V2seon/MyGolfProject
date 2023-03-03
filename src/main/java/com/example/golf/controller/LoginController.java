@@ -2,6 +2,8 @@ package com.example.golf.controller;
 
 
 import com.example.golf.dto.UserinfoDto;
+import com.example.golf.entity.UserinfoEntity;
+import com.example.golf.repository.UserinfoRepository;
 import com.example.golf.service.JoinService;
 import com.example.golf.service.LoginService;
 import lombok.AllArgsConstructor;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -21,6 +24,7 @@ public class LoginController {
 
     private JoinService joinService;
     private LoginService loginService;
+    private UserinfoRepository userinfoRepository;
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "userlogin")
@@ -30,9 +34,11 @@ public class LoginController {
         HttpSession session = request.getSession();
         HashMap<String, String> msg = new HashMap<String, String>();
         int loginResult = loginService.loginAdmin(userid, userpw);
+        Optional<UserinfoEntity> ggg = userinfoRepository.findByUiidAndUipassword(userid, userpw);
         if(loginResult==1){
             msg.put("loginResult", "1");
             session.setAttribute("user_signature", userid);
+            session.setAttribute("name",ggg.get().getUiname());
 //            String sessioninid = (String) session.getAttribute("user_signature");
 //            System.out.print(sessioninid);
         }else{

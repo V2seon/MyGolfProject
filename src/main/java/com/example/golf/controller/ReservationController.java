@@ -26,7 +26,7 @@ public class ReservationController {
     private ReservationInfoService reservationInfoService;
 
     @GetMapping("/Reservation")
-    public String gjoin(Model model, HttpServletRequest request, Pageable pageable,
+    public String Reservation(Model model, HttpServletRequest request, Pageable pageable,
                         @RequestParam(required = false, defaultValue = "0", value = "page") int page){
         String returnValue = "";
         if(new SessionCheck().loginSessionCheck(request)){
@@ -47,7 +47,7 @@ public class ReservationController {
             model.addAttribute("userlist", s1); //페이지 객체 리스트
             model.addAttribute("nowurl0","/Reservation");
 
-            returnValue = "/Reservation/WaitinfoList";
+            returnValue = "/Reservation/WaitInfoList";
         }else{
             returnValue = "login";
         }
@@ -56,9 +56,9 @@ public class ReservationController {
 
     @RequestMapping(value = "/search_Reservation", method = RequestMethod.POST)
     public String search_Reservation(Model model, HttpServletRequest request,
-                                @RequestParam(required = false ,defaultValue = "0" , value="page") int page,
-                                @RequestParam(required = false ,defaultValue = "" , value="selectKey") String selectKey,
-                                @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText){
+                        @RequestParam(required = false ,defaultValue = "0" , value="page") int page,
+                        @RequestParam(required = false ,defaultValue = "" , value="selectKey") String selectKey,
+                        @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText){
         HttpSession session = request.getSession();
 
         Pageable pageable = PageRequest.of(page, 10);
@@ -78,11 +78,120 @@ public class ReservationController {
         model.addAttribute("userlist", pageList); //페이지 객체 리스트
         model.addAttribute("nowurl0","/Reservation");
 
-        return "/Reservation/WaitinfoList :: #intable";
+        return "/Reservation/WaitInfoList :: #intable";
     }
 
+    @GetMapping("/Reservation1")
+    public String Reservation1(Model model, HttpServletRequest request, Pageable pageable,
+                        @RequestParam(required = false, defaultValue = "0", value = "page") int page){
+        String returnValue = "";
+        if(new SessionCheck().loginSessionCheck(request)){
+            HttpSession session = request.getSession();
 
+            pageable = PageRequest.of(page, 10);
+            Page<ReservationInfoEntity> s1 = reservationInfoService.selectALLTable1(pageable);
 
+            Pagination pagination = new Pagination(s1.getTotalPages(), page);
+
+            model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
+            model.addAttribute("isNextSection", pagination.isNextSection()); //다음버튼 유무 확인하기 위함
+            model.addAttribute("isPrevSection", pagination.isPrevSection()); //이전버튼 유무 확인하기 위함
+            model.addAttribute("firstBtnIndex", pagination.getFirstBtnIndex()); //버튼 페이징 - 첫시작 인덱스
+            model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
+            model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
+
+            model.addAttribute("userlist", s1); //페이지 객체 리스트
+            model.addAttribute("nowurl0","/Reservation");
+
+            returnValue = "/Reservation/NotDefInfoList";
+        }else{
+            returnValue = "login";
+        }
+        return returnValue;
+    }
+
+    @RequestMapping(value = "/search_Reservation1", method = RequestMethod.POST)
+    public String search_Reservation1(Model model, HttpServletRequest request,
+                        @RequestParam(required = false ,defaultValue = "0" , value="page") int page,
+                        @RequestParam(required = false ,defaultValue = "" , value="selectKey") String selectKey,
+                        @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText){
+        HttpSession session = request.getSession();
+
+        Pageable pageable = PageRequest.of(page, 10);
+        int totalPages = reservationInfoService.seALLTable1(selectKey, titleText, pageable).getTotalPages();
+        Pagination pagination = new Pagination(totalPages, page);
+
+        model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
+        model.addAttribute("isNextSection", pagination.isNextSection()); //다음버튼 유무 확인하기 위함
+        model.addAttribute("isPrevSection", pagination.isPrevSection()); //이전버튼 유무 확인하기 위함
+        model.addAttribute("firstBtnIndex", pagination.getFirstBtnIndex()); //버튼 페이징 - 첫시작 인덱스
+        model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
+        model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
+
+        //서비스 엔티티 추가후 주석 풀고 사용
+        Page<ReservationInfoEntity> pageList = reservationInfoService.seALLTable1(selectKey, titleText, pageable);
+
+        model.addAttribute("userlist", pageList); //페이지 객체 리스트
+        model.addAttribute("nowurl0","/Reservation");
+
+        return "/Reservation/NotDefInfoList :: #intable";
+    }
+
+    @GetMapping("/Reservation3")
+    public String Reservation3(Model model, HttpServletRequest request, Pageable pageable,
+                        @RequestParam(required = false, defaultValue = "0", value = "page") int page){
+        String returnValue = "";
+        if(new SessionCheck().loginSessionCheck(request)){
+            HttpSession session = request.getSession();
+
+            pageable = PageRequest.of(page, 10);
+            Page<ReservationInfoEntity> s1 = reservationInfoService.selectALLTable3(pageable);
+
+            Pagination pagination = new Pagination(s1.getTotalPages(), page);
+
+            model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
+            model.addAttribute("isNextSection", pagination.isNextSection()); //다음버튼 유무 확인하기 위함
+            model.addAttribute("isPrevSection", pagination.isPrevSection()); //이전버튼 유무 확인하기 위함
+            model.addAttribute("firstBtnIndex", pagination.getFirstBtnIndex()); //버튼 페이징 - 첫시작 인덱스
+            model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
+            model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
+
+            model.addAttribute("userlist", s1); //페이지 객체 리스트
+            model.addAttribute("nowurl0","/Reservation");
+
+            returnValue = "/Reservation/DefInfoList";
+        }else{
+            returnValue = "login";
+        }
+        return returnValue;
+    }
+
+    @RequestMapping(value = "/search_Reservation3", method = RequestMethod.POST)
+    public String search_Reservation3(Model model, HttpServletRequest request,
+                        @RequestParam(required = false ,defaultValue = "0" , value="page") int page,
+                        @RequestParam(required = false ,defaultValue = "" , value="selectKey") String selectKey,
+                        @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText){
+        HttpSession session = request.getSession();
+
+        Pageable pageable = PageRequest.of(page, 10);
+        int totalPages = reservationInfoService.seALLTable3(selectKey, titleText, pageable).getTotalPages();
+        Pagination pagination = new Pagination(totalPages, page);
+
+        model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
+        model.addAttribute("isNextSection", pagination.isNextSection()); //다음버튼 유무 확인하기 위함
+        model.addAttribute("isPrevSection", pagination.isPrevSection()); //이전버튼 유무 확인하기 위함
+        model.addAttribute("firstBtnIndex", pagination.getFirstBtnIndex()); //버튼 페이징 - 첫시작 인덱스
+        model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
+        model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
+
+        //서비스 엔티티 추가후 주석 풀고 사용
+        Page<ReservationInfoEntity> pageList = reservationInfoService.seALLTable3(selectKey, titleText, pageable);
+
+        model.addAttribute("userlist", pageList); //페이지 객체 리스트
+        model.addAttribute("nowurl0","/Reservation");
+
+        return "/Reservation/DefInfoList :: #intable";
+    }
 
 
 }

@@ -19,7 +19,7 @@
         </div>
         <div class="profile_info">
             <span>Welcome</span>
-            <h2 th:if="${session.user_signature}!=null" th:text="${session.user_signature}+'님 환영합니다!'"><!--로그인시 여기다가 이름 띄워주면 좋을듯--></h2>
+            <h2 th:if="${session.name}!=null" th:text="${session.name}+'님 환영합니다!'"><!--로그인시 여기다가 이름 띄워주면 좋을듯--></h2>
         </div>
     </div>
 
