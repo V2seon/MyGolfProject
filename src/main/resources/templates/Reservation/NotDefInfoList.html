@@ -171,9 +171,13 @@
                                                             <td th:if="${Co.Ricaid}!= null"
                                                                 th:text="${Co.Ricaid}"></td>
                                                             <td th:if="${Co.Riccno}!= null"
-                                                                th:text="${Co.Riccno}"></td>
-                                                            <td th:if="${Co.Ricourse}!= null"
-                                                                th:text="${Co.Ricourse}"></td>
+                                                                th:text="${Co.Riccno == 17 ? '어등산' : ''}"></td>
+                                                            <td th:if="${Co.Ricourse}== 2"
+                                                                th:text="어등코스"></td>
+                                                            <td th:if="${Co.Ricourse}== 3"
+                                                                th:text="송정코스"></td>
+                                                            <td th:if="${Co.Ricourse}== 4"
+                                                                th:text="하남코스"></td>
                                                             <td th:if="${Co.Riyear}!= null and ${Co.Rimonth}!= null and ${Co.Riday}!= null"
                                                                 th:text="${Co.Riyear}+'.'+${Co.Rimonth}+'.'+${Co.Riday}"></td>
                                                             <td th:if="${Co.Ristarttime}!= null and ${Co.Riendtime}!= null"
