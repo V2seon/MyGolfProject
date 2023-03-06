@@ -5,11 +5,9 @@ import com.example.golf.dto.ReservationInfoDto;
 import com.example.golf.entity.CountryAccountEntity;
 import com.example.golf.entity.ReservationInfoEntity;
 import com.example.golf.entity.UserinfoEntity;
-import com.example.golf.repository.CountryAccountRepository;
-import com.example.golf.repository.ReservationInfoRepository;
-import com.example.golf.repository.RlRepository;
-import com.example.golf.repository.UserinfoRepository;
+import com.example.golf.repository.*;
 import com.example.golf.service.ReservationInfoService;
+import com.example.golf.service.ReservationStateService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,6 +45,8 @@ public class MainController {
     private UserinfoRepository userinfoRepository;
     private ReservationInfoService reservationInfoService;
     private ReservationInfoRepository reservationInfoRepository;
+    private ReservationStateRepository reservationStateRepository;
+    private ReservationStateService reservationStateService;
 
     @GetMapping("/")
     public String login(){
@@ -231,7 +231,7 @@ public class MainController {
         System.out.println(caid);
         LocalDateTime localDateTime = LocalDateTime.now();
         String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        ReservationInfoDto reservationInfoDto = new ReservationInfoDto(null, cano, uino, mountin, caid, capw, hope_y, hope_m, hope_d, hope_t1, hope_t2, hope_h, hope_c, 0, 0, 0, null, 0, null, sdf1, null);
+        ReservationInfoDto reservationInfoDto = new ReservationInfoDto(null, cano, uino, mountin, caid, capw, hope_y, hope_m, hope_d, hope_t1, hope_t2, hope_h, hope_c, 0, 0, 0, null, 0, null,null, sdf1, null);
         reservationInfoService.insertData1(reservationInfoDto);
         String ipmsg = cano+"/"+uino+"/"+uino;
         System.out.println(ipmsg);

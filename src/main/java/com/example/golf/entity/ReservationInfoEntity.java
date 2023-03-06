@@ -74,6 +74,9 @@ public class ReservationInfoEntity {
     @Column(name = "RI_CANCLE_DAY")
     private String ricancelday;
 
+    @Column(name = "RI_PID")
+    private String ripid;
+
     @Column(name = "RI_IDATETIME")
     private String riidatetime;
 
@@ -83,7 +86,7 @@ public class ReservationInfoEntity {
     @Builder
     public ReservationInfoEntity(Long Ri_no, Long Ri_ca_no, Long Ri_ui_no, Long Ri_cc_no, String Ri_ca_id, String Ri_ca_password, int Ri_year,
                                  int Ri_month, int Ri_day, int Ri_start_time, int Ri_end_time, int Ri_hall, int Ri_course, int Ri_person, int Ri_sex,
-                                 int Ri_state, String Ri_resdatetime, int Ri_choice, String Ri_cancel_day, String Ri_idatetime, String Ri_udatetime) {
+                                 int Ri_state, String Ri_resdatetime, int Ri_choice, String Ri_cancel_day, String Ri_pid, String Ri_idatetime, String Ri_udatetime) {
         rino = Ri_no;
         ricano = Ri_ca_no;
         riuino = Ri_ui_no;
@@ -103,6 +106,7 @@ public class ReservationInfoEntity {
         riresdatetime = Ri_resdatetime;
         richoice = Ri_choice;
         ricancelday = Ri_cancel_day;
+        ripid = Ri_pid;
         riidatetime = Ri_idatetime;
         riudatetime = Ri_udatetime;
     }

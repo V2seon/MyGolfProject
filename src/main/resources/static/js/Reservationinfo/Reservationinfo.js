@@ -5,6 +5,10 @@ function searching(){
     var titleText = $('#titleText').val();
     var selectKey = $('#selectKey').val();
 
+    if(titleText == null){
+            titleText = "";
+    }
+
     console.log(titleText);
     const params = {
         page: 0,
@@ -39,8 +43,8 @@ function paging(pageValue){
 
     console.log(pageValue);
 
-    var titleText = myPageQuery.get('titleText');
-    var selectKey = myPageQuery.get('selectKey');
+    var titleText = $('#titleText').val();
+    var selectKey = $('#selectKey').val();
 
     $("#load").show();
 

@@ -27,7 +27,7 @@ public class CourseController {
 
     @GetMapping("/course")
     public String gcourse(Model m, HttpServletRequest request){
-        return "Course.html";
+        return "CourseList.html";
     }
 
     @PostMapping("/course2")

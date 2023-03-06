@@ -20,8 +20,8 @@ public interface ReservationInfoRepository extends JpaRepository<ReservationInfo
     //order by RI_STATE desc limit 5
 
     // 예약 대기 정보 가져오기
-    @Query(value = "SELECT * FROM test_reservation_info where RI_STATE=0" , nativeQuery = true)
-    Page<ReservationInfoEntity> findAll0(Pageable pageable);
+    @Query(value = "SELECT * FROM test_reservation_info" , nativeQuery = true)
+    Page<ReservationInfoEntity> findAll(Pageable pageable);
 
     // 미확정 예약 정보 가져오기
     @Query(value = "SELECT * FROM test_reservation_info where RI_STATE=1" , nativeQuery = true)
@@ -30,6 +30,13 @@ public interface ReservationInfoRepository extends JpaRepository<ReservationInfo
     // 예약 완료 정보 가져오기
     @Query(value = "SELECT * FROM test_reservation_info where RI_STATE=2" , nativeQuery = true)
     Page<ReservationInfoEntity> findAll2(Pageable pageable);
+
+
+
+
+
+
+
 
     // 예약 확정 정보 가져오기
     @Query(value = "SELECT * FROM test_reservation_info where RI_STATE=3" , nativeQuery = true)

@@ -12,12 +12,10 @@ public class ReservationinfoPredicate {
         System.out.println(titleText);
         if(!selectKey.equals("전체")){
             if(selectKey.equals("No")){
-                builder.and(qReservationInfoEntity.ristate.eq(0)).and
-                        (qReservationInfoEntity.rino.eq(Long.valueOf(titleText)));
+                builder.and(qReservationInfoEntity.rino.eq(Long.valueOf(titleText)));
             }
             else if(selectKey.equals("아이디")){
-                builder.and(qReservationInfoEntity.ristate.eq(0)).and
-                        (qReservationInfoEntity.ricaid.contains(titleText));
+                builder.and(qReservationInfoEntity.ricaid.contains(titleText));
             }
 //            else if(selectKey.equals("CC")){
 //                builder.and(qReservationInfoEntity.uiphone.contains(titleText));
@@ -28,12 +26,10 @@ public class ReservationinfoPredicate {
         }
         else if(selectKey.equals("전체")){
             try{
-                builder.and(qReservationInfoEntity.ristate.eq(0)).and
-                        (qReservationInfoEntity.rino.eq(Long.valueOf(titleText)));
+                builder.and(qReservationInfoEntity.rino.eq(Long.valueOf(titleText)));
             }
             catch (Exception e){
                 builder.and(
-                        (qReservationInfoEntity.ristate.eq(0)).and
                         (qReservationInfoEntity.ricaid.contains(titleText)));
 //                .or
 //                        (qViewUserInfoEntity.uiphone.contains(titleText))
@@ -51,12 +47,12 @@ public class ReservationinfoPredicate {
         System.out.println(titleText);
         if(!selectKey.equals("전체")){
             if(selectKey.equals("No")){
-                builder.and(qReservationInfoEntity.ristate.eq(1)).and
-                        (qReservationInfoEntity.rino.eq(Long.valueOf(titleText)));
+                builder.and(qReservationInfoEntity.rino.eq(Long.valueOf(titleText))).and
+                        (qReservationInfoEntity.ristate.eq(1));
             }
             else if(selectKey.equals("아이디")){
-                builder.and(qReservationInfoEntity.ristate.eq(1)).and
-                        (qReservationInfoEntity.ricaid.contains(titleText));
+                builder.and(qReservationInfoEntity.ricaid.contains(titleText)).and
+                        (qReservationInfoEntity.ristate.eq(1));
             }
 //            else if(selectKey.equals("CC")){
 //                builder.and(qReservationInfoEntity.uiphone.contains(titleText));
@@ -67,13 +63,13 @@ public class ReservationinfoPredicate {
         }
         else if(selectKey.equals("전체")){
             try{
-                builder.and(qReservationInfoEntity.ristate.eq(1)).and
-                        (qReservationInfoEntity.rino.eq(Long.valueOf(titleText)));
+                builder.and(qReservationInfoEntity.rino.eq(Long.valueOf(titleText))).and
+                        (qReservationInfoEntity.ristate.eq(1));
             }
             catch (Exception e){
                 builder.and(
-                        (qReservationInfoEntity.ristate.eq(1)).and
-                                (qReservationInfoEntity.ricaid.contains(titleText)));
+                        (qReservationInfoEntity.ricaid.contains(titleText))).and
+                                (qReservationInfoEntity.ristate.eq(1));
 //                .or
 //                        (qViewUserInfoEntity.uiphone.contains(titleText))
             }
@@ -90,12 +86,12 @@ public class ReservationinfoPredicate {
         System.out.println(titleText);
         if(!selectKey.equals("전체")){
             if(selectKey.equals("No")){
-                builder.and(qReservationInfoEntity.ristate.eq(2)).and
-                        (qReservationInfoEntity.rino.eq(Long.valueOf(titleText)));
+                builder.and(qReservationInfoEntity.rino.eq(Long.valueOf(titleText))).and
+                        (qReservationInfoEntity.ristate.eq(2));
             }
             else if(selectKey.equals("아이디")){
-                builder.and(qReservationInfoEntity.ristate.eq(2)).and
-                        (qReservationInfoEntity.ricaid.contains(titleText));
+                builder.and(qReservationInfoEntity.ricaid.contains(titleText)).and
+                        (qReservationInfoEntity.ristate.eq(2));
             }
 //            else if(selectKey.equals("CC")){
 //                builder.and(qReservationInfoEntity.uiphone.contains(titleText));
@@ -106,13 +102,13 @@ public class ReservationinfoPredicate {
         }
         else if(selectKey.equals("전체")){
             try{
-                builder.and(qReservationInfoEntity.ristate.eq(2)).and
-                        (qReservationInfoEntity.rino.eq(Long.valueOf(titleText)));
+                builder.and(qReservationInfoEntity.rino.eq(Long.valueOf(titleText))).and
+                        (qReservationInfoEntity.ristate.eq(2));
             }
             catch (Exception e){
                 builder.and(
-                        (qReservationInfoEntity.ristate.eq(2)).and
-                                (qReservationInfoEntity.ricaid.contains(titleText)));
+                        (qReservationInfoEntity.ricaid.contains(titleText))).and
+                        (qReservationInfoEntity.ristate.eq(2));
 //                .or
 //                        (qViewUserInfoEntity.uiphone.contains(titleText))
             }

@@ -3,7 +3,9 @@ package com.example.golf.controller;
 import com.example.golf.common.Pagination;
 import com.example.golf.common.SessionCheck;
 import com.example.golf.entity.ReservationInfoEntity;
+import com.example.golf.entity.ReservationSteteEntity;
 import com.example.golf.service.ReservationInfoService;
+import com.example.golf.service.ReservationStateService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +26,7 @@ import javax.servlet.http.HttpSession;
 public class ReservationController {
 
     private ReservationInfoService reservationInfoService;
+    private ReservationStateService reservationStateService;
 
     @GetMapping("/Reservation")
     public String Reservation(Model model, HttpServletRequest request, Pageable pageable,
@@ -89,7 +92,7 @@ public class ReservationController {
             HttpSession session = request.getSession();
 
             pageable = PageRequest.of(page, 10);
-            Page<ReservationInfoEntity> s1 = reservationInfoService.selectALLTable1(pageable);
+            Page<ReservationSteteEntity> s1 = reservationStateService.selectALLTable0(pageable);
 
             Pagination pagination = new Pagination(s1.getTotalPages(), page);
 
@@ -118,7 +121,7 @@ public class ReservationController {
         HttpSession session = request.getSession();
 
         Pageable pageable = PageRequest.of(page, 10);
-        int totalPages = reservationInfoService.seALLTable1(selectKey, titleText, pageable).getTotalPages();
+        int totalPages = reservationStateService.seALLTable(selectKey, titleText, pageable).getTotalPages();
         Pagination pagination = new Pagination(totalPages, page);
 
         model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
@@ -129,7 +132,7 @@ public class ReservationController {
         model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
 
         //서비스 엔티티 추가후 주석 풀고 사용
-        Page<ReservationInfoEntity> pageList = reservationInfoService.seALLTable1(selectKey, titleText, pageable);
+        Page<ReservationSteteEntity> pageList = reservationStateService.seALLTable(selectKey, titleText, pageable);
 
         model.addAttribute("userlist", pageList); //페이지 객체 리스트
         model.addAttribute("nowurl0","/Reservation");
@@ -145,7 +148,7 @@ public class ReservationController {
             HttpSession session = request.getSession();
 
             pageable = PageRequest.of(page, 10);
-            Page<ReservationInfoEntity> s1 = reservationInfoService.selectALLTable3(pageable);
+            Page<ReservationSteteEntity> s1 = reservationStateService.selectALLTable1(pageable);
 
             Pagination pagination = new Pagination(s1.getTotalPages(), page);
 
@@ -174,7 +177,7 @@ public class ReservationController {
         HttpSession session = request.getSession();
 
         Pageable pageable = PageRequest.of(page, 10);
-        int totalPages = reservationInfoService.seALLTable3(selectKey, titleText, pageable).getTotalPages();
+        int totalPages = reservationStateService.seALLTable1(selectKey, titleText, pageable).getTotalPages();
         Pagination pagination = new Pagination(totalPages, page);
 
         model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
@@ -185,7 +188,7 @@ public class ReservationController {
         model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
 
         //서비스 엔티티 추가후 주석 풀고 사용
-        Page<ReservationInfoEntity> pageList = reservationInfoService.seALLTable3(selectKey, titleText, pageable);
+        Page<ReservationSteteEntity> pageList = reservationStateService.seALLTable1(selectKey, titleText, pageable);
 
         model.addAttribute("userlist", pageList); //페이지 객체 리스트
         model.addAttribute("nowurl0","/Reservation");

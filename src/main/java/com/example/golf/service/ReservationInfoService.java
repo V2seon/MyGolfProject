@@ -45,7 +45,7 @@ public class ReservationInfoService {
 
     @Transactional
     public Page<ReservationInfoEntity> selectALLTable0(Pageable pageable){
-        return reservationInfoRepository.findAll0(pageable);
+        return reservationInfoRepository.findAll(pageable);
     }
 
     @Transactional
@@ -53,24 +53,24 @@ public class ReservationInfoService {
         return reservationInfoRepository.findAll(ReservationinfoPredicate.search0(selectKey, titleText),pageable);
     }
 
-    @Transactional
-    public Page<ReservationInfoEntity> selectALLTable1(Pageable pageable){
-        return reservationInfoRepository.findAll1(pageable);
-    }
-
-    @Transactional
-    public Page<ReservationInfoEntity> seALLTable1(String selectKey, String titleText, Pageable pageable){
-        return reservationInfoRepository.findAll(ReservationinfoPredicate.search1(selectKey, titleText),pageable);
-    }
-
-    @Transactional
-    public Page<ReservationInfoEntity> selectALLTable3(Pageable pageable){
-        return reservationInfoRepository.findAll2(pageable);
-    }
-
-    @Transactional
-    public Page<ReservationInfoEntity> seALLTable3(String selectKey, String titleText, Pageable pageable){
-        return reservationInfoRepository.findAll(ReservationinfoPredicate.search2(selectKey, titleText),pageable);
-    }
+//    @Transactional
+//    public Page<ReservationInfoEntity> selectALLTable1(Pageable pageable){
+//        return reservationInfoRepository.findAll1(pageable);
+//    }
+//
+//    @Transactional
+//    public Page<ReservationInfoEntity> seALLTable1(String selectKey, String titleText, Pageable pageable){
+//        return reservationInfoRepository.findAll(ReservationinfoPredicate.search1(selectKey, titleText),pageable);
+//    }
+//
+//    @Transactional
+//    public Page<ReservationInfoEntity> selectALLTable3(Pageable pageable){
+//        return reservationInfoRepository.findAll2(pageable);
+//    }
+//
+//    @Transactional
+//    public Page<ReservationInfoEntity> seALLTable3(String selectKey, String titleText, Pageable pageable){
+//        return reservationInfoRepository.findAll(ReservationinfoPredicate.search2(selectKey, titleText),pageable);
+//    }
 
 }

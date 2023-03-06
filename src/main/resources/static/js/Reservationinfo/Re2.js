@@ -6,6 +6,11 @@ function searching(){
     var selectKey = $('#selectKey').val();
 
     console.log(titleText);
+
+    if(titleText == null){
+            titleText = "";
+    }
+
     const params = {
         page: 0,
         selectKey: selectKey,
@@ -39,8 +44,12 @@ function paging(pageValue){
 
     console.log(pageValue);
 
-    var titleText = myPageQuery.get('titleText');
-    var selectKey = myPageQuery.get('selectKey');
+    var titleText = $('#titleText').val();
+    var selectKey = $('#selectKey').val();
+
+    if(titleText == null){
+            titleText = "";
+    }
 
     $("#load").show();
 
