@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!-- Meta, title, CSS, favicons, etc. -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Android Golf</title>
+
+	<!-- Bootstrap -->
+	<link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<!-- NProgress -->
+	<link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+	<!-- iCheck -->
+	<link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+	<!-- bootstrap-wysiwyg -->
+	<link href="/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+	<!-- Select2 -->
+	<link href="/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+	<!-- Switchery -->
+	<link href="/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+	<!-- starrr -->
+	<link href="/vendors/starrr/dist/starrr.css" rel="stylesheet">
+	<!-- bootstrap-daterangepicker -->
+	<link href="/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+	<!-- Custom Theme Style -->
+	<link href="/css/custom.min.css" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+<div class="container body">
+	<div class="main_container">
+		<div class="col-md-3 left_col">
+			<div th:insert="nav/nav.html"></div>
+		</div>
+
+		<!-- top navigation -->
+		<div th:insert="nav/top.html"></div>
+		<!-- /top navigation -->
+
+		<!-- page content -->
+		<div class="right_col" role="main" style="min-height:1240px;">
+			<div class="">
+				<div class="page-title">
+					<div class="title_left">
+						<h3>예약정보입력</h3>
+					</div>
+
+					<div class="title_right">
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div class="row">
+					<div class="col-md-12 col-sm-12 ">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2>희망정보 입력 <small>Enter desired information</small></h2>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content">
+								<br />
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align" for="cc_name">골프장
+									</label>
+									<div class="col-md-6 col-sm-6 ">
+										<select class="form-control" id = "cc_name">
+<!--											<option>선택</option>-->
+											<option value="17">어등산cc</option>
+											<!--<option value="빛고을">빛고을cc</option>-->
+										</select>
+									</div>
+								</div>
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align" for="year">연도
+									</label>
+									<div class="col-md-6 col-sm-6 ">
+										<select class="form-control" id = "year">
+											<option>선택</option>
+											<option value=2023>2023</option>
+										</select>
+									</div>
+								</div>
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align" for="month">월
+									</label>
+									<div class="col-md-6 col-sm-6 ">
+										<select class="form-control" id = "month">
+											<option>선택</option>
+											<option value=1>1월</option>
+											<option value=2>2월</option>
+											<option value=3>3월</option>
+											<option value=4>4월</option>
+											<option value=5>5월</option>
+											<option value=6>6월</option>
+											<option value=7>7월</option>
+											<option value=8>8월</option>
+											<option value=9>9월</option>
+											<option value=10>10월</option>
+											<option value=11>11월</option>
+											<option value=12>12월</option>
+										</select>
+									</div>
+								</div>
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align" for="day">일
+									</label>
+									<div class="col-md-6 col-sm-6 ">
+										<select class="form-control" id = "day">
+											<option>선택</option>
+											<option value=1>1일</option>
+											<option value=2>2일</option>
+											<option value=3>3일</option>
+											<option value=4>4일</option>
+											<option value=5>5일</option>
+											<option value=6>6일</option>
+											<option value=7>7일</option>
+											<option value=8>8일</option>
+											<option value=9>9일</option>
+											<option value=10>10일</option>
+											<option value=11>11일</option>
+											<option value=12>12일</option>
+											<option value=13>13일</option>
+											<option value=14>14일</option>
+											<option value=15>15일</option>
+											<option value=16>16일</option>
+											<option value=17>17일</option>
+											<option value=18>18일</option>
+											<option value=19>19일</option>
+											<option value=20>20일</option>
+											<option value=21>21일</option>
+											<option value=22>22일</option>
+											<option value=23>23일</option>
+											<option value=24>24일</option>
+											<option value=25>25일</option>
+											<option value=26>26일</option>
+											<option value=27>27일</option>
+											<option value=28>28일</option>
+											<option value=29>29일</option>
+											<option value=30>30일</option>
+											<option value=31>31일</option>
+										</select>
+									</div>
+								</div>
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align" for="t1">희망시간
+									</label>
+									<div class="col-md-6 col-sm-6 ">
+										<select class="form-control" id = "t1">
+											<option>선택</option>
+											<option value=6>06</option>
+											<option value=7>07</option>
+											<option value=8>08</option>
+											<option value=9>09</option>
+											<option value=10>10</option>
+											<option value=11>11</option>
+											<option value=12>12</option>
+											<option value=13>13</option>
+											<option value=14>14</option>
+											<option value=15>15</option>
+											<option value=16>16</option>
+											<option value=17>17</option>
+										</select>
+									</div>
+								</div>
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align" for="t2">~
+									</label>
+									<div class="col-md-6 col-sm-6 ">
+										<select class="form-control" id = "t2">
+											<option>선택</option>
+											<option value=6>06</option>
+											<option value=7>07</option>
+											<option value=8>08</option>
+											<option value=9>09</option>
+											<option value=10>10</option>
+											<option value=11>11</option>
+											<option value=12>12</option>
+											<option value=13>13</option>
+											<option value=14>14</option>
+											<option value=15>15</option>
+											<option value=16>16</option>
+											<option value=17>17</option>
+										</select>
+									</div>
+								</div>
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align" for="c">코스
+									</label>
+									<div class="col-md-6 col-sm-6 ">
+										<select class="form-control" id = "c">
+											<option>선택</option>
+											<option value="2">어등코스</option>
+											<option value="3">송정코스</option>
+											<option value="4">하남코스</option>
+										</select>
+									</div>
+								</div>
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align" for="cc">홀
+									</label>
+									<div class="col-md-6 col-sm-6 ">
+										<select class="form-control" id = "cc">
+											<option>선택</option>
+											<option value=9>9홀만</option>
+											<option value=18>18홀만</option>
+											<option value=0>상관없음</option>
+										</select>
+									</div>
+								</div>
+								<div class="ln_solid"></div>
+								<div class="item form-group">
+									<div class="col-md-6 col-sm-6 offset-md-3">
+										<!--<button class="btn btn-primary" type="button">Cancel</button>-->
+										<button class="btn btn-primary" type="reset">리셋</button>
+										<button onclick="sub()" class="btn btn-success">예약하기</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /page content -->
+
+		<!-- footer content -->
+		<footer>
+			<div class="pull-right">
+				Gentelella - Bootstrap Admin Template by Colorlib
+			</div>
+			<div class="clearfix"></div>
+		</footer>
+		<!-- /footer content -->
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/js/Golf/Golf.js"></script>
+</body></html>

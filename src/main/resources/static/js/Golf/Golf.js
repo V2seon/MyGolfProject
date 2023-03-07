@@ -50,3 +50,13 @@ let sendData = {
 
 
 }
+
+function move(seq){
+console.log(seq);
+
+if(seq == 17){
+    location.href="/formRI17";
+}else if(seq == 40){
+    location.href="/formRI40";
+}
+}

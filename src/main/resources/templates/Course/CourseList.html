@@ -113,17 +113,19 @@
                                                         </thead>
                                                         <tbody>
                                                         <tr th:if="${userlist}!=null" th:each="Co : ${userlist}">
-                                                            <td th:if="${Co.Ccno}!= null"
-                                                                th:text="${Co.Ccno}"></td>
-                                                            <td th:if="${Co.Ccname}!= null"
-                                                                th:text="${Co.Ccname}"></td>
-                                                            <td th:if="${Co.Ccurl}!= null"
-                                                                th:text="${Co.Ccurl}"></td>
+                                                            <td th:if="${Co.Cno}!= null"
+                                                                th:text="${Co.Cno}"></td>
+                                                            <td th:if="${Co.Cccname}!= null"
+                                                                th:text="${Co.Cccname}"></td>
+                                                            <td th:if="${Co.Cname}!= null"
+                                                                th:text="${Co.Cname}"></td>
+                                                            <td th:if="${Co.Cnumber}!= null"
+                                                                th:text="${Co.Cnumber}"></td>
                                                             <td>
-                                                                <button th:onclick="|javascript:ModifyCCgo(${Co.Ccno})|" class="btn btn-primary" type="button">수정</button>
+                                                                <button th:onclick="|javascript:ModifyCgo(${Co.Cno})|" class="btn btn-primary" type="button">수정</button>
                                                             </td>
                                                             <td>
-                                                                <button th:onclick="|javascript:DelCCgo(${Co.Ccno})|" class="btn btn-primary" type="button">삭제</button>
+                                                                <button th:onclick="|javascript:DelCgo(${Co.Cno})|" class="btn btn-primary" type="button">삭제</button>
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -200,7 +202,7 @@
 </div>
 </div>
 
-<script src="/js/Countryclub/Countryclub.js"></script>
+<script src="/js/Course/Course.js"></script>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
