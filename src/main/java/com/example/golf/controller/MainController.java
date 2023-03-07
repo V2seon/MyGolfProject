@@ -249,8 +249,19 @@ public class MainController {
                     String arg1;
                     ProcessBuilder builder;
                     BufferedReader br;
+                    arg1 = "";
+                    if(mountin == 17){
+                        arg1 = "C:/Users/eb/주피터/어등산0221.py";
+                        builder = new ProcessBuilder("python", arg1);
+                        builder.redirectErrorStream(true);
+                        Process process = builder.start();
+                    }else if(mountin == 40){
+                        arg1 = "C:/Users/eb/주피터/해피니스cc.py";
+                        builder = new ProcessBuilder("python", arg1);
+                        builder.redirectErrorStream(true);
+                        Process process = builder.start();
+                    }
 
-                    arg1 = "C:/Users/eb/주피터/어등산0221.py";
                     System.out.println("여긴 안오는거니?");
                     builder = new ProcessBuilder("python", arg1);
 
