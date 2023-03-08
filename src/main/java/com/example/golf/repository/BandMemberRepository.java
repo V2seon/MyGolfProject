@@ -10,7 +10,8 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 public interface BandMemberRepository extends JpaRepository<BandMemberEntity, String>, QuerydslPredicateExecutor<BandMemberEntity> {
 
     // 모든 데이터 가져오기
-    @Query(value = "SELECT * FROM band_member ORDER BY BM_SEQ DESC" , nativeQuery = true)
+//    @Query(value = "SELECT * FROM band_member ORDER BY BM_SEQ DESC" , nativeQuery = true)
+    @Query(value = "SELECT * FROM band_member" , nativeQuery = true)
     Page<BandMemberEntity> findAll(Pageable pageable);
 
 }

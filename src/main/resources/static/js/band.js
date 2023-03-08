@@ -1,5 +1,5 @@
 // 검색필터
-function searching(band){
+function searching(db){
     var titleText = $('#titleText').val();
     var selectKey = $('#selectKey').val();
 
@@ -17,7 +17,7 @@ function searching(band){
     var querydata = { "page" : myPageQuery.get('page'), "selectKey":myPageQuery.get('selectKey'),"titleText":myPageQuery.get('titleText')};
 
 
-    if(band == 'bi'){
+    if(db == 'bi'){
         $.ajax({
             url: "/Bandinfo_search",
             data: querydata,
@@ -25,7 +25,7 @@ function searching(band){
         }).done(function (fragment) {
             $("#bitable").replaceWith(fragment);
         });
-    }else if(band == 'bl'){
+    }else if(db == 'bl'){
         $.ajax({
             url: "/bandlog_search",
             data: querydata,
@@ -33,7 +33,7 @@ function searching(band){
         }).done(function (fragment) {
             $("#bltable").replaceWith(fragment);
         });
-    }else if(band == 'blm'){
+    }else if(db == 'blm'){
         $.ajax({
             url: "/bandlogmember_search",
             data: querydata,
@@ -41,7 +41,7 @@ function searching(band){
         }).done(function (fragment) {
             $("#blmtable").replaceWith(fragment);
         });
-    }else if(band == 'bm'){
+    }else if(db == 'bm'){
         $.ajax({
             url: "/bandmember_search",
             data: querydata,
@@ -53,7 +53,7 @@ function searching(band){
 }
 
 // 페이징
-function paging(pageValue){
+function paging(pageValue,db){
     const myPageQuery = new URLSearchParams(location.search);
     var titleText = myPageQuery.get('titleText');
     var selectKey = myPageQuery.get('selectKey');
@@ -81,12 +81,41 @@ function paging(pageValue){
 
     var querydata = { "page" : pageValue, "selectKey":selectKey, "titleText":titleText};
 
-    $.ajax({
-        url: "/Countryclub_search",
-        data: querydata,
-        type:"POST",
-    }).done(function (fragment) {
-        $("#intable").replaceWith(fragment);
-        $("#load").hide();
-    });
+    if(db == 'bi'){
+        $.ajax({
+            url: "/Bandinfo_search",
+            data: querydata,
+            type:"POST",
+        }).done(function (fragment) {
+            $("#bitable").replaceWith(fragment);
+            $("#load").hide();
+        });
+    }else if(db == 'bl'){
+        $.ajax({
+            url: "/bandlog_search",
+            data: querydata,
+            type:"POST",
+        }).done(function (fragment) {
+            $("#bltable").replaceWith(fragment);
+            $("#load").hide();
+        });
+    }else if(db == 'blm'){
+        $.ajax({
+            url: "/bandlogmember_search",
+            data: querydata,
+            type:"POST",
+        }).done(function (fragment) {
+            $("#blmtable").replaceWith(fragment);
+            $("#load").hide();
+        });
+    }else if(db == 'bm'){
+        $.ajax({
+            url: "/bandmember_search",
+            data: querydata,
+            type:"POST",
+        }).done(function (fragment) {
+            $("#bmtable").replaceWith(fragment);
+            $("#load").hide();
+        });
+    }
 }
