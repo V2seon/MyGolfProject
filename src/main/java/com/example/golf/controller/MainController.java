@@ -266,13 +266,15 @@ public class MainController {
     @PostMapping("/golftest3")
     public String golftest3(HttpServletRequest request, Model model,
                             @RequestParam(required = false, defaultValue = "", value = "mountin") Long mountin,
-                            @RequestParam(required = false, defaultValue = "", value = "hope_y") int hope_y,
-                            @RequestParam(required = false, defaultValue = "", value = "hope_m") int hope_m,
-                            @RequestParam(required = false, defaultValue = "", value = "hope_d") int hope_d,
+                            @RequestParam(required = false, defaultValue = "", value = "startdate") String startdate,
+                            @RequestParam(required = false, defaultValue = "", value = "enddate") String enddate,
+                            @RequestParam(required = false, defaultValue = "", value = "id") String id,
+                            @RequestParam(required = false, defaultValue = "", value = "pw") String pw,
                             @RequestParam(required = false, defaultValue = "", value = "hope_t1") int hope_t1,
                             @RequestParam(required = false, defaultValue = "", value = "hope_t2") int hope_t2,
                             @RequestParam(required = false, defaultValue = "", value = "hope_h") int hope_h,
-                            @RequestParam(required = false, defaultValue = "", value = "hope_c") int hope_c){
+                            @RequestParam(required = false, defaultValue = "", value = "hope_c") int hope_c,
+                            @RequestParam(required = false, defaultValue = "", value = "type") int type){
         System.out.println("11");
         HttpSession session = request.getSession();
         String sessioninid = (String) session.getAttribute("user_signature");
@@ -288,8 +290,8 @@ public class MainController {
         LocalDateTime localDateTime = LocalDateTime.now();
         String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         Optional<CountryClubEntity> c1 = countryClubRepository.findByCcno(mountin);
-//        String canday = c1.get().getCccancelday();
-        ReservationInfoDto reservationInfoDto = new ReservationInfoDto(null, cano, uino, mountin, caid, capw, null, null, hope_t1, hope_t2, hope_h, hope_c, 0, 0, 0, null, 0, null,null, sdf1, null);
+        String canday = String.valueOf(c1.get().getCccancelday());
+        ReservationInfoDto reservationInfoDto = new ReservationInfoDto(null, cano, uino, mountin, caid, capw, startdate, enddate, hope_t1, hope_t2, hope_h, hope_c, 0, 0, 0, null, type, canday,null, sdf1, null);
         reservationInfoService.insertData1(reservationInfoDto);
         String ipmsg = cano+"/"+uino+"/"+uino;
         System.out.println(ipmsg);
@@ -309,7 +311,7 @@ public class MainController {
                     BufferedReader br;
                     arg1 = "";
                     if(mountin == 17){
-                        arg1 = "C:/Users/eb/주피터/어등산0221.py";
+                        arg1 = "C:/Users/eb/주피터/어등산0303.py";
                         builder = new ProcessBuilder("python", arg1);
                         builder.redirectErrorStream(true);
                         Process process = builder.start();
