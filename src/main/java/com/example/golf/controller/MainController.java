@@ -276,6 +276,7 @@ public class MainController {
                             @RequestParam(required = false, defaultValue = "", value = "hope_c") int hope_c,
                             @RequestParam(required = false, defaultValue = "", value = "type") int type){
         System.out.println("11");
+        System.out.println("11");
         HttpSession session = request.getSession();
         String sessioninid = (String) session.getAttribute("user_signature");
         System.out.println(sessioninid);
