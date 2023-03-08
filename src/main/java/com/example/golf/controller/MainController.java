@@ -287,7 +287,9 @@ public class MainController {
         System.out.println(caid);
         LocalDateTime localDateTime = LocalDateTime.now();
         String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        ReservationInfoDto reservationInfoDto = new ReservationInfoDto(null, cano, uino, mountin, caid, capw, hope_y, hope_m, hope_d, hope_t1, hope_t2, hope_h, hope_c, 0, 0, 0, null, 0, null,null, sdf1, null);
+        Optional<CountryClubEntity> c1 = countryClubRepository.findByCcno(mountin);
+//        String canday = c1.get().getCccancelday();
+        ReservationInfoDto reservationInfoDto = new ReservationInfoDto(null, cano, uino, mountin, caid, capw, null, null, hope_t1, hope_t2, hope_h, hope_c, 0, 0, 0, null, 0, null,null, sdf1, null);
         reservationInfoService.insertData1(reservationInfoDto);
         String ipmsg = cano+"/"+uino+"/"+uino;
         System.out.println(ipmsg);

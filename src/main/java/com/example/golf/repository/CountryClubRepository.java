@@ -16,4 +16,6 @@ public interface CountryClubRepository extends JpaRepository<CountryClubEntity, 
     @Query(value = "SELECT * FROM test_country_club " , nativeQuery = true)
     Page<CountryClubEntity> findAll(Pageable pageable);
 
+    Optional<CountryClubEntity> findByCcno (Long ccno);
+
 }

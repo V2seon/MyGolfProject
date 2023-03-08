@@ -67,6 +67,7 @@ public class UserinfoController {
         }else{
             returnValue = "login";
         }
+        System.out.println("여기");
         return returnValue;
     }
 

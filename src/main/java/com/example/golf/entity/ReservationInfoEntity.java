@@ -35,14 +35,11 @@ public class ReservationInfoEntity {
     @Column(name = "RI_CA_PASSWORD")
     private String ricapassword;
 
-    @Column(name = "RI_YEAR")
-    private int riyear;
+    @Column(name = "RI_START_DATE")
+    private String ristartdate;
 
-    @Column(name = "RI_MONTH")
-    private int rimonth;
-
-    @Column(name = "RI_DAY")
-    private int riday;
+    @Column(name = "RI_END_DATE")
+    private String rienddate;
 
     @Column(name = "RI_START_TIME")
     private int ristarttime;
@@ -84,8 +81,8 @@ public class ReservationInfoEntity {
     private String riudatetime;
 
     @Builder
-    public ReservationInfoEntity(Long Ri_no, Long Ri_ca_no, Long Ri_ui_no, Long Ri_cc_no, String Ri_ca_id, String Ri_ca_password, int Ri_year,
-                                 int Ri_month, int Ri_day, int Ri_start_time, int Ri_end_time, int Ri_hall, int Ri_course, int Ri_person, int Ri_sex,
+    public ReservationInfoEntity(Long Ri_no, Long Ri_ca_no, Long Ri_ui_no, Long Ri_cc_no, String Ri_ca_id, String Ri_ca_password,
+                                 String Ri_startdate, String Ri_enddate, int Ri_start_time, int Ri_end_time, int Ri_hall, int Ri_course, int Ri_person, int Ri_sex,
                                  int Ri_state, String Ri_resdatetime, int Ri_choice, String Ri_cancel_day, String Ri_pid, String Ri_idatetime, String Ri_udatetime) {
         rino = Ri_no;
         ricano = Ri_ca_no;
@@ -93,9 +90,8 @@ public class ReservationInfoEntity {
         riccno = Ri_cc_no;
         ricaid = Ri_ca_id;
         ricapassword = Ri_ca_password;
-        riyear = Ri_year;
-        rimonth = Ri_month;
-        riday = Ri_day;
+        ristartdate = Ri_startdate;
+        rienddate = Ri_enddate;
         ristarttime = Ri_start_time;
         riendtime = Ri_end_time;
         rihall = Ri_hall;

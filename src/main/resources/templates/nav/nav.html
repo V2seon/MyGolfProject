@@ -39,7 +39,12 @@
                     <a href="/Cource"><!--<i class="fa fa-edit"></i>--> 코스 정보 <!--<span class="fa fa-chevron-down"></span>--></a>
                 </li>
                 <li>
-                    <a href="Reservation"><!--<i class="fa fa-desktop"></i>--> 예약정보 <!--<span class="fa fa-chevron-down"></span>--></a>
+                    <a><!--<i class="fa fa-edit"></i>--> 예약정보 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/Reservation">예약 대기 정보</a></li>
+                        <li><a href="/Reservation1">미확정 예약 정보</a></li>
+                        <li><a href="/Reservation3">확정 예약 정보</a></li>
+                    </ul>
                 </li>
                 <li th:class="${nowurl0 == '/Notice' ? 'current-page' : ''}">
                     <a href="/Notice"><!--<i class="fa fa-table"></i>--> 공지 사항 <!--<span class="fa fa-chevron-down"></span>--></a>

@@ -15,9 +15,8 @@ public class ReservationInfoDto {
     private Long riccno;
     private String ricaid;
     private String ricapassword;
-    private int riyear;
-    private int rimonth;
-    private int riday;
+    private String ristartdate;
+    private String rienddate;
     private int ristarttime;
     private int riendtime;
     private int rihall;
@@ -33,18 +32,17 @@ public class ReservationInfoDto {
     private String riudatetime;
 
     @Builder
-    public ReservationInfoDto(Long Ri_no, Long Ri_ca_no, Long Ri_ui_no, Long Ri_cc_no, String Ri_ca_id, String Ri_ca_password, int Ri_year,
-                              int Ri_month, int Ri_day, int Ri_start_time, int Ri_end_time, int Ri_hall, int Ri_course, int Ri_person, int Ri_sex,
-                              int Ri_state, String Ri_resdatetime, int Ri_choice, String Ri_cancel_day,String Ri_pid, String Ri_idatetime, String Ri_udatetime) {
+    public ReservationInfoDto(Long Ri_no, Long Ri_ca_no, Long Ri_ui_no, Long Ri_cc_no, String Ri_ca_id, String Ri_ca_password,
+                                 String Ri_startdate, String Ri_enddate, int Ri_start_time, int Ri_end_time, int Ri_hall, int Ri_course, int Ri_person, int Ri_sex,
+                                 int Ri_state, String Ri_resdatetime, int Ri_choice, String Ri_cancel_day, String Ri_pid, String Ri_idatetime, String Ri_udatetime) {
         rino = Ri_no;
         ricano = Ri_ca_no;
         riuino = Ri_ui_no;
         riccno = Ri_cc_no;
         ricaid = Ri_ca_id;
         ricapassword = Ri_ca_password;
-        riyear = Ri_year;
-        rimonth = Ri_month;
-        riday = Ri_day;
+        ristartdate = Ri_startdate;
+        rienddate = Ri_enddate;
         ristarttime = Ri_start_time;
         riendtime = Ri_end_time;
         rihall = Ri_hall;
@@ -68,9 +66,8 @@ public class ReservationInfoDto {
                 .Ri_cc_no(riccno)
                 .Ri_ca_id(ricaid)
                 .Ri_ca_password(ricapassword)
-                .Ri_year(riyear)
-                .Ri_month(rimonth)
-                .Ri_day(riday)
+                .Ri_startdate(ristartdate)
+                .Ri_enddate(rienddate)
                 .Ri_start_time(ristarttime)
                 .Ri_end_time(riendtime)
                 .Ri_hall(rihall)
