@@ -25,7 +25,7 @@ console.log(cc);
 let sendData = {
                 "mountin" : ccname,
                 "startdate" : startdate,
-                "enddate", : enddate,
+                "enddate" : enddate,
                 "id" : id,
                 "pw" : pw,
                 "hope_t1" : t1,
@@ -54,8 +54,6 @@ let sendData = {
             });
         }
     });
-
-
 }
 
 function move(seq){
