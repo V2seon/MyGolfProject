@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Android Golf</title>
+
+    <!-- Bootstrap -->
+    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!--    &lt;!&ndash; iCheck &ndash;&gt;-->
+    <!--    <link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">-->
+    <!--    &lt;!&ndash; bootstrap-wysiwyg &ndash;&gt;-->
+    <!--    <link href="/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">-->
+    <!--    &lt;!&ndash; Select2 &ndash;&gt;-->
+    <!--    <link href="/vendors/select2/dist/css/select2.min.css" rel="stylesheet">-->
+    <!--    &lt;!&ndash; Switchery &ndash;&gt;-->
+    <!--    <link href="/vendors/switchery/dist/switchery.min.css" rel="stylesheet">-->
+    <!--    &lt;!&ndash; starrr &ndash;&gt;-->
+    <!--    <link href="/vendors/starrr/dist/starrr.css" rel="stylesheet">-->
+    <!--    &lt;!&ndash; bootstrap-daterangepicker &ndash;&gt;-->
+    <!--    <link href="/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">-->
+
+    <!-- jQuery custom content scroller -->
+    <link href="/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet"/>
+
+    <!-- Custom Theme Style -->
+    <link href="/css/custom.min.css" rel="stylesheet">
+    <style>
+            th, td {
+              text-align: center;
+            }
+            #datatable{
+                width:1100px;
+            }
+
+    </style>
+
+
+
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div th:insert="nav/nav.html"></div>
+        </div>
+
+        <!-- top navigation -->
+        <div th:insert="nav/top.html"></div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main" style="min-height: 1240px;">
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3>밴드 로그</h3>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 ">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>밴드 로그 목록<small>Band log list</small></h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <br />
+                                <div class="container">
+                                    <div>
+                                        <div class="title_right">
+                                            <div class="offset-md-9 form-group pull-right top_search">
+                                                <div class="input-group">
+                                                    <select id="selectKey" style="margin-left:10px;">
+                                                        <option value="전체">전체</option>
+                                                        <option value="No">No</option>
+                                                        <option value="ID">로그인ID</option>
+                                                        <option value="BAND">밴드명</option>
+                                                        <option value="PRE">전날날짜</option>
+                                                        <option value="TODAY">날짜</option>
+                                                    </select>
+                                                    <input id="titleText" type="text" class="form-control" placeholder="Search for...">
+                                                    <span class="input-group-btn">
+                                                        <button onclick="searching('blm')" class="btn btn-default==" type="button">검색</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="x_content" style="width:100%" >
+                                            <div class="col-sm-12">
+                                                <div class="card-box table-responsive">
+                                                    <p class="text-muted font-13 m-b-30">
+                                                    </p>
+                                                    <div id="blmtable">
+                                                        <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>No</th>
+                                                                <th>로그인 아이디</th>
+                                                                <th>밴드 이름</th>
+                                                                <th>전날 날짜</th>
+                                                                <th>전날 총 멤버수</th>
+                                                                <th>전날 탈퇴수</th>
+                                                                <th>전날 탈퇴자</th>
+                                                                <th>날짜</th>
+                                                                <th>총 멤버수</th>
+                                                                <th>가입수</th>
+                                                                <th>가입자</th>
+                                                                <th>저장 날짜</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr th:if="${bandlist}!=null" th:each="Co : ${bandlist}">
+                                                                <td th:if="${Co.Blmseq}!= null" th:text="${Co.Blmseq}" style="text-align:center;"></td>
+                                                                <td th:if="${Co.Blmuserid}!= null" th:text="${Co.Blmuserid}" style="text-align:center;"></td>
+                                                                <td th:if="${Co.Blmbandname}!= null" th:text="${Co.Blmbandname}" style="text-align:center;"></td>
+                                                                <td th:if="${Co.Blmpredata}!= null" th:text="${Co.Blmpredata}" style="text-align:center;"></td>
+                                                                <td th:if="${Co.Blmpredata2}!= null" th:text="${Co.Blmpredata2}" style="text-align:center;"></td>
+                                                                <td th:if="${Co.Blmpredata3}!= null" th:text="${Co.Blmpredata3}" style="text-align:center;"></td>
+                                                                <td th:if="${Co.Blmpredata4}!= null" th:text="${Co.Blmpredata4}" style="text-align:center;"></td>
+                                                                <td th:if="${Co.Blmtodaydata}!= null" th:text="${Co.Blmtodaydata}" style="text-align:center;"></td>
+                                                                <td th:if="${Co.Blmtodaydata2}!= null" th:text="${Co.Blmtodaydata2}" style="text-align:center;"></td>
+                                                                <td th:if="${Co.Blmtodaydata3}!= null" th:text="${Co.Blmtodaydata3}" style="text-align:center;"></td>
+                                                                <td th:if="${Co.Blmtodaydata4}!= null" th:text="${Co.Blmtodaydata4}" style="text-align:center;"></td>
+                                                                <td th:if="${Co.Blmdatetime}!= null" th:text="${Co.Blmdatetime}" style="text-align:center;"></td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <div style="margin-top:20px; " class="card-footer clearfix">
+                                                            <ul class="pagination pagination-sm m-0 justify-content-center" id="pageList">
+                                                                <div class="page-item1" th:onclick="|javascript:paging(0)|">
+                                                                    <a class="page-link" aria-label="Previous">
+                                                                        <<
+                                                                    </a>
+                                                                </div>
+
+                                                                <div class="page-item1 prev-page" th:if="${isPrevSection}"
+                                                                     th:value="${thisSection}" th:onclick="|javascript:paging(${firstBtnIndex}-1)|">
+                                                                    <a class="page-link" aria-label="Previous">
+                                                                        <
+                                                                    </a>
+                                                                </div>
+
+                                                                <!--            onclick 구현-->
+                                                                <div th:each="page: ${#numbers.sequence(firstBtnIndex,lastBtnIndex)}"
+                                                                     id="pageItem" class="page-item" th:onclick="|javascript:paging(${page})|"
+                                                                     th:classappend="${thisPage} ==  ${page} ?  'active'" th:value="${page}">
+                                                                    <a class="page-link">
+                                                                        <span th:text="${page+1}"></span>
+                                                                    </a>
+                                                                </div>
+                                                                <!--            onclick 구현-->
+
+                                                                <!--다음버튼2-->
+                                                                <div class="page-item1 next-page" th:if="${isNextSection}"
+                                                                     th:onclick="|javascript:paging(${lastBtnIndex}+1)|"
+                                                                     th:value="${thisSection}">
+                                                                    <a class="page-link" aria-label="Next">
+                                                                        >
+                                                                    </a>
+                                                                </div>
+                                                                <!--다음버튼2-->
+
+                                                                <div class="page-item1" th:onclick="|javascript:paging(${totalPage})|">
+                                                                    <a class="page-link" id="pageItem2" aria-label="Previous">
+                                                                        >>
+                                                                    </a>
+                                                                </div>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<footer>
+    <div class="pull-right">
+        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+    </div>
+    <div class="clearfix"></div>
+</footer>
+<!-- /footer content -->
+</div>
+</div>
+
+<!-- jQuery -->
+<script src="/vendors/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!-- FastClick -->
+<script src="/vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="/vendors/nprogress/nprogress.js"></script>
+<!--&lt;!&ndash; bootstrap-progressbar &ndash;&gt;-->
+<!--<script src="/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>-->
+<!--&lt;!&ndash; iCheck &ndash;&gt;-->
+<!--<script src="/vendors/iCheck/icheck.min.js"></script>-->
+<!--&lt;!&ndash; bootstrap-daterangepicker &ndash;&gt;-->
+<!--<script src="/vendors/moment/min/moment.min.js"></script>-->
+<!--<script src="/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>-->
+<!--&lt;!&ndash; bootstrap-wysiwyg &ndash;&gt;-->
+<!--<script src="/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>-->
+<!--<script src="/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>-->
+<!--<script src="/vendors/google-code-prettify/src/prettify.js"></script>-->
+<!--&lt;!&ndash; jQuery Tags Input &ndash;&gt;-->
+<!--<script src="/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>-->
+<!--&lt;!&ndash; Switchery &ndash;&gt;-->
+<!--<script src="/vendors/switchery/dist/switchery.min.js"></script>-->
+<!--&lt;!&ndash; Select2 &ndash;&gt;-->
+<!--<script src="/vendors/select2/dist/js/select2.full.min.js"></script>-->
+<!--&lt;!&ndash; Parsley &ndash;&gt;-->
+<!--<script src="/vendors/parsleyjs/dist/parsley.min.js"></script>-->
+<!--&lt;!&ndash; Autosize &ndash;&gt;-->
+<!--<script src="/vendors/autosize/dist/autosize.min.js"></script>-->
+<!--&lt;!&ndash; jQuery autocomplete &ndash;&gt;-->
+<!--<script src="/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>-->
+<!--&lt;!&ndash; starrr &ndash;&gt;-->
+<!--<script src="/vendors/starrr/dist/starrr.js"></script>-->
+
+<!-- jQuery custom content scroller -->
+<script src="/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<script src="/js/band.js"></script>
+<!-- Custom Theme Scripts -->
+<script src="/js/custom.min.js"></script>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</body></html>
