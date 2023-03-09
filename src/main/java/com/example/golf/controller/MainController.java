@@ -276,7 +276,6 @@ public class MainController {
                             @RequestParam(required = false, defaultValue = "", value = "hope_c") int hope_c,
                             @RequestParam(required = false, defaultValue = "", value = "type") int type){
         System.out.println("11");
-        System.out.println("11");
         HttpSession session = request.getSession();
         String sessioninid = (String) session.getAttribute("user_signature");
         System.out.println(sessioninid);
@@ -310,19 +309,8 @@ public class MainController {
                     String arg1;
                     ProcessBuilder builder;
                     BufferedReader br;
-                    arg1 = "";
-                    if(mountin == 17){
-                        arg1 = "C:/Users/eb/주피터/어등산0303.py";
-                        builder = new ProcessBuilder("python", arg1);
-                        builder.redirectErrorStream(true);
-                        Process process = builder.start();
-                    }else if(mountin == 40){
-                        arg1 = "C:/Users/eb/주피터/해피니스cc.py";
-                        builder = new ProcessBuilder("python", arg1);
-                        builder.redirectErrorStream(true);
-                        Process process = builder.start();
-                    }
 
+                    arg1 = "C:/Users/abcd/Desktop/selenium/selenium/golftest4.py";
                     System.out.println("여긴 안오는거니?");
                     builder = new ProcessBuilder("python", arg1);
 

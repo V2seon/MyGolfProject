@@ -106,8 +106,11 @@
                                                                 <th>아이디</th>
                                                                 <th>CC</th>
                                                                 <th>코스정보</th>
+                                                                <th>예약일</th>
                                                                 <th>예약티 시간</th>
-
+                                                                <th>취소가능일</th>
+                                                                <th>확정</th>
+                                                                <th>예약취소</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
@@ -135,7 +138,17 @@
                                                                 <td th:if="${Co.Rsicno}== 8"
                                                                     th:text="힐링코스"></td>
                                                                 <td th:if="${Co.Rsitime}!= null"
-                                                                    th:text="${Co.Rsitime}"></td>
+                                                                    th:text="${#strings.substring(Co.Rsitime,0,10)}"></td>
+                                                                <td th:if="${Co.Rsitime}!= null"
+                                                                    th:text="${#strings.substring(Co.Rsitime,10,16)}"></td>
+                                                                <td th:if="${Co.Rsicanceldate}!= null"
+                                                                    th:text="${Co.Rsicanceldate}"></td>
+                                                                <td>
+                                                                    <button th:onclick="|javascript:DelCCgo(${Co.Rsino})|" class="btn btn-success" type="button">확정</button>
+                                                                </td>
+                                                                <td>
+                                                                    <button th:onclick="|javascript:DelCCgo(${Co.Rsino})|" class="btn btn-primary" type="button">예약취소</button>
+                                                                </td>
                                                             </tr>
                                                             </tbody>
                                                         </table>
