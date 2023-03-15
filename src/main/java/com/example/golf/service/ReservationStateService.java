@@ -1,9 +1,10 @@
 package com.example.golf.service;
 
 import com.example.golf.dto.ReservationSteteDto;
-import com.example.golf.entity.ReservationSteteEntity;
-import com.example.golf.predicate.ReservationStetePredicate;
+import com.example.golf.entity.ViewReservationStateInfoEntity;
+import com.example.golf.predicate.ViewReservationStetePredicate;
 import com.example.golf.repository.ReservationStateRepository;
+import com.example.golf.repository.ViewReservationStateInfoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,7 @@ import javax.transaction.Transactional;
 @AllArgsConstructor
 public class ReservationStateService {
     private ReservationStateRepository reservationStateRepository;
+    private ViewReservationStateInfoRepository viewReservationStateInfoRepository;
 
     @Transactional
     public Long savedto(ReservationSteteDto reservationSteteDto){
@@ -22,24 +24,31 @@ public class ReservationStateService {
     }
 
     @Transactional
-    public Page<ReservationSteteEntity> selectALLTable0(Pageable pageable){
-        return reservationStateRepository.findAll0(pageable);
+    public Page<ViewReservationStateInfoEntity> selectALLTable0(Pageable pageable){
+        return viewReservationStateInfoRepository.findAll0(pageable);
     }
 
     @Transactional
-    public Page<ReservationSteteEntity> seALLTable(String selectKey, String titleText, Pageable pageable){
-        return reservationStateRepository.findAll(ReservationStetePredicate.search0(selectKey, titleText),pageable);
+    public Page<ViewReservationStateInfoEntity> seALLTable(String selectKey, String titleText, Pageable pageable){
+        return viewReservationStateInfoRepository.findAll(ViewReservationStetePredicate.search0(selectKey, titleText),pageable);
     }
 
 
     @Transactional
-    public Page<ReservationSteteEntity> selectALLTable1(Pageable pageable){
-        return reservationStateRepository.findAll1(pageable);
+    public Page<ViewReservationStateInfoEntity> selectALLTable1(Pageable pageable){
+        return viewReservationStateInfoRepository.findAll1(pageable);
     }
 
     @Transactional
-    public Page<ReservationSteteEntity> seALLTable1(String selectKey, String titleText, Pageable pageable){
-        return reservationStateRepository.findAll(ReservationStetePredicate.search1(selectKey, titleText),pageable);
+    public Page<ViewReservationStateInfoEntity> seALLTable1(String selectKey, String titleText, Pageable pageable){
+        return viewReservationStateInfoRepository.findAll(ViewReservationStetePredicate.search1(selectKey, titleText),pageable);
     }
+
+    @Transactional
+    public void changeState(int num){
+        reservationStateRepository.updateState(num);
+    }
+
+
 
 }

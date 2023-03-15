@@ -394,7 +394,7 @@ public class MainController {
         } catch (Throwable e) {
             e.printStackTrace();
         }
-        return "formRI";
+        return "/formRI/formRI1";
     }
 
 

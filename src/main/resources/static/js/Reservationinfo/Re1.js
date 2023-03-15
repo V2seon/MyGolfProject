@@ -1,4 +1,3 @@
-
 // 검색필터
 function searching(){
 
@@ -80,4 +79,64 @@ function paging(pageValue){
 
     });
 
+}
+
+function Defno(seq){
+console.log(seq);
+swal({
+        title: "예약을 확정하시겠습니까?",
+        icon: "success",
+        closeOnClickOutside : false,
+        button: "확인"
+    }).then(function(){
+
+        const sendData = {
+                'seq' : seq
+            };
+
+        $.ajax({
+                url      : "/clearrs",
+                data     : sendData,
+                type     : "POST",
+                success : function(result) {
+                    $('#load').hide();
+                    swal({
+                            text: "예약확정완료.",
+                            icon: "success",
+                            closeOnClickOutside : false,
+                            button: "확인"
+                        }).then(function(){
+                            location.href = "/Reservation1";
+                        })
+                },
+                error:function(request,status,error){
+                    $('#load').hide();
+                    swal({
+                        text: "서버에 문제가 발생했습니다.",
+                        icon: "warning" //"info,success,warning,error" 중 택1
+                    });
+                }
+            });
+    });
+}
+
+function band(seq){
+swal({
+      title : "글을 작성하시겠습니까?.",
+      closeOnClickOutside : false,
+      icon: "success"
+    }).then(function(){
+        const data = {
+                    'seq' : seq
+                };
+        $.ajax({
+                url : "/bandup",
+                data : data,
+                type : "POST",
+                success : function (result){
+                },
+                error : function (request,status,error){
+                }
+            });
+    });
 }

@@ -85,6 +85,8 @@
                                                         <option value="전체">전체</option>
                                                         <option value="No">No</option>
                                                         <option value="아이디">아이디</option>
+                                                        <option value="CC">CC</option>
+                                                        <option value="코스정보">코스정보</option>
                                                     </select>
                                                     <input id="titleText" type="text" class="form-control" placeholder="Search for...">
                                                     <span class="input-group-btn">
@@ -118,24 +120,10 @@
                                                                     th:text="${Co.Rsino}"></td>
                                                                 <td th:if="${Co.Rsicaid}!= null"
                                                                     th:text="${Co.Rsicaid}"></td>
-                                                                <td th:if="${Co.Rsiccno}== 17"
-                                                                    th:text="어등산"></td>
-                                                                <td th:if="${Co.Rsiccno}== 40"
-                                                                    th:text="해피니스"></td>
-                                                                <td th:if="${Co.Rsicno}== 2"
-                                                                    th:text="어등코스"></td>
-                                                                <td th:if="${Co.Rsicno}== 3"
-                                                                    th:text="송정코스"></td>
-                                                                <td th:if="${Co.Rsicno}== 4"
-                                                                    th:text="하남코스"></td>
-                                                                <td th:if="${Co.Rsicno}== 5"
-                                                                    th:text="휴먼코스"></td>
-                                                                <td th:if="${Co.Rsicno}== 6"
-                                                                    th:text="해피코스"></td>
-                                                                <td th:if="${Co.Rsicno}== 7"
-                                                                    th:text="하트코스"></td>
-                                                                <td th:if="${Co.Rsicno}== 8"
-                                                                    th:text="힐링코스"></td>
+                                                                <td th:if="${Co.Rsiccno}!= null"
+                                                                    th:text="${Co.Rsiccno}"></td>
+                                                                <td th:if="${Co.Rsicno}!= null"
+                                                                    th:text="${Co.Rsicno}"></td>
                                                                 <td th:if="${Co.Rsitime}!= null"
                                                                     th:text="${#strings.substring(Co.Rsitime,0,10)}"></td>
                                                                 <td th:if="${Co.Rsitime}!= null"

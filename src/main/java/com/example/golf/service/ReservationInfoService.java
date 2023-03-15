@@ -4,8 +4,8 @@ import com.example.golf.dto.CountryAccountDto;
 import com.example.golf.dto.CountryClubDto;
 import com.example.golf.dto.CourseDto;
 import com.example.golf.dto.ReservationInfoDto;
-import com.example.golf.entity.ReservationInfoEntity;
-import com.example.golf.predicate.ReservationinfoPredicate;
+import com.example.golf.entity.ViewReservationInfoEntity;
+import com.example.golf.predicate.ViewReservationinfoPredicate;
 import com.example.golf.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,6 +22,7 @@ public class ReservationInfoService {
     private UserinfoRepository userinfoRepository;
     private CourseRepository courseRepository;
     private CountryAccountRepository countryAccountRepository;
+    private ViewReservationInfoRepository viewReservationInfoRepository;
 
     @Transactional
     public Long insertData1(ReservationInfoDto golfDto){
@@ -44,13 +45,13 @@ public class ReservationInfoService {
     }
 
     @Transactional
-    public Page<ReservationInfoEntity> selectALLTable0(Pageable pageable){
-        return reservationInfoRepository.findAll(pageable);
+    public Page<ViewReservationInfoEntity> selectALLTable0(Pageable pageable){
+        return viewReservationInfoRepository.findAll(pageable);
     }
 
     @Transactional
-    public Page<ReservationInfoEntity> seALLTable(String selectKey, String titleText, Pageable pageable){
-        return reservationInfoRepository.findAll(ReservationinfoPredicate.search0(selectKey, titleText),pageable);
+    public Page<ViewReservationInfoEntity> seALLTable(String selectKey, String titleText, Pageable pageable){
+        return viewReservationInfoRepository.findAll(ViewReservationinfoPredicate.search0(selectKey, titleText),pageable);
     }
 
 //    @Transactional
