@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -159,7 +160,7 @@ public class CountryClubController {
     }
 
 
-    @PostMapping("/countryclub2")
+    @PostMapping("/SaveCC")
     public String countryclub(HttpServletRequest request, Model model,
                               @RequestParam(required = false, defaultValue = "", value = "ccname") String ccname,
                               @RequestParam(required = false, defaultValue = "", value = "ccurl") String ccurl,
@@ -168,11 +169,11 @@ public class CountryClubController {
                               @RequestParam(required = false, defaultValue = "", value = "cctype") int cctype,
                               @RequestParam(required = false, defaultValue = "", value = "ccrv") int ccrv) {
         System.out.println("hi?");
-        CountryClubDto countryClubDto = new CountryClubDto(null, ccname,null, ccurl, cccancel, ccopen, cctype, ccrv, null,null);
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        CountryClubDto countryClubDto = new CountryClubDto(null, ccname,null, ccurl, cccancel, ccopen, cctype, ccrv, localDateTime,null);
         reservationInfoService.Ccinsert(countryClubDto);
-        List<CountryClubEntity> ccn = countryClubRepository.findAll();
-        model.addAttribute("ccname4",ccn);
-        return "/gcountryclub";
+        return "/Countryclub";
     }
 
 }
