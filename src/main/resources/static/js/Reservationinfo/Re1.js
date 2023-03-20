@@ -182,8 +182,8 @@ swal({
     });
 }
 
-function searching1(Ccname){
-
+function searching1(ppp){
+    console.log(ppp.value)
     var titleText = $('#titleText').val();
     var selectKey = $('#selectKey').val();
 
@@ -195,7 +195,7 @@ function searching1(Ccname){
     const params = {
         page: 0,
         selectKey: "CC",
-        titleText: Ccname
+        titleText: ppp.value
     }
 
     const queryString = new URLSearchParams(params).toString();

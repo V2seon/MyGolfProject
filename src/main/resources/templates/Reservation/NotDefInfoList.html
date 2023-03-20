@@ -83,6 +83,7 @@
                                                 <div class="input-group" style="width:2">
                                                     <div style="width:85%; padding-left:10px;">
                                                         <button th:if="${country}!=null" th:each="Co : ${country}"
+                                                                onclick="searching1(this)"
                                                                 th:class="'Ccbtn' + ${Co.Ccno}"
                                                                 th:value="${Co.Ccname}" th:text="${Co.Ccname} +' : '+ ${Co.Cctype} +'개'">
                                                         </button>
