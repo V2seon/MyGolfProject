@@ -181,3 +181,40 @@ swal({
     }
     });
 }
+
+function searching1(Ccname){
+
+    var titleText = $('#titleText').val();
+    var selectKey = $('#selectKey').val();
+
+    if(titleText == null){
+            titleText = "";
+    }
+
+    console.log(titleText);
+    const params = {
+        page: 0,
+        selectKey: "CC",
+        titleText: Ccname
+    }
+
+    const queryString = new URLSearchParams(params).toString();
+
+    const replaceUri = location.pathname + '?' + queryString;
+
+    history.pushState(null, '', replaceUri);
+
+    //값 가져오기 (페이지네이션)
+    const myPageQuery = new URLSearchParams(location.search);
+
+    var querydata = { "page" : myPageQuery.get('page'), "selectKey":myPageQuery.get('selectKey'),"titleText":myPageQuery.get('titleText')};
+
+    $.ajax({
+        url: "/search_Reservation1",
+        data: querydata,
+        type:"POST",
+    }).done(function (fragment) {
+        $("#intable").replaceWith(fragment);
+    });
+
+}

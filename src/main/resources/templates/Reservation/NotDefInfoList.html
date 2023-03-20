@@ -82,8 +82,10 @@
                                             <div class="offset-md-9 form-group top_search">
                                                 <div class="input-group" style="width:2">
                                                     <div style="width:85%; padding-left:10px;">
-                                                        <button th:if="${country}!=null" th:each="Co : ${country}" th:class="'Ccbtn' + ${Co.Ccno}"
-                                                                th:value="${Co.Ccname}" th:text="${Co.Ccname}"></button>
+                                                        <button th:if="${country}!=null" th:each="Co : ${country}"
+                                                                th:class="'Ccbtn' + ${Co.Ccno}"
+                                                                th:value="${Co.Ccname}" th:text="${Co.Ccname} +' : '+ ${Co.Cctype} +'개'">
+                                                        </button>
                                                     </div>
                                                     <select class="form-control" id="selectKey" style="margin-left:10px;">
                                                         <option value="전체">전체</option>

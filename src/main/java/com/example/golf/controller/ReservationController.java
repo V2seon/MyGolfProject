@@ -123,6 +123,28 @@ public class ReservationController {
             model.addAttribute("nowurl0","/Reservation");
 
             List<CountryClubEntity> s2 = countryClubRepository.findAll1();
+            List<ViewReservationStateInfoEntity> 어등 = viewReservationStateInfoRepository.findByRsiccno("어등산");
+            List<ViewReservationStateInfoEntity> 해피니스 = viewReservationStateInfoRepository.findByRsiccno("해피니스");
+            List<ViewReservationStateInfoEntity> 무안 = viewReservationStateInfoRepository.findByRsiccno("무안컨트리클럽");
+            List<ViewReservationStateInfoEntity> 아크로 = viewReservationStateInfoRepository.findByRsiccno("아크로컨트리클럽");
+            List<ViewReservationStateInfoEntity> 클린밸리 = viewReservationStateInfoRepository.findByRsiccno("무안클린밸리");
+            List<ViewReservationStateInfoEntity> 광주 = viewReservationStateInfoRepository.findByRsiccno("광주");
+
+            for(int i=0; i<s2.size(); i++){
+                if(s2.get(i).getCcname().equals("어등산")){
+                    s2.get(i).setCctype(어등.size());
+                }else if(s2.get(i).getCcname().equals("무안컨트리클럽")){
+                    s2.get(i).setCctype(무안.size());
+                }else if(s2.get(i).getCcname().equals("해피니스")){
+                    s2.get(i).setCctype(해피니스.size());
+                }else if(s2.get(i).getCcname().equals("아크로컨트리클럽")){
+                    s2.get(i).setCctype(아크로.size());
+                }else if(s2.get(i).getCcname().equals("무안클린밸리")){
+                    s2.get(i).setCctype(클린밸리.size());
+                }else if(s2.get(i).getCcname().equals("광주")){
+                    s2.get(i).setCctype(광주.size());
+                }
+            }
 
             model.addAttribute("country",s2);
 

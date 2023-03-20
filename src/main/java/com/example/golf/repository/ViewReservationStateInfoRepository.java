@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
+import java.util.List;
+
 public interface ViewReservationStateInfoRepository extends JpaRepository<ViewReservationStateInfoEntity, Long> , QuerydslPredicateExecutor<ViewReservationStateInfoEntity> {
 
     // 미확정 정보 가져오기
@@ -16,6 +18,9 @@ public interface ViewReservationStateInfoRepository extends JpaRepository<ViewRe
     // 확정 정보 가져오기
     @Query(value = "SELECT * FROM view_reservation_state_info where RSI_STATE=1" , nativeQuery = true)
     Page<ViewReservationStateInfoEntity> findAll1(Pageable pageable);
+
+    @Query(value = "SELECT * FROM view_reservation_state_info where RSI_CC_NO = :Rsiccno", nativeQuery = true)
+    List<ViewReservationStateInfoEntity> findByRsiccno (String Rsiccno);
 
 
 }
