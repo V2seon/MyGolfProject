@@ -2,6 +2,7 @@ package com.example.golf.controller;
 
 import com.example.golf.common.Pagination;
 import com.example.golf.common.SessionCheck;
+import com.example.golf.entity.CountryClubEntity;
 import com.example.golf.entity.ViewReservationInfoEntity;
 import com.example.golf.entity.ViewReservationStateInfoEntity;
 import com.example.golf.repository.CountryClubRepository;
@@ -28,6 +29,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -119,6 +121,10 @@ public class ReservationController {
 
             model.addAttribute("userlist", s1); //페이지 객체 리스트
             model.addAttribute("nowurl0","/Reservation");
+
+            List<CountryClubEntity> s2 = countryClubRepository.findAll1();
+
+            model.addAttribute("country",s2);
 
             returnValue = "/Reservation/NotDefInfoList";
         }else{
@@ -217,6 +223,12 @@ public class ReservationController {
         return "redirect:";
     }
 
+    @PostMapping("/Delstate")
+    public String Delstate(HttpServletRequest request, Model model,
+                          @RequestParam(required = false, defaultValue = "", value = "seq") Long seq){
+        viewReservationStateInfoRepository.deleteById(seq);
+        return "redirect:";
+    }
 
     @PostMapping("/bandup")
     public String bandup(HttpServletRequest request, Model model,

@@ -79,9 +79,13 @@
                                 <div class="container">
                                     <div>
                                         <div class="title_right">
-                                            <div class="offset-md-9 form-group pull-right top_search">
-                                                <div class="input-group">
-                                                    <select id="selectKey" style="margin-left:10px;">
+                                            <div class="offset-md-9 form-group top_search">
+                                                <div class="input-group" style="width:2">
+                                                    <div style="width:85%; padding-left:10px;">
+                                                        <button th:if="${country}!=null" th:each="Co : ${country}" th:class="'Ccbtn' + ${Co.Ccno}"
+                                                                th:value="${Co.Ccname}" th:text="${Co.Ccname}"></button>
+                                                    </div>
+                                                    <select class="form-control" id="selectKey" style="margin-left:10px;">
                                                         <option value="전체">전체</option>
                                                         <option value="No">No</option>
                                                         <option value="아이디">아이디</option>
@@ -105,33 +109,34 @@
                                                             <thead>
                                                             <tr>
                                                                 <th>No</th>
-                                                                <th>아이디</th>
                                                                 <th>CC</th>
                                                                 <th>코스정보</th>
                                                                 <th>예약일</th>
-                                                                <th>예약티 시간</th>
                                                                 <th>취소가능일</th>
+                                                                <th>예약티 시간</th>
+                                                                <th>아이디</th>
                                                                 <th>밴드 글작성</th>
                                                                 <th>확정</th>
-                                                                <th>예약취소</th>
+                                                                <th>연동삭제</th>
+                                                                <th>삭제</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
                                                             <tr th:if="${userlist}!=null" th:each="Co : ${userlist}">
                                                                 <td th:if="${Co.Rsino}!= null"
                                                                     th:text="${Co.Rsino}"></td>
-                                                                <td th:if="${Co.Rsicaid}!= null"
-                                                                    th:text="${Co.Rsicaid}"></td>
                                                                 <td th:if="${Co.Rsiccno}!= null"
                                                                     th:text="${Co.Rsiccno}"></td>
                                                                 <td th:if="${Co.Rsicno}!= null"
                                                                     th:text="${Co.Rsicno}"></td>
                                                                 <td th:if="${Co.Rsitime}!= null"
                                                                     th:text="${#strings.substring(Co.Rsitime,0,10)}"></td>
-                                                                <td th:if="${Co.Rsitime}!= null"
-                                                                    th:text="${#strings.substring(Co.Rsitime,10,16)}"></td>
                                                                 <td th:if="${Co.Rsicanceldate}!= null"
                                                                     th:text="${Co.Rsicanceldate}"></td>
+                                                                <td th:if="${Co.Rsitime}!= null"
+                                                                    th:text="${#strings.substring(Co.Rsitime,10,16)}"></td>
+                                                                <td th:if="${Co.Rsicaid}!= null"
+                                                                    th:text="${Co.Rsicaid}"></td>
                                                                 <td>
                                                                     <button th:if="${Co.Rsibandstate} == 0" th:onclick="|javascript:band(${Co.Rsino})|" class="btn btn-success" type="button">작성</button>
                                                                     <span th:if="${Co.Rsibandstate} == 1">작성됨</span>
@@ -140,7 +145,10 @@
                                                                     <button th:onclick="|javascript:Defno(${Co.Rsino})|" class="btn btn-success" type="button">확정</button>
                                                                 </td>
                                                                 <td>
-                                                                    <button th:onclick="|javascript:DelCCgo(${Co.Rsino})|" class="btn btn-primary" type="button">예약취소</button>
+                                                                    <button th:onclick="|javascript:DelCCgo(${Co.Rsino})|" class="btn btn-primary" type="button">연동삭제</button>
+                                                                </td>
+                                                                <td>
+                                                                    <button th:onclick="|javascript:Delinfo(${Co.Rsino})|" class="btn btn-primary" type="button">예약삭제</button>
                                                                 </td>
                                                             </tr>
                                                             </tbody>
