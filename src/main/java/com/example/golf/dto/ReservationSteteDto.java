@@ -46,6 +46,7 @@ public class ReservationSteteDto {
                 .Rsi_ca_no(rsicano)
                 .Rsi_ui_no(rsiuino)
                 .Rsi_cc_no(rsiccno)
+                .Rsi_ca_id(rsicaid)
                 .Rsi_time(rsitime)
                 .Rsi_c_no(rsicno)
                 .Rsi_state(rsistate)

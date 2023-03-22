@@ -10,7 +10,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import javax.transaction.Transactional;
 
-public interface ReservationStateRepository extends JpaRepository<ReservationSteteEntity, String>, QuerydslPredicateExecutor<ReservationSteteEntity> {
+public interface ReservationStateRepository extends JpaRepository<ReservationSteteEntity, Long>, QuerydslPredicateExecutor<ReservationSteteEntity> {
 
 
     // 미확정 정보 가져오기

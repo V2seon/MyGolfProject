@@ -337,7 +337,7 @@ public class ReservationController {
                            @RequestParam(required = false, defaultValue = "", value = "cancel") String cancel){
         LocalDateTime localDateTime = LocalDateTime.now();
         String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        ReservationSteteDto reservationSteteDto = new ReservationSteteDto(null,0L,11L,9L,cname,id,date,course,0,sdf1,cancel,0);
+        ReservationSteteDto reservationSteteDto = new ReservationSteteDto(null,0L,11L,9L,cname,id,date,course,0,cancel,sdf1,0);
         reservationInfoService.StateSave(reservationSteteDto);
         return "redirect:";
     }
@@ -352,7 +352,7 @@ public class ReservationController {
     @PostMapping("/Delstate")
     public String Delstate(HttpServletRequest request, Model model,
                           @RequestParam(required = false, defaultValue = "", value = "seq") Long seq){
-        viewReservationStateInfoRepository.deleteById(seq);
+        reservationStateRepository.deleteById(seq);
         return "redirect:";
     }
 

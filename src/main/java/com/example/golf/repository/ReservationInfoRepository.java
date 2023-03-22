@@ -10,7 +10,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import java.util.List;
 
-public interface ReservationInfoRepository extends JpaRepository<ReservationInfoEntity, String>, QuerydslPredicateExecutor<ReservationInfoEntity> {
+public interface ReservationInfoRepository extends JpaRepository<ReservationInfoEntity, Long>, QuerydslPredicateExecutor<ReservationInfoEntity> {
 
 
     // 사용자 골프장 예약정보 가져오기

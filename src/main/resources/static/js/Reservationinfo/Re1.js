@@ -230,35 +230,35 @@ function Saveinfo(){
     var date = document.getElementById('date').value;
     var course = document.getElementById('course').value;
     var cancel = document.getElementById('time').value;
-if(cname.value === null || cname.value === "") {
+if(cname === null || cname === "") {
         swal({
             title: "골프장을 선택하세요.",
             icon: "info",
             button: "확인"
         });
         return false;
-}else if(id.value === null || id.value === "") {
+}else if(id === null || id === "") {
         swal({
             title: "아이디를 입력하세요.",
             icon: "info",
             button: "확인"
         });
         return false;
-}else if(date.value === null || date.value === ""){
+}else if(date === null || date === ""){
         swal({
             title: "예약티 시간를 입력하세요.",
             icon: "info",
             button: "확인"
         });
         return false;
-}else if(course.value === null || course.value === ""){
+}else if(course === null || course === ""){
         swal({
             title: "코스정보를 선택하세요.",
             icon: "info",
             button: "확인"
         });
         return false;
-}else if(cancel.value === null || cancel.value === ""){
+}else if(cancel === null || cancel === ""){
         swal({
             title: "취소가능일을 입력하세요.",
             icon: "info",
