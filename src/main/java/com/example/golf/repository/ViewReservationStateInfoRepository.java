@@ -19,8 +19,11 @@ public interface ViewReservationStateInfoRepository extends JpaRepository<ViewRe
     @Query(value = "SELECT * FROM view_reservation_state_info where RSI_STATE=1" , nativeQuery = true)
     Page<ViewReservationStateInfoEntity> findAll1(Pageable pageable);
 
-    @Query(value = "SELECT * FROM view_reservation_state_info where RSI_CC_NO = :Rsiccno", nativeQuery = true)
-    List<ViewReservationStateInfoEntity> findByRsiccno (String Rsiccno);
+    @Query(value = "SELECT * FROM view_reservation_state_info where RSI_CC_NO = :Rsiccno and RSI_STATE = 0", nativeQuery = true)
+    List<ViewReservationStateInfoEntity> findByRsiccno0 (String Rsiccno);
+
+    @Query(value = "SELECT * FROM view_reservation_state_info where RSI_CC_NO = :Rsiccno and RSI_STATE = 1", nativeQuery = true)
+    List<ViewReservationStateInfoEntity> findByRsiccno1 (String Rsiccno);
 
 
 }

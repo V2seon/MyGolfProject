@@ -20,10 +20,11 @@ public class ReservationSteteDto {
     private int rsistate;
     private String rsicanceldate;
     private String rsiidatetime;
+    private int rsibandstate;
 
     @Builder
     public ReservationSteteDto(Long Rsi_no, Long Rsi_ri_no, Long Rsi_ca_no, Long Rsi_ui_no, Long Rsi_cc_no, String Rsi_ca_id,
-                               String Rsi_time, int Rsi_c_no, int Rsi_state, String Rsi_canceldate, String Rsi_idatetime) {
+                               String Rsi_time, int Rsi_c_no, int Rsi_state, String Rsi_canceldate, String Rsi_idatetime, int Rsi_bandstate) {
         rsino = Rsi_no;
         rsirino = Rsi_ri_no;
         rsicano = Rsi_ca_no;
@@ -35,6 +36,7 @@ public class ReservationSteteDto {
         rsistate = Rsi_state;
         rsicanceldate = Rsi_canceldate;
         rsiidatetime = Rsi_idatetime;
+        rsibandstate = Rsi_bandstate;
     }
 
     public ReservationSteteEntity toEntity(){
@@ -49,6 +51,7 @@ public class ReservationSteteDto {
                 .Rsi_state(rsistate)
                 .Rsi_canceldate(rsicanceldate)
                 .Rsi_idatetime(rsiidatetime)
+                .Rsi_bandstate(rsibandstate)
                 .build();
         return entity;
     }

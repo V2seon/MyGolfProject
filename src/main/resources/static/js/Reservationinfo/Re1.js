@@ -218,3 +218,97 @@ function searching1(ppp){
     });
 
 }
+
+function infoin(){
+location.href="/RegisterInfo"
+}
+
+
+function Saveinfo(){
+    var cname = document.getElementById('ccname').value;
+    var id = document.getElementById('id').value;
+    var date = document.getElementById('date').value;
+    var course = document.getElementById('course').value;
+    var cancel = document.getElementById('time').value;
+if(cname.value === null || cname.value === "") {
+        swal({
+            title: "골프장을 선택하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}else if(id.value === null || id.value === "") {
+        swal({
+            title: "아이디를 입력하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}else if(date.value === null || date.value === ""){
+        swal({
+            title: "예약티 시간를 입력하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}else if(course.value === null || course.value === ""){
+        swal({
+            title: "코스정보를 선택하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}else if(cancel.value === null || cancel.value === ""){
+        swal({
+            title: "취소가능일을 입력하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}else{
+swal({
+        title: "예약 정보 등록",
+          text: "예약 정보 등록하시겠습니까?",
+          icon: "info",
+          closeOnClickOutside : false,
+          buttons : ["취소", "등록"]
+    }).then((result) => {
+        if(result){
+            const sendData = {
+                        'cname' : cname,
+                        'id' : id,
+                        'date' : date,
+                        'course' : course,
+                        'cancel' : cancel
+            }
+            $.ajax({
+                            url      : "/SaveInfo",
+                            data     : sendData,
+                            type     : "POST",
+                            success : function(result) {
+                                $('#load').hide();
+                                swal({
+                                        text: "등록완료.",
+                                        icon: "success",
+                                        closeOnClickOutside : false,
+                                        button: "확인"
+                                    }).then(function(){
+                                        location.href = "/Reservation1";
+                                    })
+                            },
+                            error:function(request,status,error){
+                                $('#load').hide();
+                                swal({
+                                    text: "서버에 문제가 발생했습니다.",
+                                    icon: "warning" //"info,success,warning,error" 중 택1
+                                });
+                            }
+                        });
+        }
+    });
+}
+}
+
+function info(){
+location.href="/Reservation1"
+}

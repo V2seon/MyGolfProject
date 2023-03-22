@@ -1,9 +1,6 @@
 package com.example.golf.service;
 
-import com.example.golf.dto.CountryAccountDto;
-import com.example.golf.dto.CountryClubDto;
-import com.example.golf.dto.CourseDto;
-import com.example.golf.dto.ReservationInfoDto;
+import com.example.golf.dto.*;
 import com.example.golf.entity.ViewReservationInfoEntity;
 import com.example.golf.predicate.ViewReservationinfoPredicate;
 import com.example.golf.repository.*;
@@ -23,10 +20,16 @@ public class ReservationInfoService {
     private CourseRepository courseRepository;
     private CountryAccountRepository countryAccountRepository;
     private ViewReservationInfoRepository viewReservationInfoRepository;
+    private ReservationStateRepository reservationStateRepository;
 
     @Transactional
     public Long insertData1(ReservationInfoDto golfDto){
         return reservationInfoRepository.save(golfDto.toEntity()).getRino();
+    }
+
+    @Transactional
+    public Long StateSave(ReservationSteteDto reservationSteteDto){
+        return reservationStateRepository.save(reservationSteteDto.toEntity()).getRsino();
     }
 
     @Transactional

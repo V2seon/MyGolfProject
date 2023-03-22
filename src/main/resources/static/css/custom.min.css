@@ -32,32 +32,62 @@
 	display: none;
 }
 
-.Ccbtn17{
+.Cc{
+color:white;
+border:none;
+border-radius:8px;
 width:155px;
 height:38px;
 }
 
-.Ccbtn39{
-width:155px;
-height:38px;
+.btn17{
+background-color:red;
 }
 
-.Ccbtn40{
-width:155px;
-height:38px;
+.btn39{
+background-color:orange;
 }
 
-.Ccbtn41{
-width:155px;
-height:38px;
+.btn40{
+background-color:yellow;
 }
 
-.Ccbtn42{
-width:155px;
-height:38px;
+.btn41{
+background-color:green;
 }
 
-.Ccbtn45{
-width:155px;
-height:38px;
+.btn42{
+background-color:blue;
+}
+
+.btn45{
+background-color:purple;
+}
+
+.Tt17{
+color:red;
+}
+
+.Tt39{
+color:orange;
+}
+
+.Tt40{
+color:yellow;
+}
+
+.Tt41{
+color:green;
+}
+
+.Tt42{
+color:blue;
+}
+
+.Tt45{
+color:purple;
+}
+
+.ctx{
+background-color:#964b00;
 }

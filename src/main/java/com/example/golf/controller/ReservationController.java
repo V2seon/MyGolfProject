@@ -2,12 +2,12 @@ package com.example.golf.controller;
 
 import com.example.golf.common.Pagination;
 import com.example.golf.common.SessionCheck;
+import com.example.golf.dto.ReservationSteteDto;
 import com.example.golf.entity.CountryClubEntity;
+import com.example.golf.entity.CourseEntity;
 import com.example.golf.entity.ViewReservationInfoEntity;
 import com.example.golf.entity.ViewReservationStateInfoEntity;
-import com.example.golf.repository.CountryClubRepository;
-import com.example.golf.repository.ViewReservationInfoRepository;
-import com.example.golf.repository.ViewReservationStateInfoRepository;
+import com.example.golf.repository.*;
 import com.example.golf.service.ReservationInfoService;
 import com.example.golf.service.ReservationStateService;
 import lombok.AllArgsConstructor;
@@ -29,6 +29,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -43,6 +47,8 @@ public class ReservationController {
     private CountryClubRepository countryClubRepository;
     private ViewReservationInfoRepository viewReservationInfoRepository;
     private ViewReservationStateInfoRepository viewReservationStateInfoRepository;
+    private CourseRepository courseRepository;
+    private ReservationStateRepository reservationStateRepository;
 
     @GetMapping("/Reservation")
     public String Reservation(Model model, HttpServletRequest request, Pageable pageable,
@@ -119,16 +125,26 @@ public class ReservationController {
             model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
             model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
 
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 년-월-일로만 Format되게 구현
+            LocalDate nowDate = LocalDate.now();
+            for(int j=0; j<s1.getContent().size(); j++){
+                LocalDate startDate = LocalDate.parse(s1.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
+                LocalDateTime date1 = startDate.atStartOfDay();
+                LocalDateTime date2 = nowDate.atStartOfDay();
+                Long betweenDays = (Long) Duration.between(date2,date1).toDays();
+                s1.getContent().get(j).setRsiuino(betweenDays);
+            }
+
             model.addAttribute("userlist", s1); //페이지 객체 리스트
             model.addAttribute("nowurl0","/Reservation");
 
             List<CountryClubEntity> s2 = countryClubRepository.findAll1();
-            List<ViewReservationStateInfoEntity> 어등 = viewReservationStateInfoRepository.findByRsiccno("어등산");
-            List<ViewReservationStateInfoEntity> 해피니스 = viewReservationStateInfoRepository.findByRsiccno("해피니스");
-            List<ViewReservationStateInfoEntity> 무안 = viewReservationStateInfoRepository.findByRsiccno("무안컨트리클럽");
-            List<ViewReservationStateInfoEntity> 아크로 = viewReservationStateInfoRepository.findByRsiccno("아크로컨트리클럽");
-            List<ViewReservationStateInfoEntity> 클린밸리 = viewReservationStateInfoRepository.findByRsiccno("무안클린밸리");
-            List<ViewReservationStateInfoEntity> 광주 = viewReservationStateInfoRepository.findByRsiccno("광주");
+            List<ViewReservationStateInfoEntity> 어등 = viewReservationStateInfoRepository.findByRsiccno0("어등산");
+            List<ViewReservationStateInfoEntity> 해피니스 = viewReservationStateInfoRepository.findByRsiccno0("해피니스");
+            List<ViewReservationStateInfoEntity> 무안 = viewReservationStateInfoRepository.findByRsiccno0("무안컨트리클럽");
+            List<ViewReservationStateInfoEntity> 아크로 = viewReservationStateInfoRepository.findByRsiccno0("아크로컨트리클럽");
+            List<ViewReservationStateInfoEntity> 클린밸리 = viewReservationStateInfoRepository.findByRsiccno0("무안클린밸리");
+            List<ViewReservationStateInfoEntity> 광주 = viewReservationStateInfoRepository.findByRsiccno0("광주컨트리클럽");
 
             for(int i=0; i<s2.size(); i++){
                 if(s2.get(i).getCcname().equals("어등산")){
@@ -141,7 +157,7 @@ public class ReservationController {
                     s2.get(i).setCctype(아크로.size());
                 }else if(s2.get(i).getCcname().equals("무안클린밸리")){
                     s2.get(i).setCctype(클린밸리.size());
-                }else if(s2.get(i).getCcname().equals("광주")){
+                }else if(s2.get(i).getCcname().equals("광주컨트리클럽")){
                     s2.get(i).setCctype(광주.size());
                 }
             }
@@ -175,6 +191,16 @@ public class ReservationController {
 
         //서비스 엔티티 추가후 주석 풀고 사용
         Page<ViewReservationStateInfoEntity> pageList = reservationStateService.seALLTable(selectKey, titleText, pageable);
+        LocalDate nowDate = LocalDate.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 년-월-일로만 Format되게 구현
+
+        for(int j=0; j<pageList.getContent().size(); j++){
+            LocalDate startDate = LocalDate.parse(pageList.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
+            LocalDateTime date1 = startDate.atStartOfDay();
+            LocalDateTime date2 = nowDate.atStartOfDay();
+            Long betweenDays = (Long) Duration.between(date2,date1).toDays();
+            pageList.getContent().get(j).setRsiuino(betweenDays);
+        }
 
         model.addAttribute("userlist", pageList); //페이지 객체 리스트
         model.addAttribute("nowurl0","/Reservation");
@@ -204,6 +230,41 @@ public class ReservationController {
             model.addAttribute("userlist", s1); //페이지 객체 리스트
             model.addAttribute("nowurl0","/Reservation");
 
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 년-월-일로만 Format되게 구현
+            LocalDate nowDate = LocalDate.now();
+            for(int j=0; j<s1.getContent().size(); j++){
+                LocalDate startDate = LocalDate.parse(s1.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
+                LocalDateTime date1 = startDate.atStartOfDay();
+                LocalDateTime date2 = nowDate.atStartOfDay();
+                Long betweenDays = (Long) Duration.between(date2,date1).toDays();
+                s1.getContent().get(j).setRsiuino(betweenDays);
+            }
+
+            List<CountryClubEntity> s2 = countryClubRepository.findAll1();
+            List<ViewReservationStateInfoEntity> 어등 = viewReservationStateInfoRepository.findByRsiccno1("어등산");
+            List<ViewReservationStateInfoEntity> 해피니스 = viewReservationStateInfoRepository.findByRsiccno1("해피니스");
+            List<ViewReservationStateInfoEntity> 무안 = viewReservationStateInfoRepository.findByRsiccno1("무안컨트리클럽");
+            List<ViewReservationStateInfoEntity> 아크로 = viewReservationStateInfoRepository.findByRsiccno1("아크로컨트리클럽");
+            List<ViewReservationStateInfoEntity> 클린밸리 = viewReservationStateInfoRepository.findByRsiccno1("무안클린밸리");
+            List<ViewReservationStateInfoEntity> 광주 = viewReservationStateInfoRepository.findByRsiccno1("광주컨트리클럽");
+
+            for(int i=0; i<s2.size(); i++){
+                if(s2.get(i).getCcname().equals("어등산")){
+                    s2.get(i).setCctype(어등.size());
+                }else if(s2.get(i).getCcname().equals("무안컨트리클럽")){
+                    s2.get(i).setCctype(무안.size());
+                }else if(s2.get(i).getCcname().equals("해피니스")){
+                    s2.get(i).setCctype(해피니스.size());
+                }else if(s2.get(i).getCcname().equals("아크로컨트리클럽")){
+                    s2.get(i).setCctype(아크로.size());
+                }else if(s2.get(i).getCcname().equals("무안클린밸리")){
+                    s2.get(i).setCctype(클린밸리.size());
+                }else if(s2.get(i).getCcname().equals("광주컨트리클럽")){
+                    s2.get(i).setCctype(광주.size());
+                }
+            }
+            model.addAttribute("country",s2);
+
             returnValue = "/Reservation/DefInfoList";
         }else{
             returnValue = "login";
@@ -232,10 +293,53 @@ public class ReservationController {
         //서비스 엔티티 추가후 주석 풀고 사용
         Page<ViewReservationStateInfoEntity> pageList = reservationStateService.seALLTable1(selectKey, titleText, pageable);
 
+        LocalDate nowDate = LocalDate.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 년-월-일로만 Format되게 구현
+
+        for(int j=0; j<pageList.getContent().size(); j++){
+            LocalDate startDate = LocalDate.parse(pageList.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
+            LocalDateTime date1 = startDate.atStartOfDay();
+            LocalDateTime date2 = nowDate.atStartOfDay();
+            Long betweenDays = (Long) Duration.between(date2,date1).toDays();
+            pageList.getContent().get(j).setRsiuino(betweenDays);
+        }
+
         model.addAttribute("userlist", pageList); //페이지 객체 리스트
         model.addAttribute("nowurl0","/Reservation");
 
         return "/Reservation/DefInfoList :: #intable";
+    }
+
+    @GetMapping("/RegisterInfo")
+    public String RegisterInfo(Model model, HttpServletRequest request, Pageable pageable){
+        String returnValue = "";
+        if(new SessionCheck().loginSessionCheck(request)){
+            HttpSession session = request.getSession();
+
+            List<CountryClubEntity> s2 = countryClubRepository.findAll1();
+            List<CourseEntity> s1 = courseRepository.findAll();
+            model.addAttribute("country",s2);
+            model.addAttribute("course",s1);
+            model.addAttribute("nowurl0","/Reservation");
+            returnValue = "/Reservation/RegisterInfo";
+        }else{
+            returnValue = "login";
+        }
+        return returnValue;
+    }
+
+    @PostMapping("/SaveInfo")
+    public String SaveInfo(HttpServletRequest request, Model model,
+                           @RequestParam(required = false, defaultValue = "", value = "cname") Long cname,
+                           @RequestParam(required = false, defaultValue = "", value = "id") String id,
+                           @RequestParam(required = false, defaultValue = "", value = "date") String date,
+                           @RequestParam(required = false, defaultValue = "", value = "course") int course,
+                           @RequestParam(required = false, defaultValue = "", value = "cancel") String cancel){
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        ReservationSteteDto reservationSteteDto = new ReservationSteteDto(null,0L,11L,9L,cname,id,date,course,0,sdf1,cancel,0);
+        reservationInfoService.StateSave(reservationSteteDto);
+        return "redirect:";
     }
 
     @PostMapping("/clearrs")

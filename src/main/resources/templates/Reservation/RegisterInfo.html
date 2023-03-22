@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Android Golf</title>
+
+    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!--    &lt;!&ndash; iCheck &ndash;&gt;-->
+    <!--    <link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">-->
+    <!--    &lt;!&ndash; bootstrap-wysiwyg &ndash;&gt;-->
+    <!--    <link href="/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">-->
+    <!--    &lt;!&ndash; Select2 &ndash;&gt;-->
+    <!--    <link href="/vendors/select2/dist/css/select2.min.css" rel="stylesheet">-->
+    <!--    &lt;!&ndash; Switchery &ndash;&gt;-->
+    <!--    <link href="/vendors/switchery/dist/switchery.min.css" rel="stylesheet">-->
+    <!--    &lt;!&ndash; starrr &ndash;&gt;-->
+    <!--    <link href="/vendors/starrr/dist/starrr.css" rel="stylesheet">-->
+    <!--    &lt;!&ndash; bootstrap-daterangepicker &ndash;&gt;-->
+    <!--    <link href="/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">-->
+
+    <!-- jQuery custom content scroller -->
+    <link href="/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet"/>
+
+    <!-- Custom Theme Style -->
+    <link href="/css/custom.min.css" rel="stylesheet">
+    <style>
+            th, td {
+              text-align: center;
+            }
+            #datatable{
+                width:1100px;
+            }
+
+    </style>
+
+
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div th:insert="nav/nav.html"></div>
+        </div>
+
+        <!-- top navigation -->
+        <div th:insert="nav/top.html"></div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main" style="min-height:1240px;">
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3>예약정보등록</h3>
+                    </div>
+                    <div class="title_right">
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 ">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>예약정보등록<small></small></h2>
+
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <br />
+                                <div id="demo-form2">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="ccname"> 이름
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 ">
+                                            <select id="ccname" class="form-control">
+                                                <option th:if="${country}!=null" th:each="Co : ${country}" th:value="${Co.ccno}" th:text="${Co.ccname}">어등산</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="id"> 아이디
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 ">
+                                            <input type="text" id="id" required="required" class="form-control  ">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="date"> 예약티시간
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 ">
+                                            <input type="text" id="date" required="required" class="form-control" placeholder="ex) 2023-03-30 08:00">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3 col-sm-3  label-align">코스정보
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 ">
+                                            <select id="course" class="form-control">
+                                                <option th:if="${course}!=null" th:each="Co : ${course}" th:value="${Co.cno}" th:text="${Co.cname}">어등산</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3 col-sm-3  label-align">취소가능일
+                                        </label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <input class="form-control" id="time" name="time" required='required' placeholder="ex) 2023-03-30">
+                                        </div>
+                                    </div>
+                                    <div class="ln_solid"></div>
+                                </div>
+                                <div class="item form-group">
+                                    <div class="offset-md-11">
+                                        <button onclick="info()" class="btn btn-primary" ><a>목록</a></button>
+                                        <button onclick="Saveinfo()" class="btn btn-primary" ><a>등록</a></button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<footer>
+    <div class="pull-right">
+    </div>
+    <div class="clearfix"></div>
+</footer>
+
+</div>
+</div>
+
+<script src="/vendors/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!-- FastClick -->
+<script src="/vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="/vendors/nprogress/nprogress.js"></script>
+<!-- Custom Theme Scripts -->
+<script src="/js/Reservationinfo/Re1.js"></script>
+
+<script src="/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+<!-- Custom Theme Scripts -->
+<script src="/js/custom.min.js"></script>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</body></html>
