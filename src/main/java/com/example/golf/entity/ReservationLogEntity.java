@@ -34,10 +34,10 @@ public class ReservationLogEntity {
 
     @Builder
     public ReservationLogEntity(Long Rl_no, Long Rl_ri_no, Long Rl_ui_no, String Rl_text, String Rl_idatetime) {
-        rlno = Rl_no;
-        rlrino = Rl_ri_no;
-        rluino = Rl_ui_no;
-        rltext = Rl_text;
-        rlidateitme = Rl_idatetime;
+        this.rlno = Rl_no;
+        this.rlrino = Rl_ri_no;
+        this.rluino = Rl_ui_no;
+        this.rltext = Rl_text;
+        this.rlidateitme = Rl_idatetime;
     }
 }

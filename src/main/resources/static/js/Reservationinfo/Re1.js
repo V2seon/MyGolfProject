@@ -38,6 +38,8 @@ function searching(){
 
 // 페이징
 function paging(pageValue){
+    var set = document.getElementById('set').innerText;
+    console.log(set);
     const myPageQuery = new URLSearchParams(location.search);
 
     console.log(pageValue);
@@ -53,7 +55,6 @@ function paging(pageValue){
     }
 
     // 대입 끝
-
     //url 주소 바꾸기
     const params = {
         page: pageValue,
@@ -66,7 +67,7 @@ function paging(pageValue){
     //url 주소 바꾸기 끝
 
 
-    var querydata = { "page" : pageValue, "selectKey":selectKey, "titleText":titleText};
+    var querydata = { "page" : pageValue, "selectKey":selectKey, "titleText":titleText, "set":set};
 
 
     $.ajax({
@@ -183,7 +184,7 @@ swal({
 }
 
 function searching1(ppp){
-    console.log(ppp.value)
+    var set = document.getElementById('set').innerText;
     var titleText = $('#titleText').val();
     var selectKey = $('#selectKey').val();
 
@@ -191,7 +192,6 @@ function searching1(ppp){
             titleText = "";
     }
 
-    console.log(titleText);
     const params = {
         page: 0,
         selectKey: "CC",
@@ -214,6 +214,7 @@ function searching1(ppp){
         data: querydata,
         type:"POST",
     }).done(function (fragment) {
+        $("#set").text(ppp.value);
         $("#intable").replaceWith(fragment);
     });
 

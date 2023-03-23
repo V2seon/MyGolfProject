@@ -5,7 +5,10 @@ function searching(){
     var titleText = $('#titleText').val();
     var selectKey = $('#selectKey').val();
 
-    console.log(titleText);
+    if(titleText == null){
+                titleText = "";
+    }
+
     const params = {
         page: 0,
         selectKey: selectKey,

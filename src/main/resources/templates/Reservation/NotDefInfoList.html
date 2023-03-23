@@ -128,8 +128,9 @@
                                                             <tbody>
                                                             <tr th:if="${userlist}!=null" th:each="Co : ${userlist}">
                                                                 <td th:if="${Co.Rsino}!= null"
-                                                                    th:text="${Co.Rsino}"></td>
-                                                                <td th:if="${Co.Rsiccno}!= null"
+                                                                    th:text="${Co.Rsino}"
+                                                                    th:classappend="${Co.Rsiuino < 4 ? 'ctx' : ''}"></td>
+                                                                <td th:if="${Co.Rsiccno}!= null" th:class="${Co.Rsiuino < 4 ? 'ctx' : ''}"
                                                                     th:text="${Co.Rsiccno}"  th:classappend="${(Co.Rsiccno =='어등산' ? 'Tt17': '') +
                                                                                                                 (Co.Rsiccno =='해피니스' ? 'Tt40': '')+
                                                                                                                 (Co.Rsiccno =='광주컨트리클럽' ? 'Tt39': '')+
@@ -137,27 +138,31 @@
                                                                                                                 (Co.Rsiccno =='아크로컨트리클럽' ? 'Tt42': '')+
                                                                                                                 (Co.Rsiccno =='무안클린밸리' ? 'Tt45': '')}"></td>
                                                                 <td th:if="${Co.Rsicno}!= null"
-                                                                    th:text="${Co.Rsicno}"></td>
+                                                                    th:text="${Co.Rsicno}"
+                                                                    th:classappend="${Co.Rsiuino < 4 ? 'ctx' : ''}"></td>
                                                                 <td th:if="${Co.Rsitime}!= null"
-                                                                    th:text="${#strings.substring(Co.Rsitime,0,10)}"></td>
+                                                                    th:text="${#strings.substring(Co.Rsitime,0,10)}"
+                                                                    th:classappend="${Co.Rsiuino < 4 ? 'ctx' : ''}"></td>
                                                                 <td th:if="${Co.Rsicanceldate}!= null"
                                                                     th:text="${Co.Rsicanceldate}"
-                                                                    th:classappend="${Co.Rsiuino <= 3 ? 'ctx' : ''}"></td>
+                                                                    th:classappend="${Co.Rsiuino < 4 ? 'ctx' : ''}"></td>
                                                                 <td th:if="${Co.Rsitime}!= null"
-                                                                    th:text="${#strings.substring(Co.Rsitime,10,16)}"></td>
+                                                                    th:text="${#strings.substring(Co.Rsitime,10,16)}"
+                                                                    th:classappend="${Co.Rsiuino < 4 ? 'ctx' : ''}"></td>
                                                                 <td th:if="${Co.Rsicaid}!= null"
-                                                                    th:text="${Co.Rsicaid}"></td>
-                                                                <td>
+                                                                    th:text="${Co.Rsicaid}"
+                                                                    th:classappend="${Co.Rsiuino < 4 ? 'ctx' : ''}"></td>
+                                                                <td th:classappend="${Co.Rsiuino < 4 ? 'ctx' : ''}">
                                                                     <button th:if="${Co.Rsibandstate} == 0" th:onclick="|javascript:band(${Co.Rsino})|" class="btn btn-success" type="button">작성</button>
                                                                     <span th:if="${Co.Rsibandstate} == 1">작성됨</span>
                                                                 </td>
-                                                                <td>
+                                                                <td th:classappend="${Co.Rsiuino < 4 ? 'ctx' : ''}">
                                                                     <button th:onclick="|javascript:Defno(${Co.Rsino})|" class="btn btn-success" type="button">확정</button>
                                                                 </td>
-                                                                <td>
+                                                                <td th:classappend="${Co.Rsiuino < 4 ? 'ctx' : ''}">
                                                                     <button th:onclick="|javascript:DelCCgo(${Co.Rsino})|" class="btn btn-primary" type="button">연동삭제</button>
                                                                 </td>
-                                                                <td>
+                                                                <td th:classappend="${Co.Rsiuino < 4 ? 'ctx' : ''}">
                                                                     <button th:onclick="|javascript:Delinfo(${Co.Rsino})|" class="btn btn-primary" type="button">예약삭제</button>
                                                                 </td>
                                                             </tr>
@@ -219,6 +224,7 @@
         </div>
     </div>
 </div>
+<span hidden id="set">0</span>
 </div>
 
 <footer>

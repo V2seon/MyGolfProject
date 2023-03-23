@@ -36,7 +36,7 @@ public class LogController {
         if(new SessionCheck().loginSessionCheck(request)){
             HttpSession session = request.getSession();
 
-            pageable = PageRequest.of(page, 10, Sort.by("RL_NO").descending());
+            pageable = PageRequest.of(page, 10, Sort.by("Rl_no").descending());
             Page<ReservationLogEntity> s1 = logService.selectALLTable0(pageable);
 
             Pagination pagination = new Pagination(s1.getTotalPages(), page);
@@ -65,7 +65,7 @@ public class LogController {
                                   @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText){
         HttpSession session = request.getSession();
 
-        Pageable pageable = PageRequest.of(page, 10, Sort.by("RL_NO").descending());
+        Pageable pageable = PageRequest.of(page, 10, Sort.by("rlno").descending());
         int totalPages = logService.selectALLTable(selectKey, titleText, pageable).getTotalPages();
         Pagination pagination = new Pagination(totalPages, page);
 

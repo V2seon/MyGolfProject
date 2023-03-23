@@ -175,11 +175,20 @@ public class ReservationController {
     public String search_Reservation1(Model model, HttpServletRequest request,
                         @RequestParam(required = false ,defaultValue = "0" , value="page") int page,
                         @RequestParam(required = false ,defaultValue = "" , value="selectKey") String selectKey,
-                        @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText){
+                        @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText,
+                        @RequestParam(required = false ,defaultValue = "0" , value="set") String set){
         HttpSession session = request.getSession();
-
+        System.out.println(selectKey);
+        System.out.println(titleText);
+        System.out.println(set);
         Pageable pageable = PageRequest.of(page, 10);
-        int totalPages = reservationStateService.seALLTable(selectKey, titleText, pageable).getTotalPages();
+        int totalPages = 0;
+        if(!set.equals("0")){
+            System.out.println("여기" + set);
+            totalPages = reservationStateService.seALLTable("CC", set, pageable).getTotalPages();
+        }else {
+            totalPages = reservationStateService.seALLTable(selectKey, titleText, pageable).getTotalPages();
+        }
         Pagination pagination = new Pagination(totalPages, page);
 
         model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
@@ -190,19 +199,34 @@ public class ReservationController {
         model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
 
         //서비스 엔티티 추가후 주석 풀고 사용
-        Page<ViewReservationStateInfoEntity> pageList = reservationStateService.seALLTable(selectKey, titleText, pageable);
         LocalDate nowDate = LocalDate.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 년-월-일로만 Format되게 구현
 
-        for(int j=0; j<pageList.getContent().size(); j++){
-            LocalDate startDate = LocalDate.parse(pageList.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
-            LocalDateTime date1 = startDate.atStartOfDay();
-            LocalDateTime date2 = nowDate.atStartOfDay();
-            Long betweenDays = (Long) Duration.between(date2,date1).toDays();
-            pageList.getContent().get(j).setRsiuino(betweenDays);
+        if(!set.equals("0")){
+            Page<ViewReservationStateInfoEntity> pageList = reservationStateService.seALLTable("CC", set, pageable);
+            for(int j=0; j<pageList.getContent().size(); j++){
+                LocalDate startDate = LocalDate.parse(pageList.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
+                LocalDateTime date1 = startDate.atStartOfDay();
+                LocalDateTime date2 = nowDate.atStartOfDay();
+                Long betweenDays = (Long) Duration.between(date2,date1).toDays();
+                pageList.getContent().get(j).setRsiuino(betweenDays);
+            }
+
+            model.addAttribute("userlist", pageList); //페이지 객체 리스트
+        }else {
+            Page<ViewReservationStateInfoEntity> pageList = reservationStateService.seALLTable(selectKey, titleText, pageable);
+            for(int j=0; j<pageList.getContent().size(); j++){
+                LocalDate startDate = LocalDate.parse(pageList.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
+                LocalDateTime date1 = startDate.atStartOfDay();
+                LocalDateTime date2 = nowDate.atStartOfDay();
+                Long betweenDays = (Long) Duration.between(date2,date1).toDays();
+                pageList.getContent().get(j).setRsiuino(betweenDays);
+            }
+
+            model.addAttribute("userlist", pageList); //페이지 객체 리스트
         }
 
-        model.addAttribute("userlist", pageList); //페이지 객체 리스트
+
         model.addAttribute("nowurl0","/Reservation");
 
         return "/Reservation/NotDefInfoList :: #intable";
@@ -276,11 +300,18 @@ public class ReservationController {
     public String search_Reservation3(Model model, HttpServletRequest request,
                         @RequestParam(required = false ,defaultValue = "0" , value="page") int page,
                         @RequestParam(required = false ,defaultValue = "" , value="selectKey") String selectKey,
-                        @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText){
+                        @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText,
+                        @RequestParam(required = false ,defaultValue = "0" , value="set") String set){
         HttpSession session = request.getSession();
 
         Pageable pageable = PageRequest.of(page, 10);
-        int totalPages = reservationStateService.seALLTable1(selectKey, titleText, pageable).getTotalPages();
+        int totalPages = 0;
+        if(!set.equals("0")){
+            System.out.println("여기" + set);
+            totalPages = reservationStateService.seALLTable1("CC", set, pageable).getTotalPages();
+        }else {
+            totalPages = reservationStateService.seALLTable1(selectKey, titleText, pageable).getTotalPages();
+        }
         Pagination pagination = new Pagination(totalPages, page);
 
         model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
@@ -290,21 +321,33 @@ public class ReservationController {
         model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
         model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
 
-        //서비스 엔티티 추가후 주석 풀고 사용
-        Page<ViewReservationStateInfoEntity> pageList = reservationStateService.seALLTable1(selectKey, titleText, pageable);
-
         LocalDate nowDate = LocalDate.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 년-월-일로만 Format되게 구현
 
-        for(int j=0; j<pageList.getContent().size(); j++){
-            LocalDate startDate = LocalDate.parse(pageList.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
-            LocalDateTime date1 = startDate.atStartOfDay();
-            LocalDateTime date2 = nowDate.atStartOfDay();
-            Long betweenDays = (Long) Duration.between(date2,date1).toDays();
-            pageList.getContent().get(j).setRsiuino(betweenDays);
+        if(!set.equals("0")){
+            Page<ViewReservationStateInfoEntity> pageList = reservationStateService.seALLTable1("CC", set, pageable);
+            for(int j=0; j<pageList.getContent().size(); j++){
+                LocalDate startDate = LocalDate.parse(pageList.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
+                LocalDateTime date1 = startDate.atStartOfDay();
+                LocalDateTime date2 = nowDate.atStartOfDay();
+                Long betweenDays = (Long) Duration.between(date2,date1).toDays();
+                pageList.getContent().get(j).setRsiuino(betweenDays);
+            }
+
+            model.addAttribute("userlist", pageList); //페이지 객체 리스트
+        }else {
+            Page<ViewReservationStateInfoEntity> pageList = reservationStateService.seALLTable1(selectKey, titleText, pageable);
+            for(int j=0; j<pageList.getContent().size(); j++){
+                LocalDate startDate = LocalDate.parse(pageList.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
+                LocalDateTime date1 = startDate.atStartOfDay();
+                LocalDateTime date2 = nowDate.atStartOfDay();
+                Long betweenDays = (Long) Duration.between(date2,date1).toDays();
+                pageList.getContent().get(j).setRsiuino(betweenDays);
+            }
+
+            model.addAttribute("userlist", pageList); //페이지 객체 리스트
         }
 
-        model.addAttribute("userlist", pageList); //페이지 객체 리스트
         model.addAttribute("nowurl0","/Reservation");
 
         return "/Reservation/DefInfoList :: #intable";
@@ -335,9 +378,11 @@ public class ReservationController {
                            @RequestParam(required = false, defaultValue = "", value = "date") String date,
                            @RequestParam(required = false, defaultValue = "", value = "course") int course,
                            @RequestParam(required = false, defaultValue = "", value = "cancel") String cancel){
+        LocalDateTime localDateTime1 = LocalDateTime.parse(date);
         LocalDateTime localDateTime = LocalDateTime.now();
         String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        ReservationSteteDto reservationSteteDto = new ReservationSteteDto(null,0L,11L,9L,cname,id,date,course,0,cancel,sdf1,0);
+        String sdf2 = localDateTime1.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        ReservationSteteDto reservationSteteDto = new ReservationSteteDto(null,0L,11L,9L,cname,id,sdf2,course,0,cancel,sdf1,0);
         reservationInfoService.StateSave(reservationSteteDto);
         return "redirect:";
     }
