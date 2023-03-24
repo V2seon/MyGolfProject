@@ -81,7 +81,7 @@
                                         <div class="title_right">
                                             <div class="offset-md-9 form-group top_search">
                                                 <div class="input-group" style="width:2">
-                                                    <div style="width:85%; padding-left:10px;">
+                                                    <div style="width:75%; padding-left:10px;">
                                                         <button th:if="${country}!=null" th:each="Co : ${country}"
                                                                 onclick="searching1(this)"
                                                                 th:classappend="'btn' + ${Co.Ccno}" class="Cc"
@@ -122,7 +122,7 @@
                                                                 <th>밴드 글작성</th>
                                                                 <th>확정</th>
                                                                 <th>연동삭제</th>
-                                                                <th>삭제</th>
+                                                                <th>DB삭제</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
@@ -163,7 +163,7 @@
                                                                     <button th:onclick="|javascript:DelCCgo(${Co.Rsino})|" class="btn btn-primary" type="button">연동삭제</button>
                                                                 </td>
                                                                 <td th:classappend="${Co.Rsiuino < 4 ? 'ctx' : ''}">
-                                                                    <button th:onclick="|javascript:Delinfo(${Co.Rsino})|" class="btn btn-primary" type="button">예약삭제</button>
+                                                                    <button th:onclick="|javascript:Delinfo(${Co.Rsino})|" class="btn btn-primary" type="button">DB삭제</button>
                                                                 </td>
                                                             </tr>
                                                             </tbody>

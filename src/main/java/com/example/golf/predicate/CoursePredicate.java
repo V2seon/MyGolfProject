@@ -31,8 +31,7 @@ public class CoursePredicate {
             catch (Exception e){
                 builder.and(
                         (qCourseEntity.cccname.contains(titleText)).or
-                                (qCourseEntity.cname.contains(titleText)).or
-                                (qCourseEntity.cno.eq(Long.valueOf(titleText))));
+                                (qCourseEntity.cname.contains(titleText)));
             }
 
         }

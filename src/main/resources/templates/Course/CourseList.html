@@ -88,11 +88,11 @@
                                                         <!--                                                                        <option value="등록일">등록일</option>-->
                                                         <!--                                                                        <option value="수정일">수정일</option>-->
                                                     </select>
-                                                    <input type="text" id="titleText" class="form-control" placeholder="Search for...">
+                                                    <input type="text" id="titleText" class="form-control" placeholder="Search for..." onkeyup="enterkey()">
                                                     <span class="input-group-btn">
                                                         <button onclick="searching()" class="btn btn-default==" type="button">검색</button>
                                                     </span>
-                                                    <button onclick="inCC()" class="btn btn-primary" type="button">등록</button>
+                                                    <button onclick="inCourse()" class="btn btn-primary" type="button">등록</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -108,7 +108,6 @@
                                                             <th>No</th>
                                                             <th>CC</th>
                                                             <th>코스 이름</th>
-                                                            <th>할당 번호</th>
                                                             <th>수정</th>
                                                             <th>삭제</th>
                                                         </tr>
@@ -121,8 +120,8 @@
                                                                 th:text="${Co.Cccname}"></td>
                                                             <td th:if="${Co.Cname}!= null"
                                                                 th:text="${Co.Cname}"></td>
-                                                            <td th:if="${Co.Cnumber}!= null"
-                                                                th:text="${Co.Cnumber}"></td>
+<!--                                                            <td th:if="${Co.Cnumber}!= null"-->
+<!--                                                                th:text="${Co.Cnumber}"></td>-->
                                                             <td>
                                                                 <button th:onclick="|javascript:ModifyCgo(${Co.Cno})|" class="btn btn-primary" type="button">수정</button>
                                                             </td>
