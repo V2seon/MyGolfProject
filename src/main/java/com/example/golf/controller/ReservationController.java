@@ -3,10 +3,7 @@ package com.example.golf.controller;
 import com.example.golf.common.Pagination;
 import com.example.golf.common.SessionCheck;
 import com.example.golf.dto.ReservationSteteDto;
-import com.example.golf.entity.CountryClubEntity;
-import com.example.golf.entity.CourseEntity;
-import com.example.golf.entity.ViewReservationInfoEntity;
-import com.example.golf.entity.ViewReservationStateInfoEntity;
+import com.example.golf.entity.*;
 import com.example.golf.repository.*;
 import com.example.golf.service.ReservationInfoService;
 import com.example.golf.service.ReservationStateService;
@@ -33,7 +30,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -517,10 +513,10 @@ public class ReservationController {
     public Object golfpt(HttpServletRequest request, Model model,
                          @RequestParam(required = false, defaultValue = "", value = "seq") Long seq){
         HttpSession session = request.getSession();
-        Long s1 = bgenRepository.findByBgenrsino(seq);
+        List<BgenEntity> s1 = bgenRepository.findByBgenrsino(seq);
         System.out.println(s1);
         HashMap<String, List> msg = new HashMap<String, List>();
-        msg.put("count", Collections.singletonList(s1));
+        msg.put("count", s1);
         return msg;
     }
 

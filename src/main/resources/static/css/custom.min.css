@@ -92,7 +92,7 @@ border:2px solid red;
     margin:auto; /* 15% from the top and centered */
     padding: 20px;
     width: 300px; /* Could be more or less, depending on screen size */
-    height : 270px;
+    height : auto;
     margin-top:12%;
     border: 1px solid #E0E0E0;
     border-radius: 8px;
@@ -114,14 +114,14 @@ box-shadow: inset 0px 0px 5px white;
 }
 
 .option{
-background-color: #007bff;
-height:137px;
-display: flex;
-justify-content: center;
-align-items: center;
-font-size: 50px;
+text-align:center;
+font-size: 20px;
+width: 100%;
 }
 
 .pop_bt:hover{
 cursor:pointer;
+}
+.nickid td{
+border: 1px solid #dee2e6
 }

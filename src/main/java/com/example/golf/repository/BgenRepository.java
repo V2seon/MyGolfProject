@@ -5,9 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
+import java.util.List;
+
 public interface BgenRepository extends JpaRepository<BgenEntity,Long>, QuerydslPredicateExecutor<BgenEntity> {
 
-    @Query(value = "SELECT COUNT(*) FROM band_golf_enter_nicknames WHERE BGEN_RSI_NO =:RSI_NO", nativeQuery = true)
-    Long findByBgenrsino(Long RSI_NO);
+    @Query(value = "SELECT * FROM band_golf_enter_nicknames WHERE BGEN_RSI_NO =:RSI_NO", nativeQuery = true)
+    List<BgenEntity> findByBgenrsino(Long RSI_NO);
 }
 

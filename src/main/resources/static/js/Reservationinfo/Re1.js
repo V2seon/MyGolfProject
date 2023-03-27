@@ -362,7 +362,11 @@ function view(seq) {
                 success : function(result) {
                     $('#load').hide();
                     $('#myModal3').show();
-                    $("#golfptc").text(result.count + " 명");
+                    for(var i=0; i<result.count.length; i++){
+                        $("#golfptc").append(
+                            "<tr class='nickid'><td>"+result.count[i].bgennickname+"</td></tr>"
+                        )
+                    }
                 },
                 error:function(request,status,error){
                     $('#load').hide();
@@ -378,4 +382,5 @@ function view(seq) {
 //팝업 Close 기능
 function close_pop3(flag) {
      $('#myModal3').hide();
+     $('tr.nickid').remove();
 };

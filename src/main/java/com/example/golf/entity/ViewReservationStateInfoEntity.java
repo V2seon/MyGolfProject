@@ -46,9 +46,13 @@ public class ViewReservationStateInfoEntity {
     @Column(name = "RSI_BAND_STATE")
     private int rsibandstate;
 
+    @Column(name = "BAND_NICKNAME_COUNT")
+    private Long bandnicknamecount;
+
     @Builder
     public ViewReservationStateInfoEntity(Long Rsi_no, Long Rsi_ca_no, Long Rsi_ui_no, String Rsi_cc_no, String Rsi_ca_id,
-                                     String Rsi_time, String Rsi_c_no, int Rsi_state, String Rsi_canceldate, String Rsi_idatetime, int Rsi_band_state) {
+                                     String Rsi_time, String Rsi_c_no, int Rsi_state, String Rsi_canceldate, String Rsi_idatetime,
+                                          int Rsi_band_state, Long Band_nickname_count) {
         rsino = Rsi_no;
         rsicano = Rsi_ca_no;
         rsiuino = Rsi_ui_no;
@@ -60,6 +64,7 @@ public class ViewReservationStateInfoEntity {
         rsicanceldate = Rsi_canceldate;
         rsiidatetime = Rsi_idatetime;
         rsibandstate = Rsi_band_state;
+        bandnicknamecount = Band_nickname_count;
     }
 
 }
