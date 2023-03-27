@@ -220,6 +220,43 @@ function searching1(ppp){
 
 }
 
+function searchingall(){
+
+    var titleText = $('#titleText').val();
+    var selectKey = $('#selectKey').val();
+
+    if(titleText == null){
+            titleText = "";
+    }
+
+    console.log(titleText);
+    const params = {
+        page: 0,
+        selectKey: selectKey,
+        titleText: ""
+    }
+
+    const queryString = new URLSearchParams(params).toString();
+
+    const replaceUri = location.pathname + '?' + queryString;
+
+    history.pushState(null, '', replaceUri);
+
+    //값 가져오기 (페이지네이션)
+    const myPageQuery = new URLSearchParams(location.search);
+
+    var querydata = { "page" : myPageQuery.get('page'), "selectKey":myPageQuery.get('selectKey'),"titleText":myPageQuery.get('titleText')};
+
+    $.ajax({
+        url: "/search_Reservation1",
+        data: querydata,
+        type:"POST",
+    }).done(function (fragment) {
+        $("#intable").replaceWith(fragment);
+    });
+
+}
+
 function infoin(){
 location.href="/RegisterInfo"
 }
@@ -313,3 +350,32 @@ swal({
 function info(){
 location.href="/Reservation1"
 }
+
+function view(seq) {
+    const sendData = {
+                        'seq' : seq
+                }
+    $.ajax({
+                url      : "/golfpt",
+                data     : sendData,
+                type     : "POST",
+                success : function(result) {
+                    $('#load').hide();
+                    $('#myModal3').show();
+                    $("#golfptc").text(result.count + " 명");
+                },
+                error:function(request,status,error){
+                    $('#load').hide();
+                    swal({
+                        text: "서버에 문제가 발생했습니다.",
+                        icon: "warning" //"info,success,warning,error" 중 택1
+                    });
+                }
+            });
+
+
+};
+//팝업 Close 기능
+function close_pop3(flag) {
+     $('#myModal3').hide();
+};

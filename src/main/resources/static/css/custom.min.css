@@ -40,28 +40,8 @@ width:155px;
 height:38px;
 }
 
-.btn17{
-background-color:red;
-}
-
-.btn40{
-background-color:orange;
-}
-
-.btn41{
-background-color:yellow;
-}
-
-.btn42{
+.ccbtn{
 background-color:green;
-}
-
-.btn45{
-background-color:blue;
-}
-
-.btn46{
-background-color:purple;
 }
 
 .Tt17{
@@ -89,5 +69,59 @@ color:purple;
 }
 
 .ctx{
-background-color:#964b00;
+border:2px solid red;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height:100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    overflow-y:auto;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin:auto; /* 15% from the top and centered */
+    padding: 20px;
+    width: 300px; /* Could be more or less, depending on screen size */
+    height : 270px;
+    margin-top:12%;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+}
+
+.modal-content::-webkit-scrollbar {
+width: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+background-color: #F2F2F2;
+border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+background-color: #FFFFFF;
+border-radius: 10px;
+box-shadow: inset 0px 0px 5px white;
+}
+
+.option{
+background-color: #007bff;
+height:137px;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 50px;
+}
+
+.pop_bt:hover{
+cursor:pointer;
 }

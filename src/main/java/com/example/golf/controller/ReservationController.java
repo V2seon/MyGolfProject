@@ -33,6 +33,8 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -49,6 +51,7 @@ public class ReservationController {
     private ViewReservationStateInfoRepository viewReservationStateInfoRepository;
     private CourseRepository courseRepository;
     private ReservationStateRepository reservationStateRepository;
+    private BgenRepository bgenRepository;
 
     @GetMapping("/Reservation")
     public String Reservation(Model model, HttpServletRequest request, Pageable pageable,
@@ -508,6 +511,19 @@ public class ReservationController {
         }
         return "redirect::";
     }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/golfpt")
+    public Object golfpt(HttpServletRequest request, Model model,
+                         @RequestParam(required = false, defaultValue = "", value = "seq") Long seq){
+        HttpSession session = request.getSession();
+        Long s1 = bgenRepository.findByBgenrsino(seq);
+        System.out.println(s1);
+        HashMap<String, List> msg = new HashMap<String, List>();
+        msg.put("count", Collections.singletonList(s1));
+        return msg;
+    }
+
 
 
 
