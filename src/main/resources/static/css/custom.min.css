@@ -119,9 +119,10 @@ font-size: 20px;
 width: 100%;
 }
 
-.pop_bt:hover{
+#pop_bt:hover{
 cursor:pointer;
 }
+
 .nickid td{
 border: 1px solid #dee2e6
 }

@@ -177,13 +177,9 @@ public class ReservationController {
                         @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText,
                         @RequestParam(required = false ,defaultValue = "0" , value="set") String set){
         HttpSession session = request.getSession();
-        System.out.println(selectKey);
-        System.out.println(titleText);
-        System.out.println(set);
         Pageable pageable = PageRequest.of(page, 10);
         int totalPages = 0;
         if(!set.equals("0")){
-            System.out.println("여기" + set);
             totalPages = reservationStateService.seALLTable("CC", set, pageable).getTotalPages();
         }else {
             totalPages = reservationStateService.seALLTable(selectKey, titleText, pageable).getTotalPages();
@@ -306,7 +302,6 @@ public class ReservationController {
         Pageable pageable = PageRequest.of(page, 10);
         int totalPages = 0;
         if(!set.equals("0")){
-            System.out.println("여기" + set);
             totalPages = reservationStateService.seALLTable1("CC", set, pageable).getTotalPages();
         }else {
             totalPages = reservationStateService.seALLTable1(selectKey, titleText, pageable).getTotalPages();
@@ -514,7 +509,6 @@ public class ReservationController {
                          @RequestParam(required = false, defaultValue = "", value = "seq") Long seq){
         HttpSession session = request.getSession();
         List<BgenEntity> s1 = bgenRepository.findByBgenrsino(seq);
-        System.out.println(s1);
         HashMap<String, List> msg = new HashMap<String, List>();
         msg.put("count", s1);
         return msg;
