@@ -80,26 +80,30 @@
                                     <div>
                                         <div class="title_right">
                                             <div class="offset-md-9 form-group top_search">
-                                                <div class="input-group" style="width:2">
-                                                    <div style="width:75%; padding-left:10px;">
+                                                <div class="input-group">
+                                                    <div style="width:100%; padding-left:10px;">
                                                         <button class="Cc ccbtn" onclick="searchingall()">전체</button>
                                                         <button th:if="${country}!=null" th:each="Co : ${country}"
                                                                 onclick="searching1(this)" class="Cc ccbtn"
                                                                 th:value="${Co.Ccname}" th:text="${Co.Ccname} +' : '+ ${Co.Cctype} +'개'">
                                                         </button>
                                                     </div>
-                                                    <select class="form-control" id="selectKey" style="margin-left:10px;">
-                                                        <option value="전체">전체</option>
-                                                        <option value="No">No</option>
-                                                        <option value="아이디">아이디</option>
-                                                        <option value="CC">CC</option>
-                                                        <option value="코스정보">코스정보</option>
-                                                    </select>
-                                                    <input id="titleText" type="text" class="form-control" placeholder="Search for...">
-                                                    <span class="input-group-btn">
+                                                </div>
+                                                <div class="pull-right">
+                                                    <div class="input-group">
+                                                        <select class="form-control" id="selectKey" style="margin-left:10px;">
+                                                            <option value="전체">전체</option>
+                                                            <option value="No">No</option>
+                                                            <option value="아이디">아이디</option>
+                                                            <option value="CC">CC</option>
+                                                            <option value="코스정보">코스정보</option>
+                                                        </select>
+                                                        <input id="titleText" type="text" class="form-control" placeholder="Search for...">
+                                                        <span class="input-group-btn">
                                                         <button onclick="searching()" class="btn btn-default==" type="button">검색</button>
                                                     </span>
-                                                    <button onclick="infoin()" class="btn btn-primary" type="button">등록</button>
+                                                        <button onclick="infoin()" class="btn btn-primary" type="button">등록</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -144,8 +148,13 @@
                                                                 <td th:if="${Co.Rsitime}!= null"
                                                                     th:text="${#strings.substring(Co.Rsitime,0,10)}">
                                                                 </td>
-                                                                <td th:if="${Co.Rsicanceldate}!= null"
-                                                                    th:text="${Co.Rsicanceldate}">
+                                                                <td th:if="${Co.Rsicanceldate}!= null">
+                                                                    <span th:text="${Co.Rsicanceldate}"></span>
+                                                                    <br th:if="${Co.Rsiuino < 4}">
+                                                                    <span th:if="${Co.Rsiuino == -3}">취소일 +3일</span>
+                                                                    <span th:if="${Co.Rsiuino == -2}">취소일 +2일</span>
+                                                                    <span th:if="${Co.Rsiuino == -1}">취소일 +1일</span>
+                                                                    <span th:if="${Co.Rsiuino == 0}">취소일</span>
                                                                 </td>
                                                                 <td th:if="${Co.Rsitime}!= null"
                                                                     th:text="${#strings.substring(Co.Rsitime,10,16)}">
