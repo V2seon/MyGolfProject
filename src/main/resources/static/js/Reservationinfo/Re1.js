@@ -252,6 +252,7 @@ function searchingall(){
         data: querydata,
         type:"POST",
     }).done(function (fragment) {
+        $("#set").text("0");
         $("#intable").replaceWith(fragment);
     });
 
