@@ -72,7 +72,6 @@
                         <div class="x_panel">
                             <div class="x_title">
                                 <h2>예약정보등록<small></small></h2>
-
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
@@ -82,7 +81,7 @@
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="ccname"> 이름
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <select id="ccname" class="form-control">
+                                            <select id="ccname" class="form-control" onchange="chCC()">
                                                 <option th:if="${country}!=null" th:each="Co : ${country}" th:value="${Co.ccno}" th:text="${Co.ccname}">어등산</option>
                                             </select>
                                         </div>
@@ -106,7 +105,7 @@
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
                                             <select id="course" class="form-control">
-                                                <option th:if="${course}!=null" th:each="Co : ${course}" th:value="${Co.cno}" th:text="${Co.cname}">어등산</option>
+                                                <option class="chcourse" th:if="${course}!=null" th:each="Co : ${course}" th:value="${Co.cno}" th:text="${Co.cname}"></option>
                                             </select>
                                         </div>
                                     </div>

@@ -354,8 +354,9 @@ public class ReservationController {
             HttpSession session = request.getSession();
 
             List<CountryClubEntity> s2 = countryClubRepository.findAll1();
-            List<CourseEntity> s1 = courseRepository.findAll();
+//            List<CourseEntity> s1 = courseRepository.findAll();
             model.addAttribute("country",s2);
+            List<CourseEntity> s1 = courseRepository.findAll1(17L);
             model.addAttribute("course",s1);
             model.addAttribute("nowurl0","/Reservation");
             returnValue = "/Reservation/RegisterInfo";
@@ -363,6 +364,17 @@ public class ReservationController {
             returnValue = "login";
         }
         return returnValue;
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/chCC")
+    public Object chCC(HttpServletRequest request, Model model,
+                         @RequestParam(required = false, defaultValue = "", value = "seq") Long seq){
+        HttpSession session = request.getSession();
+        List<CourseEntity> s1 = courseRepository.findAll1(seq);
+        HashMap<String, List> msg = new HashMap<String, List>();
+        msg.put("course", s1);
+        return msg;
     }
 
     @PostMapping("/SaveInfo")

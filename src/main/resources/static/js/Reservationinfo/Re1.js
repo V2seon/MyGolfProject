@@ -348,6 +348,35 @@ swal({
 }
 }
 
+function chCC(){
+    $('option.chcourse').remove();
+    var cname = document.getElementById('ccname').value;
+    const sendData = {
+                        'seq' : cname
+                    }
+        $.ajax({
+                    url      : "/chCC",
+                    data     : sendData,
+                    type     : "POST",
+                    success : function(result) {
+                        $('#load').hide();
+//                        $('#myModal3').show();
+                        for(var i=0; i<result.course.length; i++){
+                            $("#course").append(
+                                "<option class='chcourse' value='"+result.course[i].cno+"'>"+result.course[i].cname+"</option>"
+                            )
+                        }
+                    },
+                    error:function(request,status,error){
+                        $('#load').hide();
+                        swal({
+                            text: "서버에 문제가 발생했습니다.",
+                            icon: "warning" //"info,success,warning,error" 중 택1
+                        });
+                    }
+                });
+}
+
 function info(){
 location.href="/Reservation1"
 }
