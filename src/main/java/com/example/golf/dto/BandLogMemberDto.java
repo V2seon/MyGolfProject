@@ -11,7 +11,7 @@ public class BandLogMemberDto {
 
     private Long blmseq;
     private String blmuserid;
-    private String blmbandname;
+    private Long blmbiseq;
     private String blmpredata;
     private int blmpredata2;
     private int blmpredata3;
@@ -23,11 +23,11 @@ public class BandLogMemberDto {
     private String blmdatetime;
 
     @Builder
-    public BandLogMemberDto(Long Blm_seq, String Blm_userid, String Blm_bandname, String Blm_pre_data, int Blm_pre_data2, int Blm_pre_data3,
+    public BandLogMemberDto(Long Blm_seq, String Blm_userid, Long Blm_biseq, String Blm_pre_data, int Blm_pre_data2, int Blm_pre_data3,
                             String Blm_pre_data4, String Blm_today_data, int Blm_today_data2, int Blm_today_data3, String Blm_today_data4, String Blm_datetime){
         blmseq = Blm_seq;
         blmuserid = Blm_userid;
-        blmbandname = Blm_bandname;
+        blmbiseq = Blm_biseq;
         blmpredata = Blm_pre_data;
         blmpredata2 = Blm_pre_data2;
         blmpredata3 = Blm_pre_data3;
@@ -43,7 +43,7 @@ public class BandLogMemberDto {
         BandLogMemberEntity entity = BandLogMemberEntity.builder()
                 .Blm_seq(blmseq)
                 .Blm_userid(blmuserid)
-                .Blm_bandname(blmbandname)
+                .Blm_biseq(blmbiseq)
                 .Blm_pre_data(blmpredata)
                 .Blm_pre_data2(blmpredata2)
                 .Blm_pre_data3(blmpredata3)

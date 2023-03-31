@@ -79,7 +79,7 @@ public class BandPredicate {
                 builder.and(qBandLogMemberEntity.blmuserid.contains(titleText));
             }
             else if(selectKey.equals("BAND")){
-                builder.and(qBandLogMemberEntity.blmbandname.contains(titleText));
+                builder.and(qBandLogMemberEntity.blmbiseq.eq(Long.valueOf(titleText)));
             }
             else if(selectKey.equals("PRE")){
                 builder.and(qBandLogMemberEntity.blmpredata.contains(titleText));
@@ -95,7 +95,7 @@ public class BandPredicate {
             catch (Exception e){
                 builder.and(
                         (qBandLogMemberEntity.blmuserid.contains(titleText)).or
-                                (qBandLogMemberEntity.blmbandname.contains(titleText)).or
+                                (qBandLogMemberEntity.blmbiseq.eq(Long.valueOf(titleText))).or
                                 (qBandLogMemberEntity.blmpredata.contains(titleText)).or
                                 (qBandLogMemberEntity.blmtodaydata.contains(titleText)));
             }
