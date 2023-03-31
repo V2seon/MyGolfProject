@@ -34,7 +34,7 @@ function SaveCC(){
 
     let sendData = {
         "name" : name,
-        "address" : address,
+//        "address" : address,
         "url" : url,
         "day" : day,
         "opentime" : opentime,

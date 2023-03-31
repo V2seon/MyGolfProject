@@ -50,7 +50,7 @@ public class CountryClubController {
 
             model.addAttribute("userlist", s1); //페이지 객체 리스트
             model.addAttribute("nowurl0","/Countryclub");
-            returnValue = "/Countryclub/CClist";
+            returnValue = "/Countryclub/CCList";
         } else {
             returnValue = "login";
         }
@@ -80,7 +80,7 @@ public class CountryClubController {
         model.addAttribute("nowurl0","/Countryclub");
         model.addAttribute("userlist", pageList); //페이지 객체 리스트
 
-        return "/Countryclub/CClist :: #intable";
+        return "/Countryclub/CCList :: #intable";
     }
 
     @GetMapping("/CountryclubRegister")
@@ -156,24 +156,31 @@ public class CountryClubController {
     @PostMapping("/DelCC")
     public String delete(@RequestParam(required = false, defaultValue = "", value = "seq")Long seq){
         countryClubRepository.deleteById(seq);
-        return "CCList :: Success";
+        return "redirect:";
     }
 
 
     @PostMapping("/SaveCC")
     public String countryclub(HttpServletRequest request, Model model,
-                              @RequestParam(required = false, defaultValue = "", value = "ccname") String ccname,
-                              @RequestParam(required = false, defaultValue = "", value = "ccurl") String ccurl,
-                              @RequestParam(required = false, defaultValue = "", value = "cccancel") int cccancel,
-                              @RequestParam(required = false, defaultValue = "", value = "ccopen") int ccopen,
-                              @RequestParam(required = false, defaultValue = "", value = "cctype") int cctype,
-                              @RequestParam(required = false, defaultValue = "", value = "ccrv") int ccrv) {
+                              @RequestParam(required = false, defaultValue = "", value = "name") String ccname,
+                              @RequestParam(required = false, defaultValue = "", value = "url") String ccurl,
+                              @RequestParam(required = false, defaultValue = "", value = "day") int cccancel,
+                              @RequestParam(required = false, defaultValue = "", value = "opentime") int ccopen,
+                              @RequestParam(required = false, defaultValue = "", value = "retype") int cctype,
+                              @RequestParam(required = false, defaultValue = "", value = "possible") int ccrv) {
         System.out.println("hi?");
+        System.out.println(ccname);
+        System.out.println(ccurl);
+        System.out.println(cccancel);
+        System.out.println(ccopen);
+        System.out.println(cctype);
+        System.out.println(ccrv);
+
         LocalDateTime localDateTime = LocalDateTime.now();
         String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         CountryClubDto countryClubDto = new CountryClubDto(null, ccname,null, ccurl, cccancel, ccopen, cctype, ccrv, localDateTime,null);
         reservationInfoService.Ccinsert(countryClubDto);
-        return "/Countryclub";
+        return "redirect:";
     }
 
 }

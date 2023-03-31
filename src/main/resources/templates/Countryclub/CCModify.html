@@ -119,14 +119,14 @@
                                         <label class="col-form-label col-md-3 col-sm-3  label-align">취소 가능일
                                         </label>
                                         <div class="col-md-6 col-sm-6">
-                                            <input th:value="${cancelday}" id="day" class="form-control" name="date" required='required'>
+                                            <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" th:value="${cancelday}" id="day" class="form-control" name="date" required='required'>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-form-label col-md-3 col-sm-3  label-align">예약 시간
                                         </label>
                                         <div class="col-md-6 col-sm-6">
-                                            <input th:value="${opentime}" id="time" class="form-control" name="time" required='required'>
+                                            <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" th:value="${opentime}" id="time" class="form-control" name="time" required='required'>
                                         </div>
                                     </div>
                                     <div class="form-group row">
