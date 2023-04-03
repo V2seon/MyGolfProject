@@ -391,7 +391,6 @@ function view(seq) {
                 type     : "POST",
                 success : function(result) {
                     $('#load').hide();
-                    $('#myModal3').show();
                     for(var i=0; i<result.count.length; i++){
                         $("#golfptc").append(
                             "<tr class='nickid'><td>"+result.count[i].bgennickname+"</td></tr>"

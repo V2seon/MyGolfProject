@@ -154,7 +154,7 @@
                                                                     <span th:if="${Co.Rsibandstate} == 1">작성됨</span>
                                                                 </td>
                                                                 <td>
-                                                                    <button th:onclick="|javascript:view(${Co.Rsino})|" class="btn btn-success" type="button" th:text="${Co.Bandnicknamecount} +' 명'"></button>
+                                                                    <button th:onclick="|javascript:view(${Co.Rsino})|" th:value="${Co.Rsino}" class="btn btn-success ckuser" type="button" th:text="${Co.Bandnicknamecount} +' 명'"></button>
                                                                 </td>
                                                                 <td>
                                                                     <button th:onclick="|javascript:Defno(${Co.Rsino})|" class="btn btn-success" type="button">확정</button>
@@ -235,15 +235,21 @@
 
 </div>
 </div>
-<div id="myModal3" class="modal">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <p style="text-align: center;"><span style="font-size: 14pt;"><b><span style="font-size: 25pt; color: #007bff;">참가자</span></b></span></p>
-        <div id="intable1">
-            <table class="option" id="golfptc">
-            </table>
-        </div>
-        <div id="pop_bt" class="btn btn-primary" style="margin: auto; margin-top: 10px; font-size: 15pt;" onClick="close_pop3()">닫기</div>
+
+
+<!--<div class="modal-content">-->
+<!--    <p style="text-align: center;"><span style="font-size: 14pt;"><b><span style="font-size: 25pt; color: #007bff;">참가자</span></b></span></p>-->
+<!--    <div id="intable1">-->
+<!--        <table class="option" id="golfptc">-->
+<!--        </table>-->
+<!--    </div>-->
+<!--    <div id="pop_bt" class="btn btn-primary" style="margin: auto; margin-top: 10px; font-size: 15pt;" onClick="close_pop3()">닫기</div>-->
+<!--</div>-->
+<div class="popupLayer">
+    <div id="intable1" style="width:90%;">
+        <table class="option" id="golfptc">
+            <th>참가자</th>
+        </table>
     </div>
 </div>
 <script src="/vendors/jquery/dist/jquery.min.js"></script>
@@ -262,4 +268,29 @@
 <script src="/js/custom.min.js"></script>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+$(".ckuser").mouseover(function(){
+    var seq = $(this).val();
+
+    w1 = $(this).offset().left;
+    h1 = $(this).offset().top;
+
+    w1center = w1;
+    h1center = h1 - 210;
+    console.log(seq);
+    view(seq);
+    $('.popupLayer').css({
+        "top": h1center,
+        "left": w1center,
+        "position": "absolute"
+    }).show();
+});
+
+$(".ckuser").mouseout(function(){
+    $('tr.nickid').remove();
+    $('.popupLayer').hide();
+});
+
+</script>
 </body></html>
