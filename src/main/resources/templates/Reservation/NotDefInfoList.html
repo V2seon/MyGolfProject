@@ -85,7 +85,7 @@
                                                             <option value="CC">CC</option>
                                                             <option value="코스정보">코스정보</option>
                                                         </select>
-                                                        <input id="titleText" type="text" class="form-control" placeholder="Search for...">
+                                                        <input id="titleText" type="text" class="form-control" placeholder="Search for..." onkeyup="if(window.event.keyCode==13){searching()}">
                                                         <span class="input-group-btn">
                                                         <button onclick="searching()" class="btn btn-default==" type="button">검색</button>
                                                     </span>
@@ -154,7 +154,7 @@
                                                                     <span th:if="${Co.Rsibandstate} == 1">작성됨</span>
                                                                 </td>
                                                                 <td>
-                                                                    <button th:value="${Co.Rsino}" class="btn btn-success ckuser" type="button" th:text="${Co.Bandnicknamecount} +' 명'"></button>
+                                                                    <button name="ckuser" th:value="${Co.Rsino}" class="btn btn-success ckuser" type="button" th:text="${Co.Bandnicknamecount} +' 명'"></button>
                                                                 </td>
                                                                 <td>
                                                                     <button th:onclick="|javascript:Defno(${Co.Rsino})|" class="btn btn-success" type="button">확정</button>
@@ -270,28 +270,29 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script type="text/javascript">
-$(document).ready(function(){
-  $(".ckuser").mouseover(function(){
-    var seq = $(this).val();
+$(document).ready(function() {
 
-    w1 = $(this).offset().left;
-    h1 = $(this).offset().top;
+    $(document).on("mouseover",".ckuser", function() {
+        var seq = $(this).val();
 
-    w1center = w1;
-    h1center = h1 - 210;
+        w1 = $(this).offset().left;
+        h1 = $(this).offset().top;
 
-    view(seq);
-    $('.popupLayer').css({
-        "top": h1center,
-        "left": w1center,
-        "position": "absolute"
-    }).show();
-});
+        w1center = w1;
+        h1center = h1 - 210;
 
-$(".ckuser").mouseout(function(){
-    $('tr.nickid').remove();
-    $('.popupLayer').hide();
-});
+        view(seq);
+        $('.popupLayer').css({
+            "top": h1center,
+            "left": w1center,
+            "position": "absolute"
+        }).show();
+    });
+
+    $(document).on("mouseout",".ckuser", function() {
+        $('tr.nickid').remove();
+        $('.popupLayer').hide();
+    });
 });
 </script>
 </body></html>
