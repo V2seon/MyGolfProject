@@ -138,9 +138,9 @@
                                                                 <td th:if="${Co.Rsicanceldate}!= null">
                                                                     <span th:text="${Co.Rsicanceldate}"></span>
                                                                     <br th:if="${Co.Rsiuino < 4}">
-                                                                    <span th:if="${Co.Rsiuino == -3}">취소일 +3일</span>
-                                                                    <span th:if="${Co.Rsiuino == -2}">취소일 +2일</span>
-                                                                    <span th:if="${Co.Rsiuino == -1}">취소일 +1일</span>
+                                                                    <span th:if="${Co.Rsiuino == 3}">취소일 +3일</span>
+                                                                    <span th:if="${Co.Rsiuino == 2}">취소일 +2일</span>
+                                                                    <span th:if="${Co.Rsiuino == 1}">취소일 +1일</span>
                                                                     <span th:if="${Co.Rsiuino == 0}">취소일</span>
                                                                 </td>
                                                                 <td th:if="${Co.Rsitime}!= null"
@@ -154,7 +154,7 @@
                                                                     <span th:if="${Co.Rsibandstate} == 1">작성됨</span>
                                                                 </td>
                                                                 <td>
-                                                                    <button th:onclick="|javascript:view(${Co.Rsino})|" th:value="${Co.Rsino}" class="btn btn-success ckuser" type="button" th:text="${Co.Bandnicknamecount} +' 명'"></button>
+                                                                    <button th:value="${Co.Rsino}" class="btn btn-success ckuser" type="button" th:text="${Co.Bandnicknamecount} +' 명'"></button>
                                                                 </td>
                                                                 <td>
                                                                     <button th:onclick="|javascript:Defno(${Co.Rsino})|" class="btn btn-success" type="button">확정</button>
@@ -270,7 +270,8 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script type="text/javascript">
-$(".ckuser").mouseover(function(){
+$(document).ready(function(){
+  $(".ckuser").mouseover(function(){
     var seq = $(this).val();
 
     w1 = $(this).offset().left;
@@ -278,7 +279,7 @@ $(".ckuser").mouseover(function(){
 
     w1center = w1;
     h1center = h1 - 210;
-    console.log(seq);
+
     view(seq);
     $('.popupLayer').css({
         "top": h1center,
@@ -291,6 +292,6 @@ $(".ckuser").mouseout(function(){
     $('tr.nickid').remove();
     $('.popupLayer').hide();
 });
-
+});
 </script>
 </body></html>

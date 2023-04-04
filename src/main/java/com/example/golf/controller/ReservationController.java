@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -112,7 +113,7 @@ public class ReservationController {
         if(new SessionCheck().loginSessionCheck(request)){
             HttpSession session = request.getSession();
 
-            pageable = PageRequest.of(page, 10);
+            pageable = PageRequest.of(page, 10, Sort.by("Rsi_time").ascending());
             Page<ViewReservationStateInfoEntity> s1 = reservationStateService.selectALLTable0(pageable);
 
             Pagination pagination = new Pagination(s1.getTotalPages(), page);
@@ -159,7 +160,7 @@ public class ReservationController {
                         @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText,
                         @RequestParam(required = false ,defaultValue = "0" , value="set") String set){
         HttpSession session = request.getSession();
-        Pageable pageable = PageRequest.of(page, 10);
+        Pageable pageable = PageRequest.of(page, 10,Sort.by("rsitime").ascending());
         int totalPages = 0;
         if(!set.equals("0")){
             totalPages = reservationStateService.seALLTable("CC", set, pageable).getTotalPages();
