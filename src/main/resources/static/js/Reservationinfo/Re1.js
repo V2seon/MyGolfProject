@@ -262,7 +262,6 @@ function infoin(){
 location.href="/RegisterInfo"
 }
 
-
 function Saveinfo(){
     var cname = document.getElementById('ccname').value;
     var id = document.getElementById('id').value;
@@ -414,3 +413,43 @@ function close_pop3(flag) {
      $('#myModal3').hide();
      $('tr.nickid').remove();
 };
+
+function DelReservation(seq){
+swal({
+        title: "예약 연동 삭제",
+          text: "해당 예약 연동을 삭제하시겠습니까?",
+          icon: "warning",
+          closeOnClickOutside : false,
+          buttons : ["취소", "삭제"],
+          dangerMode: true
+    }).then((result) => {
+    if(result){
+        const sendData = {
+                    'seq' : seq
+                    };
+        $.ajax({
+                url      : "/DelReservation",
+                data     : sendData,
+                type     : "POST",
+                success : function(result) {
+                    $('#load').hide();
+                    swal({
+                            text: "연동삭제완료.",
+                            icon: "success",
+                            closeOnClickOutside : false,
+                            button: "확인"
+                        }).then(function(){
+                            location.href = "/Reservation1";
+                        })
+                },
+                error:function(request,status,error){
+                    $('#load').hide();
+                    swal({
+                        text: "서버에 문제가 발생했습니다.",
+                        icon: "warning" //"info,success,warning,error" 중 택1
+                    });
+                }
+            });
+    }
+    });
+}
