@@ -28,6 +28,9 @@ public class BandInfoEntity {
     @Column(name = "BI_CODE")
     private String bicode;
 
+    @Column(name = "BI_NAME")
+    private String biname;
+
     @Column(name = "BI_IDATETIME")
     private String biidatetime;
 
@@ -35,11 +38,12 @@ public class BandInfoEntity {
     private String biudatetime;
 
     @Builder
-    public BandInfoEntity(Long Bi_seq, String Bi_id, String Bi_pw, String Bi_code, String Bi_idatetime, String Bi_udatetime){
+    public BandInfoEntity(Long Bi_seq, String Bi_id, String Bi_pw, String Bi_code,String Bi_name, String Bi_idatetime, String Bi_udatetime){
         biseq = Bi_seq;
         biid = Bi_id;
         bipw = Bi_pw;
         bicode = Bi_code;
+        biname = Bi_name;
         biidatetime = Bi_idatetime;
         biudatetime = Bi_udatetime;
     }

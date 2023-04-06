@@ -61,7 +61,7 @@
             <div class="">
                 <div class="page-title">
                     <div class="title_left">
-                        <h3>예약 대기 정보</h3>
+                        <h3>구장별 타겟팅 정보</h3>
                     </div>
 
                 </div>
@@ -70,7 +70,7 @@
                     <div class="col-md-12 col-sm-12 ">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>예약정보 > 예약 대기 정보<small></small></h2>
+                                <h2>예약정보 > 구장별 타겟팅 정보<small></small></h2>
 
                                 <div class="clearfix"></div>
                             </div>
@@ -80,23 +80,30 @@
                                     <div>
                                         <div class="title_right">
                                             <div class="offset-md-9 form-group top_search">
-                                                <div class="input-group">
-                                                    <div style="width:85%; padding-left:10px;">
-                                                        <button th:if="${country}!=null" th:each="Co : ${country}" th:class="'Ccbtn' + ${Co.Ccno}"
-                                                                th:value="${Co.Ccname}" th:text="${Co.Ccname} +' : '+ ${Co.Cctype} +'개'"
-                                                                th:onclick="|javascript:searching1(${Co.Ccname})|"></button>
-                                                    </div>
-                                                    <select class="form-control" id="selectKey" style="margin-left:10px;">
-                                                        <option value="전체">전체</option>
-                                                        <option value="No">No</option>
-                                                        <option value="아이디">아이디</option>
-                                                        <option value="CC">CC</option>
-                                                        <option value="코스정보">코스정보</option>
-                                                    </select>
-                                                    <input id="titleText" type="text" class="form-control" placeholder="Search for...">
-                                                    <span class="input-group-btn">
+<!--                                                <div class="input-group">-->
+<!--                                                    <div style="width:100%; padding-left:10px;">-->
+<!--                                                        <button class="Cc ccbtn" onclick="searchingall()">전체</button>-->
+<!--                                                        <button th:if="${country}!=null" th:each="Co : ${country}"-->
+<!--                                                                onclick="searching1(this)" class="Cc ccbtn"-->
+<!--                                                                th:value="${Co.Ccname}" th:text="${Co.Ccname} +' : '+ ${Co.Cctype} +'개'">-->
+<!--                                                        </button>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+                                                <div class="pull-right">
+                                                    <div class="input-group">
+                                                        <select class="form-control" id="selectKey" style="margin-left:10px;">
+                                                            <option value="전체">전체</option>
+                                                            <option value="No">No</option>
+                                                            <option value="아이디">아이디</option>
+                                                            <option value="CC">CC</option>
+                                                            <option value="코스정보">코스정보</option>
+                                                        </select>
+                                                        <input id="titleText" type="text" class="form-control" placeholder="Search for..." onkeyup="if(window.event.keyCode==13){searching()}">
+                                                        <span class="input-group-btn">
                                                         <button onclick="searching()" class="btn btn-default==" type="button">검색</button>
                                                     </span>
+                                                        <button onclick="Waitinfoin()" class="btn btn-primary" type="button">등록</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

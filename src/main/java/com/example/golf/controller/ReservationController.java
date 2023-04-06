@@ -642,6 +642,25 @@ public class ReservationController {
         return "redirect:";
     }
 
+    @GetMapping("/WaitRegisterInfo")
+    public String WaitRegisterInfo(Model model, HttpServletRequest request, Pageable pageable){
+        String returnValue = "";
+        if(new SessionCheck().loginSessionCheck(request)){
+            HttpSession session = request.getSession();
+
+            List<CountryClubEntity> s2 = countryClubRepository.findAll1();
+//            List<CourseEntity> s1 = courseRepository.findAll();
+            model.addAttribute("country",s2);
+            List<CourseEntity> s1 = courseRepository.findAll1(17L);
+            model.addAttribute("course",s1);
+            model.addAttribute("nowurl0","/Reservation");
+            returnValue = "/Reservation/WaitRegisterInfo";
+        }else{
+            returnValue = "login";
+        }
+        return returnValue;
+    }
+
 
 
 

@@ -135,6 +135,7 @@ swal({
                 data : data,
                 type : "POST",
                 success : function (result){
+                    location.href="/Reservation1"
                 },
                 error : function (request,status,error){
                 }

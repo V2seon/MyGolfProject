@@ -20,11 +20,14 @@ public class BandLogMemberDto {
     private int blmtodaydata2;
     private int blmtodaydata3;
     private String blmtodaydata4;
+    private int blmnickchangecnt;
+    private String blmnickchangedata;
     private String blmdatetime;
 
     @Builder
     public BandLogMemberDto(Long Blm_seq, String Blm_userid, Long Blm_biseq, String Blm_pre_data, int Blm_pre_data2, int Blm_pre_data3,
-                            String Blm_pre_data4, String Blm_today_data, int Blm_today_data2, int Blm_today_data3, String Blm_today_data4, String Blm_datetime){
+                            String Blm_pre_data4, String Blm_today_data, int Blm_today_data2, int Blm_today_data3, String Blm_today_data4,
+                            int Blm_nickchange_cnt, String Blm_nickchange_data,String Blm_datetime){
         blmseq = Blm_seq;
         blmuserid = Blm_userid;
         blmbiseq = Blm_biseq;
@@ -36,6 +39,8 @@ public class BandLogMemberDto {
         blmtodaydata2 = Blm_today_data2;
         blmtodaydata3 = Blm_today_data3;
         blmtodaydata4 = Blm_today_data4;
+        blmnickchangecnt = Blm_nickchange_cnt;
+        blmnickchangedata = Blm_nickchange_data;
         blmdatetime = Blm_datetime;
     }
 
@@ -52,6 +57,8 @@ public class BandLogMemberDto {
                 .Blm_today_data2(blmtodaydata2)
                 .Blm_today_data3(blmtodaydata3)
                 .Blm_today_data4(blmtodaydata4)
+                .Blm_nickchange_cnt(blmnickchangecnt)
+                .Blm_nickchange_data(blmnickchangedata)
                 .Blm_datetime(blmdatetime)
                 .build();
         return entity;

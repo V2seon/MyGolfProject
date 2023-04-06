@@ -49,12 +49,19 @@ public class BandLogMemberEntity {
     @Column(name = "BLM_TODAY_DATA4")
     private String blmtodaydata4;
 
+    @Column(name = "BLM_NICKCHANGE_CNT")
+    private int blmnickchangecnt;
+
+    @Column(name = "BLM_NICKCHANGE_DATA")
+    private String blmnickchangedata;
+
     @Column(name = "BLM_DATETIME")
     private String blmdatetime;
 
     @Builder
     public BandLogMemberEntity(Long Blm_seq, String Blm_userid, Long Blm_biseq, String Blm_pre_data, int Blm_pre_data2, int Blm_pre_data3,
-                               String Blm_pre_data4, String Blm_today_data, int Blm_today_data2, int Blm_today_data3, String Blm_today_data4, String Blm_datetime){
+                            String Blm_pre_data4, String Blm_today_data, int Blm_today_data2, int Blm_today_data3, String Blm_today_data4,
+                            int Blm_nickchange_cnt, String Blm_nickchange_data,String Blm_datetime){
         blmseq = Blm_seq;
         blmuserid = Blm_userid;
         blmbiseq = Blm_biseq;
@@ -66,6 +73,8 @@ public class BandLogMemberEntity {
         blmtodaydata2 = Blm_today_data2;
         blmtodaydata3 = Blm_today_data3;
         blmtodaydata4 = Blm_today_data4;
+        blmnickchangecnt = Blm_nickchange_cnt;
+        blmnickchangedata = Blm_nickchange_data;
         blmdatetime = Blm_datetime;
     }
 }
