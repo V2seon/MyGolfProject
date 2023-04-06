@@ -167,7 +167,8 @@ public class CountryClubController {
                               @RequestParam(required = false, defaultValue = "", value = "day") int cccancel,
                               @RequestParam(required = false, defaultValue = "", value = "opentime") int ccopen,
                               @RequestParam(required = false, defaultValue = "", value = "retype") int cctype,
-                              @RequestParam(required = false, defaultValue = "", value = "possible") int ccrv) {
+                              @RequestParam(required = false, defaultValue = "", value = "possible") int ccrv,
+                              @RequestParam(required = false, defaultValue = "", value = "cctip") String cctip) {
         System.out.println("hi?");
         System.out.println(ccname);
         System.out.println(ccurl);

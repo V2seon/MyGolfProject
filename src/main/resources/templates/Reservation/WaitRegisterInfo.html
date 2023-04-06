@@ -123,6 +123,18 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align">예약타입
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 " style="display:flex; align-items: center;">
+                                        <input checked style="margin-right:5px;" type="radio" value="1" name="choice" id="al">
+                                        <label style="margin-right:10px;">전체 (일~토)</label>
+                                        <input style="margin-right:5px;" type="radio" value="0" name="choice" id="py">
+                                        <label style="margin-right:10px;">평일 (월~금)</label>
+                                        <input style="margin-right:5px;" type="radio" value="2" name="choice" id="ju">
+                                        <label >주말 (토,일)</label>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="t1">희망시간
                                     </label>
                                     <div class="col-md-6 col-sm-6 ">
@@ -174,6 +186,14 @@
                                             <option value=18>18홀만</option>
                                             <option value=0>상관없음</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="cctip"> 예약팁 내용
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                            <textarea style="height:200px; resize:none;" readonly type="text" id="cctip" required="required" class="form-control  ">
+                                            </textarea>
                                     </div>
                                 </div>
                                 <div class="ln_solid"></div>

@@ -29,9 +29,59 @@ function SaveCC(){
     const url = document.getElementById('ccurl').value;
     const day = document.getElementById('day').value;
     const opentime = document.getElementById('time').value;
+    const cctip = document.getElementById('cctip').value;
     var retype = $("input[name='retype']:checked").val();
     var possible = $("input[name='possible']:checked").val();
-
+if(name === null || name === "") {
+        swal({
+            title: "골프장 이름을 입력하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}else if(address === null || address === "") {
+        swal({
+            title: "골프장 주소를 입력하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}else if(url === null || url === "") {
+        swal({
+            title: "골프장 링크를 입력하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}else if(day === null || day === "") {
+        swal({
+            title: "취소 가능일을 입력하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}else if(opentime === null || opentime === "") {
+        swal({
+            title: "오픈시간을 입력하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}else if(retype === null || retype === "") {
+        swal({
+            title: "예약정보타입을 선택하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}else if(possible === null || possible === "") {
+        swal({
+            title: "예약가능여부를 선택하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}else{
     let sendData = {
         "name" : name,
 //        "address" : address,
@@ -39,9 +89,9 @@ function SaveCC(){
         "day" : day,
         "opentime" : opentime,
         "retype" : retype,
-        "possible" : possible
+        "possible" : possible,
+        "cctip" : cctip
     }
-
     $.ajax({
                 url      : "/SaveCC",
                 data     : sendData,
@@ -58,6 +108,7 @@ function SaveCC(){
                 error:function(request,status,error){
                 }
             });
+}
 }
 
 
