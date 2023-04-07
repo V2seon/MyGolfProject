@@ -251,4 +251,48 @@ public class BandController {
 
         return "/Band/BandMember :: #bmtable";
     }
+
+    @GetMapping("/Bandtemplate")
+    public String Bandtemplate(Model model, HttpServletRequest request, Pageable pageable,
+                                @RequestParam(required = false, defaultValue = "0", value = "page") int page){
+        String returnValue = "";
+        if(new SessionCheck().loginSessionCheck(request)){
+            HttpSession session = request.getSession();
+
+            pageable = PageRequest.of(page, 10);
+//            Page<BandLogMemberEntity> s1 = bandService.selectALLBandLogMember0(pageable);
+//
+//            Pagination pagination = new Pagination(s1.getTotalPages(), page);
+//
+//            model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
+//            model.addAttribute("isNextSection", pagination.isNextSection()); //다음버튼 유무 확인하기 위함
+//            model.addAttribute("isPrevSection", pagination.isPrevSection()); //이전버튼 유무 확인하기 위함
+//            model.addAttribute("firstBtnIndex", pagination.getFirstBtnIndex()); //버튼 페이징 - 첫시작 인덱스
+//            model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
+//            model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
+//
+//            model.addAttribute("bandlist", s1); //페이지 객체 리스트
+            model.addAttribute("nowurl0","/Bandlogmember");
+
+            returnValue = "/Band/Bandtemplate.html";
+        }else{
+            returnValue = "login";
+        }
+        return returnValue;
+    }
+
+    @GetMapping("/BandTemplateRegister")
+    public String BandTemplateRegister(Model model, HttpServletRequest request, Pageable pageable){
+        String returnValue = "";
+        if(new SessionCheck().loginSessionCheck(request)){
+            HttpSession session = request.getSession();
+
+            model.addAttribute("nowurl0","/Bandlogmember");
+
+            returnValue = "/Band/BandTemplateRegister.html";
+        }else{
+            returnValue = "login";
+        }
+        return returnValue;
+    }
 }
