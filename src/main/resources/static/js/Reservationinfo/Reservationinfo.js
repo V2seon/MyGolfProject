@@ -264,3 +264,20 @@ let sendData = {
 
 }
 }
+
+function Editinfo(seq){
+ let sendData = {
+        "seq" : seq
+    }
+
+    $.ajax({
+                url      : "/Reservationgo",
+                data     : sendData,
+                type     : "GET",
+                success : function(result) {
+                    location.href = "/ReservationModifygo";
+                },
+                error:function(request,status,error){
+                }
+            });
+}

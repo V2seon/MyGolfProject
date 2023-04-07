@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Android Golf</title>
+    <!-- Bootstrap -->
+    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!--    &lt;!&ndash; iCheck &ndash;&gt;-->
+    <!--    <link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">-->
+    <!--    &lt;!&ndash; bootstrap-wysiwyg &ndash;&gt;-->
+    <!--    <link href="/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">-->
+    <!--    &lt;!&ndash; Select2 &ndash;&gt;-->
+    <!--    <link href="/vendors/select2/dist/css/select2.min.css" rel="stylesheet">-->
+    <!--    &lt;!&ndash; Switchery &ndash;&gt;-->
+    <!--    <link href="/vendors/switchery/dist/switchery.min.css" rel="stylesheet">-->
+    <!--    &lt;!&ndash; starrr &ndash;&gt;-->
+    <!--    <link href="/vendors/starrr/dist/starrr.css" rel="stylesheet">-->
+    <!--    &lt;!&ndash; bootstrap-daterangepicker &ndash;&gt;-->
+    <!--    <link href="/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">-->
+
+    <!-- jQuery custom content scroller -->
+    <link href="/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet"/>
+
+    <!-- Custom Theme Style -->
+    <link href="/css/custom.min.css" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div th:insert="nav/nav.html"></div>
+        </div>
+
+        <!-- top navigation -->
+        <div th:insert="nav/top.html"></div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main" style="min-height:1240px;">
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3>예약정보입력</h3>
+                    </div>
+
+                    <div class="title_right">
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 ">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>희망정보 입력 <small>Enter desired information</small></h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <br />
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="ccname">골프장
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <select id="ccname" class="form-control" onchange="chCC()">
+                                            <option th:if="${country}!=null" th:each="Co : ${country}" th:value="${Co.ccno}" th:text="${Co.ccname}">어등산</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align">예약타입
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 " style="display:flex; align-items: center;">
+                                        <input style="margin-right:5px;" type="radio" value="1" name="choice" id="open">
+                                        <label style="margin-right:10px;" for="open">오픈티</label>
+                                        <input style="margin-right:5px;" type="radio" value="0" name="choice" id="can">
+                                        <label for="can">취소티</label>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="id">아이디
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <input class="form-control" type="text" id="id">
+                                    </div>
+                                </div>
+<!--                                <div class="item form-group">-->
+<!--                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="pw">비밀번호-->
+<!--                                    </label>-->
+<!--                                    <div class="col-md-6 col-sm-6 ">-->
+<!--                                        <input class="form-control" type="password" id="pw">-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" >코스정보
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <select id="course" class="form-control">
+                                            <option class="chcourse" th:if="${course}!=null" th:each="Co : ${course}" th:value="${Co.cno}" th:text="${Co.cname}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="startdate">예약시작일
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <input class="form-control" type="date" id="startdate">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="enddate">예약종료일
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <input class="form-control" type="date" id="enddate">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align">예약일
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 " style="display:flex; align-items: center;">
+                                        <input checked style="margin-right:5px;" type="radio" value="0" name="choice1" id="al">
+                                        <label style="margin-right:10px;">전체 (일~토)</label>
+                                        <input style="margin-right:5px;" type="radio" value="1" name="choice1" id="py">
+                                        <label style="margin-right:10px;">평일 (월~금)</label>
+                                        <input style="margin-right:5px;" type="radio" value="2" name="choice1" id="ju">
+                                        <label >주말 (토,일)</label>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="t1">희망시간
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <select class="form-control" id = "t1">
+                                            <option value="">선택</option>
+                                            <option value=6>06</option>
+                                            <option value=7>07</option>
+                                            <option value=8>08</option>
+                                            <option value=9>09</option>
+                                            <option value=10>10</option>
+                                            <option value=11>11</option>
+                                            <option value=12>12</option>
+                                            <option value=13>13</option>
+                                            <option value=14>14</option>
+                                            <option value=15>15</option>
+                                            <option value=16>16</option>
+                                            <option value=17>17</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="t2">~
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <select class="form-control" id = "t2">
+                                            <option value="">선택</option>
+                                            <option value=6>06</option>
+                                            <option value=7>07</option>
+                                            <option value=8>08</option>
+                                            <option value=9>09</option>
+                                            <option value=10>10</option>
+                                            <option value=11>11</option>
+                                            <option value=12>12</option>
+                                            <option value=13>13</option>
+                                            <option value=14>14</option>
+                                            <option value=15>15</option>
+                                            <option value=16>16</option>
+                                            <option value=17>17</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="cc">홀
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <select class="form-control" id = "cc">
+                                            <option value="">선택</option>
+                                            <option value=9>9홀만</option>
+                                            <option value=18>18홀만</option>
+                                            <option value=0>상관없음</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="cctip"> 예약팁 내용
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                            <textarea style="height:200px; resize:none;" th:text="${cctip}" readonly type="text" id="cctip" required="required" class="form-control  ">
+                                            </textarea>
+                                    </div>
+                                </div>
+                                <div class="ln_solid"></div>
+                                <div class="item form-group">
+                                    <div class="col-md-6 col-sm-6 offset-md-3">
+                                        <!--<button class="btn btn-primary" type="button">Cancel</button>-->
+                                        <button class="btn btn-primary" onclick="move()" >목록</button>
+                                        <button class="btn btn-primary" onclick="Ininfo()" >등록</button>
+                                        <!--                                        <button onclick="sub()" class="btn btn-success">예약하기</button>-->
+<!--                                        <button onclick="test()" class="btn btn-success">확인하기</button>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+            <div class="pull-right">
+                Gentelella - Bootstrap Admin Template by Colorlib
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+</div>
+<script src="/vendors/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!-- FastClick -->
+<script src="/vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="/vendors/nprogress/nprogress.js"></script>
+<!-- Custom Theme Scripts -->
+<!--<script src="/js/Golf/Golf.js"></script>-->
+<script src="/js/Reservationinfo/Reservationinfo.js"></script>
+
+<script src="/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+<!-- Custom Theme Scripts -->
+<script src="/js/custom.min.js"></script>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</body></html>

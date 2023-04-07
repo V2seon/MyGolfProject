@@ -188,7 +188,8 @@ public class ReservationController {
         //서비스 엔티티 추가후 주석 풀고 사용
         LocalDate nowDate = LocalDate.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 년-월-일로만 Format되게 구현
-
+        DateTimeFormatter sdf1= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter sdf2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm (E)");
         if(!set.equals("0")){
             Page<ViewReservationStateInfoEntity> pageList = reservationStateService.seALLTable("CC", set, pageable);
             for(int j=0; j<pageList.getContent().size(); j++){
@@ -197,6 +198,8 @@ public class ReservationController {
                 LocalDateTime date2 = nowDate.atStartOfDay();
                 Long betweenDays = (Long) Duration.between(date2,date1).toDays();
                 pageList.getContent().get(j).setRsiuino(betweenDays);
+                LocalDateTime date3 = LocalDateTime.parse(pageList.getContent().get(j).getRsitime(), sdf1);
+                pageList.getContent().get(j).setRsitime(date3.format(sdf2));
             }
 
             model.addAttribute("userlist", pageList); //페이지 객체 리스트
@@ -208,6 +211,8 @@ public class ReservationController {
                 LocalDateTime date2 = nowDate.atStartOfDay();
                 Long betweenDays = (Long) Duration.between(date2,date1).toDays();
                 pageList.getContent().get(j).setRsiuino(betweenDays);
+                LocalDateTime date3 = LocalDateTime.parse(pageList.getContent().get(j).getRsitime(), sdf1);
+                pageList.getContent().get(j).setRsitime(date3.format(sdf2));
             }
 
             model.addAttribute("userlist", pageList); //페이지 객체 리스트
@@ -707,7 +712,35 @@ public class ReservationController {
     }
 
 
+    @GetMapping("/Reservationgo")
+    public String Reservationgo(Model model, HttpServletRequest request,
+                         @RequestParam(required = false ,defaultValue = "" , value="seq") Long seq){
+        String returnValue = "";
+        HttpSession session = request.getSession();
+        if(new SessionCheck().loginSessionCheck(request)){
+            session.setAttribute("seq",seq);
+            model.addAttribute("nowurl0","/Reservation");
+            returnValue = "/Reservation/WaitRegisterInfoModify";
+        }else{
+            returnValue = "login";
+        }
+        return returnValue;
+    }
 
+    @GetMapping("/ReservationModifygo")
+    public String ReservationModifygo(Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String returnValue = "";
+        if(new SessionCheck().loginSessionCheck(request)){
+            Optional<ReservationInfoEntity> s1 = reservationInfoRepository.findById((Long) session.getAttribute("seq"));
+            model.addAttribute("info",s1);
+            model.addAttribute("nowurl0","/Reservation");
+            returnValue = "/Reservation/WaitRegisterInfoModify";
+        }else{
+            returnValue = "login";
+        }
+        return returnValue;
+    }
 
 
 
