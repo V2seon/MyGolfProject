@@ -131,6 +131,8 @@ public class ReservationController {
             model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
 
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 년-월-일로만 Format되게 구현
+            DateTimeFormatter sdf1= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            DateTimeFormatter sdf2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm (E)");
             LocalDate nowDate = LocalDate.now();
             for(int j=0; j<s1.getContent().size(); j++){
                 LocalDate startDate = LocalDate.parse(s1.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
@@ -138,6 +140,8 @@ public class ReservationController {
                 LocalDateTime date2 = nowDate.atStartOfDay();
                 Long betweenDays = (Long) Duration.between(date2,date1).toDays();
                 s1.getContent().get(j).setRsiuino(betweenDays);
+                LocalDateTime date3 = LocalDateTime.parse(s1.getContent().get(j).getRsitime(), sdf1);
+                s1.getContent().get(j).setRsitime(date3.format(sdf2));
             }
 
             model.addAttribute("userlist", s1); //페이지 객체 리스트

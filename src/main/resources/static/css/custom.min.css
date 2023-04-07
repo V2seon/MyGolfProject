@@ -139,3 +139,10 @@ border: 1px solid #dee2e6
 .popupLayer div {
 	position: absolute;
 }
+
+.daycol1{
+color:blue;
+}
+.daycol2{
+color:red;
+}

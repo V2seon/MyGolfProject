@@ -132,8 +132,11 @@
                                                                 <td th:if="${Co.Rsicno}!= null"
                                                                     th:text="${Co.Rsicno}">
                                                                 </td>
-                                                                <td th:if="${Co.Rsitime}!= null"
-                                                                    th:text="${#strings.substring(Co.Rsitime,0,10)}">
+                                                                <td th:if="${Co.Rsitime}!= null">
+                                                                    <span th:text="${#strings.substring(Co.Rsitime,0,10)}"></span>&nbsp;
+                                                                    <span th:text="${#strings.substring(Co.Rsitime,17,20)}"
+                                                                          th:classappend="${(#strings.substring(Co.Rsitime,17,20) =='(토)' ? 'daycol1': '') +
+                                                                                            (#strings.substring(Co.Rsitime,17,20) =='(일)' ? 'daycol2': '')}"></span>
                                                                 </td>
                                                                 <td th:if="${Co.Rsicanceldate}!= null">
                                                                     <span th:text="${Co.Rsicanceldate}"></span>
@@ -144,7 +147,7 @@
                                                                     <span th:if="${Co.Rsiuino == 0}">취소일</span>
                                                                 </td>
                                                                 <td th:if="${Co.Rsitime}!= null"
-                                                                    th:text="${#strings.substring(Co.Rsitime,10,16)}">
+                                                                    th:text="${#strings.substring(Co.Rsitime,11,16)}">
                                                                 </td>
                                                                 <td th:if="${Co.Rsicaid}!= null"
                                                                     th:text="${Co.Rsicaid}">
