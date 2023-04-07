@@ -1,6 +1,6 @@
 package com.example.golf.service;
 
-import com.example.golf.dto.ReservationSteteDto;
+import com.example.golf.dto.ReservationStateDto;
 import com.example.golf.entity.ViewReservationStateInfoEntity;
 import com.example.golf.predicate.ViewReservationStetePredicate;
 import com.example.golf.repository.ReservationStateRepository;
@@ -19,7 +19,7 @@ public class ReservationStateService {
     private ViewReservationStateInfoRepository viewReservationStateInfoRepository;
 
     @Transactional
-    public Long savedto(ReservationSteteDto reservationSteteDto){
+    public Long savedto(ReservationStateDto reservationSteteDto){
         return reservationStateRepository.save(reservationSteteDto.toEntity()).getRsino();
     }
 

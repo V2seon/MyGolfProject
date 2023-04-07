@@ -1,13 +1,13 @@
 package com.example.golf.dto;
 
-import com.example.golf.entity.ReservationSteteEntity;
+import com.example.golf.entity.ReservationStateEntity;
 import lombok.*;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class ReservationSteteDto {
+public class ReservationStateDto {
 
     private Long rsino;
     private Long rsirino;
@@ -24,8 +24,8 @@ public class ReservationSteteDto {
     private int rsibandstate;
 
     @Builder
-    public ReservationSteteDto(Long Rsi_no, Long Rsi_ri_no, Long Rsi_ca_no, Long Rsi_ui_no, Long Rsi_cc_no, String Rsi_ca_id,
-                               String Rsi_time, int Rsi_c_no, int Rsi_state, int Rsi_cancel_auto,String Rsi_canceldate, String Rsi_idatetime, int Rsi_bandstate) {
+    public ReservationStateDto(Long Rsi_no, Long Rsi_ri_no, Long Rsi_ca_no, Long Rsi_ui_no, Long Rsi_cc_no, String Rsi_ca_id,
+                               String Rsi_time, int Rsi_c_no, int Rsi_state, int Rsi_cancel_auto, String Rsi_canceldate, String Rsi_idatetime, int Rsi_bandstate) {
         rsino = Rsi_no;
         rsirino = Rsi_ri_no;
         rsicano = Rsi_ca_no;
@@ -41,8 +41,8 @@ public class ReservationSteteDto {
         rsibandstate = Rsi_bandstate;
     }
 
-    public ReservationSteteEntity toEntity(){
-        ReservationSteteEntity entity = ReservationSteteEntity.builder()
+    public ReservationStateEntity toEntity(){
+        ReservationStateEntity entity = ReservationStateEntity.builder()
                 .Rsi_no(rsino)
                 .Rsi_ri_no(rsirino)
                 .Rsi_ca_no(rsicano)

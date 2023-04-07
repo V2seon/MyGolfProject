@@ -127,6 +127,7 @@ public class CountryClubController {
             model.addAttribute("opentime",s1.get().getCcopentime());
             model.addAttribute("type",s1.get().getCctype());
             model.addAttribute("reservation",s1.get().getCcreservation());
+            model.addAttribute("cctip",s1.get().getCctip());
             model.addAttribute("nowurl0","/Countryclub");
             returnValue = "/Countryclub/CCModify";
         }else{

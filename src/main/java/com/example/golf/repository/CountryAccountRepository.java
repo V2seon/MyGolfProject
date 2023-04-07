@@ -17,4 +17,6 @@ public interface CountryAccountRepository extends JpaRepository<CountryAccountEn
 
     Optional<CountryAccountEntity>  findByCauinoAndCaccno(Long Cauino, Long Caccno);
 
+    Optional<CountryAccountEntity>  findByCaccnoAndCaid(Long Caccno, String Caid);
+
 }

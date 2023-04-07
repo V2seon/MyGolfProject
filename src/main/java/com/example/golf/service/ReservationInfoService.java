@@ -23,12 +23,12 @@ public class ReservationInfoService {
     private ReservationStateRepository reservationStateRepository;
 
     @Transactional
-    public Long insertData1(ReservationInfoDto golfDto){
-        return reservationInfoRepository.save(golfDto.toEntity()).getRino();
+    public Long insertData1(ReservationInfoDto reservationInfoDto){
+        return reservationInfoRepository.save(reservationInfoDto.toEntity()).getRino();
     }
 
     @Transactional
-    public Long StateSave(ReservationSteteDto reservationSteteDto){
+    public Long StateSave(ReservationStateDto reservationSteteDto){
         return reservationStateRepository.save(reservationSteteDto.toEntity()).getRsino();
     }
 

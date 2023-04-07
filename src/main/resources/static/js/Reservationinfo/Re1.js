@@ -366,6 +366,7 @@ function chCC(){
                                 "<option class='chcourse' value='"+result.course[i].cno+"'>"+result.course[i].cname+"</option>"
                             )
                         }
+//                        document.getElementById('cctip').innerText = result.cctip[0];
                     },
                     error:function(request,status,error){
                         $('#load').hide();

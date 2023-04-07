@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "reservation_state_info")
-public class ReservationSteteEntity {
+public class ReservationStateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,8 +56,8 @@ public class ReservationSteteEntity {
     private int rsibandstate;
 
     @Builder
-    public ReservationSteteEntity(Long Rsi_no, Long Rsi_ri_no, Long Rsi_ca_no, Long Rsi_ui_no, Long Rsi_cc_no, String Rsi_ca_id,
-                               String Rsi_time, int Rsi_c_no, int Rsi_state, int Rsi_cancel_auto, String Rsi_canceldate, String Rsi_idatetime, int Rsi_bandstate) {
+    public ReservationStateEntity(Long Rsi_no, Long Rsi_ri_no, Long Rsi_ca_no, Long Rsi_ui_no, Long Rsi_cc_no, String Rsi_ca_id,
+                                  String Rsi_time, int Rsi_c_no, int Rsi_state, int Rsi_cancel_auto, String Rsi_canceldate, String Rsi_idatetime, int Rsi_bandstate) {
         rsino = Rsi_no;
         rsirino = Rsi_ri_no;
         rsicano = Rsi_ca_no;

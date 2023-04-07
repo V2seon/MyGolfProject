@@ -2,7 +2,8 @@ package com.example.golf.controller;
 
 import com.example.golf.common.Pagination;
 import com.example.golf.common.SessionCheck;
-import com.example.golf.dto.ReservationSteteDto;
+import com.example.golf.dto.ReservationInfoDto;
+import com.example.golf.dto.ReservationStateDto;
 import com.example.golf.entity.*;
 import com.example.golf.repository.*;
 import com.example.golf.service.ReservationInfoService;
@@ -31,6 +32,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -50,6 +52,8 @@ public class ReservationController {
     private CourseRepository courseRepository;
     private ReservationStateRepository reservationStateRepository;
     private BgenRepository bgenRepository;
+    private ReservationInfoRepository reservationInfoRepository;
+    private CountryAccountRepository countryAccountRepository;
 
     @GetMapping("/Reservation")
     public String Reservation(Model model, HttpServletRequest request, Pageable pageable,
@@ -356,8 +360,12 @@ public class ReservationController {
                          @RequestParam(required = false, defaultValue = "", value = "seq") Long seq){
         HttpSession session = request.getSession();
         List<CourseEntity> s1 = courseRepository.findAll1(seq);
+        Optional<CountryClubEntity> s3 = countryClubRepository.findById(seq);
         HashMap<String, List> msg = new HashMap<String, List>();
+        List<String> s4 = new ArrayList<>();
+        s4.add(s3.get().getCctip());
         msg.put("course", s1);
+        msg.put("cctip", s4);
         return msg;
     }
 
@@ -372,8 +380,8 @@ public class ReservationController {
         LocalDateTime localDateTime = LocalDateTime.now();
         String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         String sdf2 = localDateTime1.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-        ReservationSteteDto reservationSteteDto = new ReservationSteteDto(null,0L,11L,9L,cname,id,sdf2,course,0,1,cancel,sdf1,0);
-        reservationInfoService.StateSave(reservationSteteDto);
+        ReservationStateDto reservationStateDto = new ReservationStateDto(null,0L,11L,9L,cname,id,sdf2,course,0,1,cancel,sdf1,0);
+        reservationInfoService.StateSave(reservationStateDto);
         return "redirect:";
     }
 
@@ -515,7 +523,7 @@ public class ReservationController {
                          @RequestParam(required = false, defaultValue = "", value = "seq") Long seq){
 
 
-        Optional<ReservationSteteEntity> s1 = reservationStateRepository.findById(seq);
+        Optional<ReservationStateEntity> s1 = reservationStateRepository.findById(seq);
         HttpSession session = request.getSession();
         String ipmsg = String.valueOf(seq);
         System.out.println(ipmsg);
@@ -652,6 +660,9 @@ public class ReservationController {
 //            List<CourseEntity> s1 = courseRepository.findAll();
             model.addAttribute("country",s2);
             List<CourseEntity> s1 = courseRepository.findAll1(17L);
+            Optional<CountryClubEntity> s3 = countryClubRepository.findById(17L);
+
+            model.addAttribute("cctip",s3.get().getCctip());
             model.addAttribute("course",s1);
             model.addAttribute("nowurl0","/Reservation");
             returnValue = "/Reservation/WaitRegisterInfo";
@@ -660,6 +671,37 @@ public class ReservationController {
         }
         return returnValue;
     }
+
+    @PostMapping("/SaveWaitRegisterInfo")
+    public String SaveWaitRegisterInfo(HttpServletRequest request, Model model,
+                                       @RequestParam(required = false, defaultValue = "", value = "mountin") Long ccname,
+                                       @RequestParam(required = false, defaultValue = "", value = "type") int type,
+                                       @RequestParam(required = false, defaultValue = "", value = "id") String id,
+                                       @RequestParam(required = false, defaultValue = "", value = "hope_c") int course,
+                                       @RequestParam(required = false, defaultValue = "", value = "startdate") String startdate,
+                                       @RequestParam(required = false, defaultValue = "", value = "enddate") String enddate,
+                                       @RequestParam(required = false, defaultValue = "", value = "choice") int choice,
+                                       @RequestParam(required = false, defaultValue = "", value = "hope_t1") int hope_t1,
+                                       @RequestParam(required = false, defaultValue = "", value = "hope_t2") int hope_t2,
+                                       @RequestParam(required = false, defaultValue = "", value = "hope_h") int hole){
+
+        Optional<CountryAccountEntity> s1 = countryAccountRepository.findByCaccnoAndCaid(ccname,id);
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        System.out.println(s1.get().getCano());
+        System.out.println(s1.get().getCauino());
+        System.out.println(s1.get().getCaccno());
+        Optional <CountryClubEntity> s2 = countryClubRepository.findById(s1.get().getCaccno());
+        String cday = String.valueOf(s2.get().getCccancelday());
+
+        ReservationInfoDto reservationInfoDto = new ReservationInfoDto(null,s1.get().getCano(),s1.get().getCauino(),s1.get().getCaccno(),
+                id,s1.get().getCapassword(),startdate,enddate,hope_t1,hope_t2,hole,course,0,0,choice,0,null,type,cday,
+                null,sdf1,null);
+        reservationInfoService.insertData1(reservationInfoDto);
+//        reservationStateRepository.deleteById(seq);
+        return "redirect:";
+    }
+
 
 
 

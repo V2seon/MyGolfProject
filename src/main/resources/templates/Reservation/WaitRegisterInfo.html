@@ -126,11 +126,11 @@
                                     <label class="col-form-label col-md-3 col-sm-3 label-align">예약일
                                     </label>
                                     <div class="col-md-6 col-sm-6 " style="display:flex; align-items: center;">
-                                        <input checked style="margin-right:5px;" type="radio" value="1" name="choice" id="al">
+                                        <input checked style="margin-right:5px;" type="radio" value="0" name="choice1" id="al">
                                         <label style="margin-right:10px;">전체 (일~토)</label>
-                                        <input style="margin-right:5px;" type="radio" value="0" name="choice" id="py">
+                                        <input style="margin-right:5px;" type="radio" value="1" name="choice1" id="py">
                                         <label style="margin-right:10px;">평일 (월~금)</label>
-                                        <input style="margin-right:5px;" type="radio" value="2" name="choice" id="ju">
+                                        <input style="margin-right:5px;" type="radio" value="2" name="choice1" id="ju">
                                         <label >주말 (토,일)</label>
                                     </div>
                                 </div>
@@ -139,7 +139,7 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 ">
                                         <select class="form-control" id = "t1">
-                                            <option>선택</option>
+                                            <option value="">선택</option>
                                             <option value=6>06</option>
                                             <option value=7>07</option>
                                             <option value=8>08</option>
@@ -160,7 +160,7 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 ">
                                         <select class="form-control" id = "t2">
-                                            <option>선택</option>
+                                            <option value="">선택</option>
                                             <option value=6>06</option>
                                             <option value=7>07</option>
                                             <option value=8>08</option>
@@ -181,7 +181,7 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 ">
                                         <select class="form-control" id = "cc">
-                                            <option>선택</option>
+                                            <option value="">선택</option>
                                             <option value=9>9홀만</option>
                                             <option value=18>18홀만</option>
                                             <option value=0>상관없음</option>
@@ -192,7 +192,7 @@
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="cctip"> 예약팁 내용
                                     </label>
                                     <div class="col-md-6 col-sm-6 ">
-                                            <textarea style="height:200px; resize:none;" readonly type="text" id="cctip" required="required" class="form-control  ">
+                                            <textarea style="height:200px; resize:none;" th:text="${cctip}" readonly type="text" id="cctip" required="required" class="form-control  ">
                                             </textarea>
                                     </div>
                                 </div>
@@ -200,9 +200,10 @@
                                 <div class="item form-group">
                                     <div class="col-md-6 col-sm-6 offset-md-3">
                                         <!--<button class="btn btn-primary" type="button">Cancel</button>-->
-                                        <button class="btn btn-primary" type="reset">리셋</button>
-                                        <button onclick="sub()" class="btn btn-success">예약하기</button>
-                                        <button onclick="test()" class="btn btn-success">확인하기</button>
+                                        <button class="btn btn-primary" onclick="move()" >목록</button>
+                                        <button class="btn btn-primary" onclick="Ininfo()" >등록</button>
+                                        <!--                                        <button onclick="sub()" class="btn btn-success">예약하기</button>-->
+<!--                                        <button onclick="test()" class="btn btn-success">확인하기</button>-->
                                     </div>
                                 </div>
                             </div>
