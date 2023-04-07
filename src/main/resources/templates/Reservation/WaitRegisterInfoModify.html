@@ -71,7 +71,7 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 ">
                                         <select id="ccname" class="form-control" onchange="chCC()">
-                                            <option th:if="${country}!=null" th:each="Co : ${country}" th:value="${Co.ccno}" th:text="${Co.ccname}">어등산</option>
+                                            <option th:selected="${info.get().getRiccno()} == ${Co.ccno}" th:if="${country}!=null" th:each="Co : ${country}" th:value="${Co.ccno}" th:text="${Co.ccname}">어등산</option>
                                         </select>
                                     </div>
                                 </div>
@@ -104,7 +104,7 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 ">
                                         <select id="course" class="form-control">
-                                            <option class="chcourse" th:if="${course}!=null" th:each="Co : ${course}" th:value="${Co.cno}" th:text="${Co.cname}"></option>
+                                            <option class="chcourse"  th:selected="${info.get().getRicourse()} == ${Co.cno}" th:if="${course}!=null" th:each="Co : ${course}" th:value="${Co.cno}" th:text="${Co.cname}"></option>
                                         </select>
                                     </div>
                                 </div>

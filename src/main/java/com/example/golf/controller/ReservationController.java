@@ -734,6 +734,13 @@ public class ReservationController {
         if(new SessionCheck().loginSessionCheck(request)){
             Optional<ReservationInfoEntity> s1 = reservationInfoRepository.findById((Long) session.getAttribute("seq"));
             model.addAttribute("info",s1);
+            List<CountryClubEntity> s2 = countryClubRepository.findAll1();
+            model.addAttribute("country",s2);
+            List<CourseEntity> s3 = courseRepository.findAll1(s1.get().getRiccno());
+            model.addAttribute("course",s3);
+            Optional<CountryClubEntity> s4 = countryClubRepository.findById(s1.get().getRiccno());
+            model.addAttribute("cctip",s4.get().getCctip());
+
             model.addAttribute("nowurl0","/Reservation");
             returnValue = "/Reservation/WaitRegisterInfoModify";
         }else{
