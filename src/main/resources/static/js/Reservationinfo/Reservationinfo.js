@@ -249,7 +249,9 @@ let sendData = {
             swal({
                     text: "예약완료.",
                     icon: "success" //"info,success,warning,error" 중 택1
-                });
+                }).then(function(){
+                      location.href = "/Reservation";
+                  })
         },
         error:function(request,status,error){
             $('#load').hide();
@@ -261,15 +263,4 @@ let sendData = {
     });
 
 }
-console.log(ccname);
-console.log(type);
-console.log(id);
-console.log(course);
-console.log(startdate);
-console.log(enddate);
-console.log(choice);
-console.log(t1);
-console.log(t2);
-console.log(cc);
-
 }
