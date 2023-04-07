@@ -71,13 +71,14 @@
                     <div class="col-md-12 col-sm-12 ">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>밴드 정보 목록<small>Band info list</small></h2>
+                                <h2>밴드 정보 목록<small>Band Greeting list</small></h2>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
                                 <br />
                                 <div class="container">
                                     <div>
+                                        <button onclick="location.href='#'" type="button" class="btn btn-round btn-primary"><i class="fa fa-pencil">등록</i></button>
                                         <div class="title_right">
                                             <div class="offset-md-9 form-group pull-right top_search">
                                                 <div class="input-group">
@@ -104,70 +105,28 @@
                                                             <thead>
                                                             <tr>
                                                                 <th>No</th>
-                                                                <th>아이디</th>
-                                                                <th>밴드 코드</th>
-                                                                <th>밴드 이름</th>
+                                                                <th>밴드이름</th>
+                                                                <th>게시글타입</th>
+                                                                <th>등록된 내용</th>
                                                                 <th>등록일</th>
-                                                                <th>수정일</th>
-                                                                <th>게시글</th>
+                                                                <th>수정</th>
+                                                                <th>삭제</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
                                                             <tr th:if="${bandlist}!=null" th:each="Co : ${bandlist}">
-                                                                <td th:text="${Co.Biseq}" style="text-align:center;"></td>
-                                                                <td th:text="${Co.Biid}" style="text-align:center;"></td>
-                                                                <td th:text="${Co.Bicode}" style="text-align:center;"></td>
-                                                                <td th:text="${Co.Biname}" style="text-align:center;"></td>
-                                                                <td th:text="${Co.Biidatetime}" style="text-align:center;"></td>
-                                                                <td th:text="${Co.Biudatetime}" style="text-align:center;"></td>
+                                                                <td th:text="${Co.Bgseq}" style="text-align:center;"></td>
+                                                                <td th:text="${Co.Bgbiseq}" style="text-align:center;"></td>
+                                                                <td th:text="${Co.Bgtype}" style="text-align:center;"></td>
+                                                                <td th:text="${Co.Bgcontents}" style="text-align:center;"></td>
+                                                                <td th:text="${Co.Bgidatetime}" style="text-align:center;"></td>
+                                                                <td th:text="${Co.Bgudatetime}" style="text-align:center;"></td>
                                                                 <td style="text-align:center;">
-                                                                    <button th:onclick="GreetingSet([[${Co.Biseq}]])" class="btn btn-primary" type="button">설정</button>
+                                                                    <button th:onclick="GreetingSet([[${Co.Bgseq}]])" class="btn btn-primary" type="button">설정</button>
                                                                 </td>
                                                             </tr>
                                                             </tbody>
                                                         </table>
-                                                        <div style="margin-top:20px; " class="card-footer clearfix">
-                                                            <ul class="pagination pagination-sm m-0 justify-content-center" id="pageList">
-                                                                <div class="page-item1" th:onclick="|javascript:paging(0,'bi')|">
-                                                                    <a class="page-link" aria-label="Previous">
-                                                                        <<
-                                                                    </a>
-                                                                </div>
-
-                                                                <div class="page-item1 prev-page" th:if="${isPrevSection}"
-                                                                     th:value="${thisSection}" th:onclick="|javascript:paging(${firstBtnIndex}-1,'bi')|">
-                                                                    <a class="page-link" aria-label="Previous">
-                                                                        <
-                                                                    </a>
-                                                                </div>
-
-                                                                <!--            onclick 구현-->
-                                                                <div th:each="page: ${#numbers.sequence(firstBtnIndex,lastBtnIndex)}"
-                                                                     id="pageItem" class="page-item" th:onclick="|javascript:paging(${page},'bi')|"
-                                                                     th:classappend="${thisPage} ==  ${page} ?  'active'" th:value="${page}">
-                                                                    <a class="page-link">
-                                                                        <span th:text="${page+1}"></span>
-                                                                    </a>
-                                                                </div>
-                                                                <!--            onclick 구현-->
-
-                                                                <!--다음버튼2-->
-                                                                <div class="page-item1 next-page" th:if="${isNextSection}"
-                                                                     th:onclick="|javascript:paging(${lastBtnIndex}+1,'bi')|"
-                                                                     th:value="${thisSection}">
-                                                                    <a class="page-link" aria-label="Next">
-                                                                        >
-                                                                    </a>
-                                                                </div>
-                                                                <!--다음버튼2-->
-
-                                                                <div class="page-item1" th:onclick="|javascript:paging(${totalPage},'bi')|">
-                                                                    <a class="page-link" id="pageItem2" aria-label="Previous">
-                                                                        >>
-                                                                    </a>
-                                                                </div>
-                                                            </ul>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

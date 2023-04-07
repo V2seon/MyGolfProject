@@ -119,3 +119,26 @@ function paging(pageValue,db){
         });
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+function GreetingSet(biseq){
+    $('#load').show();
+    location.href = "/Bandgreetinglist?no="+biseq+"";
+}
+
+
+function AllMember(blmseq){
+ // 클릭시 seq에 맞는 날짜/밴드 멤버리스트 페이지로 이동
+}
+
+

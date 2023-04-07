@@ -66,42 +66,42 @@ public class BandPredicate {
         return builder;
     }
 
-    public static BooleanBuilder BLMsearch(String selectKey, String titleText){
-        QBandLogMemberEntity qBandLogMemberEntity = QBandLogMemberEntity.bandLogMemberEntity;
-
-        BooleanBuilder builder = new BooleanBuilder();
-        System.out.println(titleText);
-        if(!selectKey.equals("전체")){
-            if(selectKey.equals("No")){
-                builder.and(qBandLogMemberEntity.blmseq.eq(Long.valueOf(titleText)));
-            }
-            else if(selectKey.equals("ID")){
-                builder.and(qBandLogMemberEntity.blmuserid.contains(titleText));
-            }
-            else if(selectKey.equals("BAND")){
-                builder.and(qBandLogMemberEntity.blmbiseq.eq(Long.valueOf(titleText)));
-            }
-            else if(selectKey.equals("PRE")){
-                builder.and(qBandLogMemberEntity.blmpredata.contains(titleText));
-            }
-            else if(selectKey.equals("TODAY")){
-                builder.and(qBandLogMemberEntity.blmtodaydata.contains(titleText));
-            }
-        }
-        else if(selectKey.equals("전체")){
-            try{
-                builder.and(qBandLogMemberEntity.blmseq.eq(Long.valueOf(titleText)));
-            }
-            catch (Exception e){
-                builder.and(
-                        (qBandLogMemberEntity.blmuserid.contains(titleText)).or
-                                (qBandLogMemberEntity.blmbiseq.eq(Long.valueOf(titleText))).or
-                                (qBandLogMemberEntity.blmpredata.contains(titleText)).or
-                                (qBandLogMemberEntity.blmtodaydata.contains(titleText)));
-            }
-        }
-        return builder;
-    }
+//    public static BooleanBuilder BLMsearch(String selectKey, String titleText){
+//        QBandLogMemberEntity qBandLogMemberEntity = QBandLogMemberEntity.bandLogMemberEntity;
+//
+//        BooleanBuilder builder = new BooleanBuilder();
+//        System.out.println(titleText);
+//        if(!selectKey.equals("전체")){
+//            if(selectKey.equals("No")){
+//                builder.and(qBandLogMemberEntity.blmseq.eq(Long.valueOf(titleText)));
+//            }
+//            else if(selectKey.equals("ID")){
+//                builder.and(qBandLogMemberEntity.blmuserid.contains(titleText));
+//            }
+//            else if(selectKey.equals("BAND")){
+//                builder.and(qBandLogMemberEntity.blmbiseq.eq(Long.valueOf(titleText)));
+//            }
+//            else if(selectKey.equals("PRE")){
+//                builder.and(qBandLogMemberEntity.blmpredata.contains(titleText));
+//            }
+//            else if(selectKey.equals("TODAY")){
+//                builder.and(qBandLogMemberEntity.blmtodaydata.contains(titleText));
+//            }
+//        }
+//        else if(selectKey.equals("전체")){
+//            try{
+//                builder.and(qBandLogMemberEntity.blmseq.eq(Long.valueOf(titleText)));
+//            }
+//            catch (Exception e){
+//                builder.and(
+//                        (qBandLogMemberEntity.blmuserid.contains(titleText)).or
+//                                (qBandLogMemberEntity.blmbiseq.eq(Long.valueOf(titleText))).or
+//                                (qBandLogMemberEntity.blmpredata.contains(titleText)).or
+//                                (qBandLogMemberEntity.blmtodaydata.contains(titleText)));
+//            }
+//        }
+//        return builder;
+//    }
 
     public static BooleanBuilder BMsearch(String selectKey, String titleText){
         QBandMemberEntity qBandMemberEntity = QBandMemberEntity.bandMemberEntity;
@@ -137,6 +137,36 @@ public class BandPredicate {
                                 (qBandMemberEntity.bmdatetime.contains(titleText)));
             }
         }
+        return builder;
+    }
+
+
+
+
+
+
+    public static BooleanBuilder BLMsearch(String selectKey, String titleText){
+        QBandLogMemberEntity qBandLogMemberEntity = QBandLogMemberEntity.bandLogMemberEntity;
+
+        BooleanBuilder builder = new BooleanBuilder();
+        System.out.println(titleText);
+//        if(!selectKey.equals("전체")){
+            if(selectKey.equals("DATE")){
+                builder.and(qBandLogMemberEntity.blmtodaydata.contains(titleText));
+            }
+            else if(selectKey.equals("BAND")){
+                builder.and(qBandLogMemberEntity.blmbiseq.eq(Long.valueOf(titleText)));
+            }
+//        }
+//        else if(selectKey.equals("전체")){
+//            try{
+//                builder.and(qBandLogMemberEntity.blmtodaydata.contains(titleText));
+//            }
+//            catch (Exception e){
+//                builder.and(
+//                        (qBandLogMemberEntity.blmbiseq.eq(Long.valueOf(titleText))));
+//            }
+//        }
         return builder;
     }
 }

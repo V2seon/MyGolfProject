@@ -6,6 +6,7 @@ import com.example.golf.repository.BandInfoRepository;
 import com.example.golf.repository.BandLogMemberRepository;
 import com.example.golf.repository.BandLogRepository;
 import com.example.golf.repository.BandMemberRepository;
+import com.example.golf.repository.BandGreetingRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,7 @@ public class BandService {
     private BandLogRepository bandLogRepository;
     private BandLogMemberRepository bandLogMemberRepository;
     private BandMemberRepository bandMemberRepository;
+    private BandGreetingRepository bandGreetingRepository;
 
     @Transactional
     public Page<BandInfoEntity> selectALLBandInfo0(Pageable pageable){

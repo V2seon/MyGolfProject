@@ -3,11 +3,14 @@ package com.example.golf.controller;
 import com.example.golf.common.Pagination;
 import com.example.golf.common.SessionCheck;
 import com.example.golf.entity.*;
+import com.example.golf.repository.BandGreetingRepository;
+import com.example.golf.repository.BandInfoRepository;
 import com.example.golf.service.BandService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +20,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
 public class BandController {
 
     private BandService bandService;
+    private BandGreetingRepository bgRepository;
+    private BandInfoRepository bandInfoRepository;
 
     @GetMapping("/Bandinfo")
     public String bandinfo(Model model, HttpServletRequest request, Pageable pageable,
@@ -203,7 +211,13 @@ public class BandController {
             HttpSession session = request.getSession();
 
             pageable = PageRequest.of(page, 10);
-            Page<BandMemberEntity> s1 = bandService.selectALLBandMember0(pageable);
+//            Page<BandMemberEntity> s1 = bandService.selectALLBandMember0(pageable);
+            Page<BandLogMemberEntity> s1 = bandService.selectALLBandLogMember0(pageable);
+            List<BandInfoEntity> s2 = bandInfoRepository.findAll();
+            Map<Long,String> seqname = new HashMap<Long,String>();
+            for (int i=0;i<s2.size();i++){
+                seqname.put(s2.get(i).getBiseq(),s2.get(i).getBiname());
+            }
 
             Pagination pagination = new Pagination(s1.getTotalPages(), page);
 
@@ -216,6 +230,7 @@ public class BandController {
 
             model.addAttribute("bandlist", s1); //페이지 객체 리스트
             model.addAttribute("nowurl0","/Bandmember");
+            model.addAttribute("seqname", seqname);
 
             returnValue = "/Band/BandMember.html";
         }else{
@@ -231,8 +246,34 @@ public class BandController {
                                   @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText){
         HttpSession session = request.getSession();
 
-        Pageable pageable = PageRequest.of(page, 10);
-        int totalPages = bandService.selectALLBandMember(selectKey, titleText, pageable).getTotalPages();
+        List<BandInfoEntity> s2 = bandInfoRepository.findAll();
+        Map<Long, String> seqname = new HashMap<Long, String>();
+        for (int i = 0; i < s2.size(); i++) {
+            seqname.put(s2.get(i).getBiseq(), s2.get(i).getBiname());
+        }
+
+        if(selectKey.equals("BAND")) { // band이름으로 검색
+            boolean bandnameCheck = false;
+            for (String value : seqname.values()) { // band이름이 포함되어 있는지 체크
+                if (value.contains(titleText)) {
+                    bandnameCheck = true;
+                    break;
+                }
+            }
+            if (bandnameCheck) { // band이름이 포함되어 있을경우 seq값으로 변경
+                for (Long key : seqname.keySet()) {
+                    if (seqname.get(key).contains(titleText)) {
+                        titleText = String.valueOf(key);
+                        break;
+                    }
+                }
+            }
+        }
+
+//        Pageable pageable = PageRequest.of(page, 10);
+        Pageable pageable = PageRequest.of(page, 10, Sort.by("blmseq").descending()); // 내림차순출력
+//        int totalPages = bandService.selectALLBandMember(selectKey, titleText, pageable).getTotalPages();
+        int totalPages = bandService.selectALLBandLogMember(selectKey, titleText, pageable).getTotalPages();
         Pagination pagination = new Pagination(totalPages, page);
 
         model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
@@ -243,8 +284,11 @@ public class BandController {
         model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
 
         //서비스 엔티티 추가후 주석 풀고 사용
-        Page<BandMemberEntity> pageList = bandService.selectALLBandMember(selectKey, titleText, pageable);
+//        Page<BandMemberEntity> pageList = bandService.selectALLBandMember(selectKey, titleText, pageable);
+        Page<BandLogMemberEntity> pageList = bandService.selectALLBandLogMember(selectKey, titleText, pageable);
+
         model.addAttribute("nowurl0","/Bandmember");
+        model.addAttribute("seqname", seqname);
 
 
         model.addAttribute("bandlist", pageList); //페이지 객체 리스트
@@ -290,6 +334,21 @@ public class BandController {
             model.addAttribute("nowurl0","/Bandlogmember");
 
             returnValue = "/Band/BandTemplateRegister.html";
+        }else{
+            returnValue = "login";
+        }
+        return returnValue;
+    }
+///
+    @GetMapping("/Bandgreetinglist")
+    public String bandgreetinglist(Model model, HttpServletRequest request,
+                                   @RequestParam(required = false, defaultValue = "", value = "no") Long no) {
+        String returnValue = "";
+        if(new SessionCheck().loginSessionCheck(request)){
+            List<BandGreetingEntity> bgdata = bgRepository.findData(no);
+            model.addAttribute("bandlist", bgdata);
+
+            returnValue = "/Band/BandGreetingList.html";
         }else{
             returnValue = "login";
         }
