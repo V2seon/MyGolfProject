@@ -43,6 +43,9 @@ public class ReservationSteteEntity {
     @Column(name = "RSI_STATE")
     private int rsistate;
 
+    @Column(name = "RSI_CANCEL_AUTO")
+    private int rsicancelauto;
+
     @Column(name = "RSI_CANCEL_DATE")
     private String rsicanceldate;
 
@@ -54,7 +57,7 @@ public class ReservationSteteEntity {
 
     @Builder
     public ReservationSteteEntity(Long Rsi_no, Long Rsi_ri_no, Long Rsi_ca_no, Long Rsi_ui_no, Long Rsi_cc_no, String Rsi_ca_id,
-                               String Rsi_time, int Rsi_c_no, int Rsi_state, String Rsi_canceldate, String Rsi_idatetime, int Rsi_bandstate) {
+                               String Rsi_time, int Rsi_c_no, int Rsi_state, int Rsi_cancel_auto, String Rsi_canceldate, String Rsi_idatetime, int Rsi_bandstate) {
         rsino = Rsi_no;
         rsirino = Rsi_ri_no;
         rsicano = Rsi_ca_no;
@@ -64,6 +67,7 @@ public class ReservationSteteEntity {
         rsitime = Rsi_time;
         rsicno = Rsi_c_no;
         rsistate = Rsi_state;
+        rsicancelauto = Rsi_cancel_auto;
         rsicanceldate = Rsi_canceldate;
         rsiidatetime = Rsi_idatetime;
         rsibandstate = Rsi_bandstate;

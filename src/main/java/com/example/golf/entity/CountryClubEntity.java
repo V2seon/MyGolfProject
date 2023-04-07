@@ -42,6 +42,9 @@ public class CountryClubEntity {
     @Column(name="CC_RESERVATION")
     private int ccreservation;
 
+    @Column(name="CC_TIP")
+    private String cctip;
+
     @Column(name="CC_IDATETIME")
     private LocalDateTime ccidatetime;
 
@@ -50,7 +53,7 @@ public class CountryClubEntity {
 
     @Builder
     public CountryClubEntity(Long Cc_no, String Cc_name, String Cc_address, String Cc_url, int Cc_cancel_day, int Cc_opentime, int Cc_type, int Cc_reservation,
-                             LocalDateTime Cc_idatetime, LocalDateTime Cc_udatetime) {
+                             String Cc_tip, LocalDateTime Cc_idatetime, LocalDateTime Cc_udatetime) {
         ccno = Cc_no;
         ccname = Cc_name;
         ccaddress = Cc_address;
@@ -59,6 +62,7 @@ public class CountryClubEntity {
         ccopentime = Cc_opentime;
         cctype = Cc_type;
         ccreservation = Cc_reservation;
+        cctip = Cc_tip;
         ccidatetime = Cc_idatetime;
         ccudatetime = Cc_udatetime;
     }

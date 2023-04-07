@@ -19,12 +19,13 @@ public class CountryClubDto {
     private int ccopentime;
     private int cctype;
     private int ccreservation;
+    private String cctip;
     private LocalDateTime ccidatetime;
     private LocalDateTime ccudatetime;
 
     @Builder
     public CountryClubDto(Long Cc_no, String Cc_name, String Cc_address, String Cc_url, int Cc_cancel_day, int Cc_opentime, int Cc_type, int Cc_reservation,
-                          LocalDateTime Cc_idatetime, LocalDateTime Cc_udatetime) {
+                          String Cc_tip,LocalDateTime Cc_idatetime, LocalDateTime Cc_udatetime) {
         ccno = Cc_no;
         ccname = Cc_name;
         ccaddress = Cc_address;
@@ -33,6 +34,7 @@ public class CountryClubDto {
         ccopentime = Cc_opentime;
         cctype = Cc_type;
         ccreservation = Cc_reservation;
+        cctip = Cc_tip;
         ccidatetime = Cc_idatetime;
         ccudatetime = Cc_udatetime;
     }
@@ -47,6 +49,7 @@ public class CountryClubDto {
                 .Cc_opentime(ccopentime)
                 .Cc_type(cctype)
                 .Cc_reservation(ccreservation)
+                .Cc_tip(cctip)
                 .Cc_idatetime(ccidatetime)
                 .Cc_udatetime(ccudatetime)
                 .build();

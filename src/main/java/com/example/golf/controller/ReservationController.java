@@ -372,7 +372,7 @@ public class ReservationController {
         LocalDateTime localDateTime = LocalDateTime.now();
         String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         String sdf2 = localDateTime1.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-        ReservationSteteDto reservationSteteDto = new ReservationSteteDto(null,0L,11L,9L,cname,id,sdf2,course,0,cancel,sdf1,0);
+        ReservationSteteDto reservationSteteDto = new ReservationSteteDto(null,0L,11L,9L,cname,id,sdf2,course,0,1,cancel,sdf1,0);
         reservationInfoService.StateSave(reservationSteteDto);
         return "redirect:";
     }

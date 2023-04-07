@@ -32,6 +32,7 @@ import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
+@RequestMapping
 public class UserinfoController {
 
     private UserinfoRepository userinfoRepository;

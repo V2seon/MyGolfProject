@@ -144,10 +144,11 @@ public class CountryClubController {
                              @RequestParam(required = false, defaultValue = "", value = "day") int day,
                              @RequestParam(required = false, defaultValue = "", value = "opentime") int opentime,
                              @RequestParam(required = false, defaultValue = "", value = "retype") int retype,
-                             @RequestParam(required = false, defaultValue = "", value = "possible") int possible){
+                             @RequestParam(required = false, defaultValue = "", value = "possible") int possible,
+                             @RequestParam(required = false, defaultValue = "", value = "cctip") String cctip){
         LocalDateTime sdf1 = LocalDateTime.now();
         Optional<CountryClubEntity> s1 = countryClubRepository.findById(seq);
-        CountryClubDto countryClubDto = new CountryClubDto(seq,name,address,url,day,opentime,retype,possible,s1.get().getCcidatetime(),sdf1);
+        CountryClubDto countryClubDto = new CountryClubDto(seq,name,address,url,day,opentime,retype,possible,cctip,s1.get().getCcidatetime(),sdf1);
         countryclubService.save(countryClubDto);
         return "redirect:";
     }
@@ -163,6 +164,7 @@ public class CountryClubController {
     @PostMapping("/SaveCC")
     public String countryclub(HttpServletRequest request, Model model,
                               @RequestParam(required = false, defaultValue = "", value = "name") String ccname,
+                              @RequestParam(required = false, defaultValue = "", value = "address") String address,
                               @RequestParam(required = false, defaultValue = "", value = "url") String ccurl,
                               @RequestParam(required = false, defaultValue = "", value = "day") int cccancel,
                               @RequestParam(required = false, defaultValue = "", value = "opentime") int ccopen,
@@ -179,7 +181,7 @@ public class CountryClubController {
 
         LocalDateTime localDateTime = LocalDateTime.now();
         String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        CountryClubDto countryClubDto = new CountryClubDto(null, ccname,null, ccurl, cccancel, ccopen, cctype, ccrv, localDateTime,null);
+        CountryClubDto countryClubDto = new CountryClubDto(null, ccname,address, ccurl, cccancel, ccopen, cctype, ccrv,cctip, localDateTime,null);
         reservationInfoService.Ccinsert(countryClubDto);
         return "redirect:";
     }
