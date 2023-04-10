@@ -119,7 +119,7 @@
                                 <div class="item form-group">
                                     <div class="offset-md-11">
                                         <button onclick="Temgo()" class="btn btn-primary" ><a>목록</a></button>
-                                        <button onclick="ModifyTem(${seq})" class="btn btn-primary" ><a>수정</a></button>
+                                        <button  th:onclick="|javascript:ModifyTem(${seq})|" class="btn btn-primary" ><a>수정</a></button>
                                     </div>
                                 </div>
 
