@@ -1,10 +1,12 @@
 package com.example.golf.service;
 
-import com.example.golf.dto.BandTemplateDto;
 import com.example.golf.entity.*;
 import com.example.golf.predicate.BandPredicate;
-import com.example.golf.predicate.BandTemPredicate;
-import com.example.golf.repository.*;
+import com.example.golf.repository.BandInfoRepository;
+import com.example.golf.repository.BandLogMemberRepository;
+import com.example.golf.repository.BandLogRepository;
+import com.example.golf.repository.BandMemberRepository;
+import com.example.golf.repository.BandGreetingRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +23,6 @@ public class BandService {
     private BandLogMemberRepository bandLogMemberRepository;
     private BandMemberRepository bandMemberRepository;
     private BandGreetingRepository bandGreetingRepository;
-    private BandTemplateRepository bandTemplateRepository;
 
     @Transactional
     public Page<BandInfoEntity> selectALLBandInfo0(Pageable pageable){
@@ -61,6 +62,21 @@ public class BandService {
     @Transactional
     public Page <BandMemberEntity> selectALLBandMember(String selectKey, String titleText, Pageable pageable){
         return bandMemberRepository.findAll(BandPredicate.BMsearch(selectKey, titleText),pageable);
+    }
+
+    @Transactional
+    public Page<BandMemberEntity> selectALLBandMemberList0(String code, String date, String titleText, Pageable pageable){
+        return bandMemberRepository.findData(code, date, titleText, pageable);
+    }
+
+//    @Transactional
+//    public Page <BandMemberEntity> selectALLBandMemberList(String code, String date, String selectKey, String titleText, Pageable pageable){
+//        return bandMemberRepository.findAll(BandPredicate.BMLsearch(code, date, selectKey, titleText), pageable);
+//    }
+
+    @Transactional
+    public Page <BandMemberEntity> selectALLBandMemberList(String code, String date, String selectKey, String titleText, Pageable pageable){
+        return bandMemberRepository.findData(code, date, titleText, pageable);
     }
 
     //////이선재

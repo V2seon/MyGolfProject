@@ -19,6 +19,10 @@ public interface BandInfoRepository extends JpaRepository<BandInfoEntity, String
     @Query(value = "SELECT * FROM band_info" , nativeQuery = true)
     List<BandInfoEntity> findAll();
 
+    // 밴드 코드 가져오기
+    @Query(value = "SELECT BI_CODE FROM band_info WHERE BI_SEQ =:no" , nativeQuery = true)
+    String findCode(Long no);
+
 }
 
 

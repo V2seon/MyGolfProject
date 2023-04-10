@@ -132,7 +132,8 @@ public class UserinfoController {
         model.addAttribute("userdata",s1);
         model.addAttribute("nowurl0","/Userinfo");
 
-        return "/Userinfo/DetailUserinfo";
+//        return "/Userinfo/DetailUserinfo";
+        return "/Userinfo/testDetailUserinfo";
     }
 
 }

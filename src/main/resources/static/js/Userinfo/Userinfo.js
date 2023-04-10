@@ -107,5 +107,19 @@ function detailUser(seq){
 }
 
 function userinfo(){
+    $("#load").show();
+    location.href="/Userinfo";
+}
+
+function AddUserInfo(){
+    $("#load").show();
+    location.href="/userinfo_detail";
+}
+
+function uiedit(){
+    location.href="/Userinfo";
+}
+
+function uiedit(){
     location.href="/Userinfo";
 }
