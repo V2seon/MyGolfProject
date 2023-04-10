@@ -1,12 +1,10 @@
 package com.example.golf.service;
 
+import com.example.golf.dto.BandTemplateDto;
 import com.example.golf.entity.*;
 import com.example.golf.predicate.BandPredicate;
-import com.example.golf.repository.BandInfoRepository;
-import com.example.golf.repository.BandLogMemberRepository;
-import com.example.golf.repository.BandLogRepository;
-import com.example.golf.repository.BandMemberRepository;
-import com.example.golf.repository.BandGreetingRepository;
+import com.example.golf.predicate.BandTemPredicate;
+import com.example.golf.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +21,7 @@ public class BandService {
     private BandLogMemberRepository bandLogMemberRepository;
     private BandMemberRepository bandMemberRepository;
     private BandGreetingRepository bandGreetingRepository;
+    private BandTemplateRepository bandTemplateRepository;
 
     @Transactional
     public Page<BandInfoEntity> selectALLBandInfo0(Pageable pageable){
@@ -62,5 +61,26 @@ public class BandService {
     @Transactional
     public Page <BandMemberEntity> selectALLBandMember(String selectKey, String titleText, Pageable pageable){
         return bandMemberRepository.findAll(BandPredicate.BMsearch(selectKey, titleText),pageable);
+    }
+
+    //////이선재
+    @Transactional
+    public Long saveTem(BandTemplateDto bandTemplateDto){
+        return bandTemplateRepository.save(bandTemplateDto.toEntity()).getBtseq();
+    }
+
+    @Transactional
+    public Page <BandTemplateEntity> selectALLBandTem(Pageable pageable){
+        return bandTemplateRepository.findAll(pageable);
+    }
+
+    @Transactional
+    public Page <BandTemplateEntity> selectALLBandTem1(String selectKey, String titleText, Pageable pageable){
+        return bandTemplateRepository.findAll(BandTemPredicate.BTsearch(selectKey, titleText),pageable);
+    }
+
+    @Transactional
+    public void changeuseState(Long num, int use_state){
+        bandTemplateRepository.updateuseState(num, use_state);
     }
 }

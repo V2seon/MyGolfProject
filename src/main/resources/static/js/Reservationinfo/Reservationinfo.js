@@ -122,6 +122,9 @@ function searching1(Ccname){
 function Waitinfoin(){
 location.href="/WaitRegisterInfo"
 }
+function move(){
+location.href="/Reservation"
+}
 
 function chCC(){
     $('option.chcourse').remove();
@@ -280,4 +283,56 @@ function Editinfo(seq){
                 error:function(request,status,error){
                 }
             });
+}
+
+function Modifyinfo(seq){
+const ccname = document.getElementById("ccname").value;
+const type = $('input[name=choice]:checked').val();
+const id = document.getElementById("id").value;
+const course = document.getElementById("course").value;
+const startdate = document.getElementById("startdate").value;
+const enddate = document.getElementById("enddate").value;
+const choice = $('input[name=choice1]:checked').val();
+//const pw = document.getElementById("pw").value;
+const t1 = document.getElementById("t1").value;
+const t2 = document.getElementById("t2").value;
+//const c = document.getElementById("c").value;
+const cc = document.getElementById("cc").value;
+
+
+let sendData = {
+                "seq":seq,
+                "mountin" : ccname,
+                "type" : type,
+                "id" : id,
+                "hope_c" : course,
+                "startdate" : startdate,
+                "enddate" : enddate,
+                "choice" : choice,
+                "hope_t1" : t1,
+                "hope_t2" : t2,
+                "hope_h" : cc
+            }
+
+    $.ajax({
+        url      : "/EditWaitRegisterInfo",
+        data     : sendData,
+        type     : "POST",
+        success : function(result) {
+            $('#load').hide();
+            swal({
+                    text: "수정완료.",
+                    icon: "success" //"info,success,warning,error" 중 택1
+                }).then(function(){
+                      location.href = "/Reservation";
+                  })
+        },
+        error:function(request,status,error){
+            $('#load').hide();
+            swal({
+                text: "서버에 문제가 발생했습니다.",
+                icon: "warning" //"info,success,warning,error" 중 택1
+            });
+        }
+    });
 }

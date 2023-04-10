@@ -71,7 +71,7 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 ">
                                         <select id="ccname" class="form-control" onchange="chCC()">
-                                            <option th:selected="${info.get().getRiccno()} == ${Co.ccno}" th:if="${country}!=null" th:each="Co : ${country}" th:value="${Co.ccno}" th:text="${Co.ccname}">어등산</option>
+                                            <option th:selected="${Riccno} == ${Co.ccno}" th:if="${country}!=null" th:each="Co : ${country}" th:value="${Co.ccno}" th:text="${Co.ccname}">어등산</option>
                                         </select>
                                     </div>
                                 </div>
@@ -79,17 +79,18 @@
                                     <label class="col-form-label col-md-3 col-sm-3 label-align">예약타입
                                     </label>
                                     <div class="col-md-6 col-sm-6 " style="display:flex; align-items: center;">
-                                        <input style="margin-right:5px;" type="radio" value="1" name="choice" id="open">
+                                        <input th:checked="${Richoice} == 1" style="margin-right:5px;" type="radio" value="1" name="choice" id="open">
                                         <label style="margin-right:10px;" for="open">오픈티</label>
-                                        <input style="margin-right:5px;" type="radio" value="0" name="choice" id="can">
+                                        <input th:checked="${Richoice} == 0" style="margin-right:5px;" type="radio" value="0" name="choice" id="can">
                                         <label for="can">취소티</label>
+
                                     </div>
                                 </div>
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="id">아이디
                                     </label>
                                     <div class="col-md-6 col-sm-6 ">
-                                        <input class="form-control" type="text" id="id">
+                                        <input th:value="${Ricaid}" class="form-control" type="text" id="id">
                                     </div>
                                 </div>
 <!--                                <div class="item form-group">-->
@@ -104,7 +105,7 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 ">
                                         <select id="course" class="form-control">
-                                            <option class="chcourse"  th:selected="${info.get().getRicourse()} == ${Co.cno}" th:if="${course}!=null" th:each="Co : ${course}" th:value="${Co.cno}" th:text="${Co.cname}"></option>
+                                            <option class="chcourse" th:selected="${getRicourse} == ${Co.cno}" th:if="${course}!=null" th:each="Co : ${course}" th:value="${Co.cno}" th:text="${Co.cname}"></option>
                                         </select>
                                     </div>
                                 </div>
@@ -112,25 +113,25 @@
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="startdate">예약시작일
                                     </label>
                                     <div class="col-md-6 col-sm-6 ">
-                                        <input class="form-control" type="date" id="startdate">
+                                        <input th:value="${Ristartdate}" class="form-control" type="date" id="startdate">
                                     </div>
                                 </div>
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="enddate">예약종료일
                                     </label>
                                     <div class="col-md-6 col-sm-6 ">
-                                        <input class="form-control" type="date" id="enddate">
+                                        <input th:value="${Rienddate}" class="form-control" type="date" id="enddate">
                                     </div>
                                 </div>
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align">예약일
                                     </label>
                                     <div class="col-md-6 col-sm-6 " style="display:flex; align-items: center;">
-                                        <input checked style="margin-right:5px;" type="radio" value="0" name="choice1" id="al">
+                                        <input th:checked="${Ritype} == 0" checked style="margin-right:5px;" type="radio" value="0" name="choice1" id="al">
                                         <label style="margin-right:10px;">전체 (일~토)</label>
-                                        <input style="margin-right:5px;" type="radio" value="1" name="choice1" id="py">
+                                        <input th:checked="${Ritype} == 1" style="margin-right:5px;" type="radio" value="1" name="choice1" id="py">
                                         <label style="margin-right:10px;">평일 (월~금)</label>
-                                        <input style="margin-right:5px;" type="radio" value="2" name="choice1" id="ju">
+                                        <input th:checked="${Ritype} == 2" style="margin-right:5px;" type="radio" value="2" name="choice1" id="ju">
                                         <label >주말 (토,일)</label>
                                     </div>
                                 </div>
@@ -140,18 +141,18 @@
                                     <div class="col-md-6 col-sm-6 ">
                                         <select class="form-control" id = "t1">
                                             <option value="">선택</option>
-                                            <option value=6>06</option>
-                                            <option value=7>07</option>
-                                            <option value=8>08</option>
-                                            <option value=9>09</option>
-                                            <option value=10>10</option>
-                                            <option value=11>11</option>
-                                            <option value=12>12</option>
-                                            <option value=13>13</option>
-                                            <option value=14>14</option>
-                                            <option value=15>15</option>
-                                            <option value=16>16</option>
-                                            <option value=17>17</option>
+                                            <option th:selected="${Ristarttime} == 6" value=6>06</option>
+                                            <option th:selected="${Ristarttime} == 7" value=7>07</option>
+                                            <option th:selected="${Ristarttime} == 8" value=8>08</option>
+                                            <option th:selected="${Ristarttime} == 9" value=9>09</option>
+                                            <option th:selected="${Ristarttime} == 10" value=10>10</option>
+                                            <option th:selected="${Ristarttime} == 11" value=11>11</option>
+                                            <option th:selected="${Ristarttime} == 12" value=12>12</option>
+                                            <option th:selected="${Ristarttime} == 13" value=13>13</option>
+                                            <option th:selected="${Ristarttime} == 14" value=14>14</option>
+                                            <option th:selected="${Ristarttime} == 15" value=15>15</option>
+                                            <option th:selected="${Ristarttime} == 16" value=16>16</option>
+                                            <option th:selected="${Ristarttime} == 17" value=17>17</option>
                                         </select>
                                     </div>
                                 </div>
@@ -161,18 +162,18 @@
                                     <div class="col-md-6 col-sm-6 ">
                                         <select class="form-control" id = "t2">
                                             <option value="">선택</option>
-                                            <option value=6>06</option>
-                                            <option value=7>07</option>
-                                            <option value=8>08</option>
-                                            <option value=9>09</option>
-                                            <option value=10>10</option>
-                                            <option value=11>11</option>
-                                            <option value=12>12</option>
-                                            <option value=13>13</option>
-                                            <option value=14>14</option>
-                                            <option value=15>15</option>
-                                            <option value=16>16</option>
-                                            <option value=17>17</option>
+                                            <option th:selected="${Riendtime} == 6" value=6>06</option>
+                                            <option th:selected="${Riendtime} == 7" value=7>07</option>
+                                            <option th:selected="${Riendtime} == 8" value=8>08</option>
+                                            <option th:selected="${Riendtime} == 9" value=9>09</option>
+                                            <option th:selected="${Riendtime} == 10" value=10>10</option>
+                                            <option th:selected="${Riendtime} == 11" value=11>11</option>
+                                            <option th:selected="${Riendtime} == 12" value=12>12</option>
+                                            <option th:selected="${Riendtime} == 13" value=13>13</option>
+                                            <option th:selected="${Riendtime} == 14" value=14>14</option>
+                                            <option th:selected="${Riendtime} == 15" value=15>15</option>
+                                            <option th:selected="${Riendtime} == 16" value=16>16</option>
+                                            <option th:selected="${Riendtime} == 17" value=17>17</option>
                                         </select>
                                     </div>
                                 </div>
@@ -182,9 +183,9 @@
                                     <div class="col-md-6 col-sm-6 ">
                                         <select class="form-control" id = "cc">
                                             <option value="">선택</option>
-                                            <option value=9>9홀만</option>
-                                            <option value=18>18홀만</option>
-                                            <option value=0>상관없음</option>
+                                            <option th:selected="${Rihall} == 9" value=9>9홀만</option>
+                                            <option th:selected="${Rihall} == 18" value=18>18홀만</option>
+                                            <option th:selected="${Rihall} == 0" value=0>상관없음</option>
                                         </select>
                                     </div>
                                 </div>
@@ -201,7 +202,7 @@
                                     <div class="col-md-6 col-sm-6 offset-md-3">
                                         <!--<button class="btn btn-primary" type="button">Cancel</button>-->
                                         <button class="btn btn-primary" onclick="move()" >목록</button>
-                                        <button class="btn btn-primary" onclick="Ininfo()" >등록</button>
+                                        <button class="btn btn-primary" th:onclick="|javascript:Modifyinfo(${Rino})|" >수정</button>
                                         <!--                                        <button onclick="sub()" class="btn btn-success">예약하기</button>-->
 <!--                                        <button onclick="test()" class="btn btn-success">확인하기</button>-->
                                     </div>

@@ -2,9 +2,11 @@ package com.example.golf.controller;
 
 import com.example.golf.common.Pagination;
 import com.example.golf.common.SessionCheck;
+import com.example.golf.dto.BandTemplateDto;
 import com.example.golf.entity.*;
 import com.example.golf.repository.BandGreetingRepository;
 import com.example.golf.repository.BandInfoRepository;
+import com.example.golf.repository.BandTemplateRepository;
 import com.example.golf.service.BandService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,16 +15,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -31,6 +33,7 @@ public class BandController {
     private BandService bandService;
     private BandGreetingRepository bgRepository;
     private BandInfoRepository bandInfoRepository;
+    private BandTemplateRepository bandTemplateRepository;
 
     @GetMapping("/Bandinfo")
     public String bandinfo(Model model, HttpServletRequest request, Pageable pageable,
@@ -304,25 +307,52 @@ public class BandController {
             HttpSession session = request.getSession();
 
             pageable = PageRequest.of(page, 10);
-//            Page<BandLogMemberEntity> s1 = bandService.selectALLBandLogMember0(pageable);
-//
-//            Pagination pagination = new Pagination(s1.getTotalPages(), page);
-//
-//            model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
-//            model.addAttribute("isNextSection", pagination.isNextSection()); //다음버튼 유무 확인하기 위함
-//            model.addAttribute("isPrevSection", pagination.isPrevSection()); //이전버튼 유무 확인하기 위함
-//            model.addAttribute("firstBtnIndex", pagination.getFirstBtnIndex()); //버튼 페이징 - 첫시작 인덱스
-//            model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
-//            model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
-//
-//            model.addAttribute("bandlist", s1); //페이지 객체 리스트
+            Page<BandTemplateEntity> s1 = bandService.selectALLBandTem(pageable);
+
+            Pagination pagination = new Pagination(s1.getTotalPages(), page);
+
+            model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
+            model.addAttribute("isNextSection", pagination.isNextSection()); //다음버튼 유무 확인하기 위함
+            model.addAttribute("isPrevSection", pagination.isPrevSection()); //이전버튼 유무 확인하기 위함
+            model.addAttribute("firstBtnIndex", pagination.getFirstBtnIndex()); //버튼 페이징 - 첫시작 인덱스
+            model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
+            model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
+
+            model.addAttribute("bandlist", s1); //페이지 객체 리스트
             model.addAttribute("nowurl0","/Bandlogmember");
 
-            returnValue = "/Band/Bandtemplate.html";
+            returnValue = "/Band/BandtemplateList.html";
         }else{
             returnValue = "login";
         }
         return returnValue;
+    }
+
+    @RequestMapping(value = "/search_Bandtemplate", method = RequestMethod.POST)
+    public String search_Bandtemplate(Model model, HttpServletRequest request,
+                                     @RequestParam(required = false ,defaultValue = "0" , value="page") int page,
+                                     @RequestParam(required = false ,defaultValue = "" , value="selectKey") String selectKey,
+                                     @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText){
+        HttpSession session = request.getSession();
+
+        Pageable pageable = PageRequest.of(page, 10);
+        int totalPages = bandService.selectALLBandTem1(selectKey, titleText, pageable).getTotalPages();
+        Pagination pagination = new Pagination(totalPages, page);
+
+        model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
+        model.addAttribute("isNextSection", pagination.isNextSection()); //다음버튼 유무 확인하기 위함
+        model.addAttribute("isPrevSection", pagination.isPrevSection()); //이전버튼 유무 확인하기 위함
+        model.addAttribute("firstBtnIndex", pagination.getFirstBtnIndex()); //버튼 페이징 - 첫시작 인덱스
+        model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
+        model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
+
+        //서비스 엔티티 추가후 주석 풀고 사용
+        Page<BandTemplateEntity> pageList = bandService.selectALLBandTem1(selectKey, titleText, pageable);
+
+        model.addAttribute("bandlist", pageList); //페이지 객체 리스트
+        model.addAttribute("nowurl0","/Bandlogmember");
+
+        return "/Band/BandtemplateList :: #intable";
     }
 
     @GetMapping("/BandTemplateRegister")
@@ -339,7 +369,90 @@ public class BandController {
         }
         return returnValue;
     }
-///
+
+    @PostMapping("/inBandTemplate")
+    public String inBandTemplate(Model m, HttpServletRequest request,
+                           @RequestParam(required = false, defaultValue = "", value = "temcode") String temcode,
+                           @RequestParam(required = false, defaultValue = "", value = "temname") String temname,
+                           @RequestParam(required = false, defaultValue = "", value = "kakao") int kakao,
+                           @RequestParam(required = false, defaultValue = "", value = "email") int email,
+                           @RequestParam(required = false, defaultValue = "", value = "sms") int sms,
+                           @RequestParam(required = false, defaultValue = "", value = "band") int band,
+                           @RequestParam(required = false, defaultValue = "", value = "temcon") String temcon){
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        BandTemplateDto bandTemplateDto = new BandTemplateDto(null,temcode,temname,temcon,kakao,email,sms,band,1,0,sdf1,null);
+        bandService.saveTem(bandTemplateDto);
+        return "redirect:";
+    }
+
+    @GetMapping("/Bttemgo")
+    public String Bttemgo(Model model, HttpServletRequest request,
+                          @RequestParam(required = false ,defaultValue = "" , value="seq") Long seq){
+        String returnValue = "";
+        HttpSession session = request.getSession();
+        if(new SessionCheck().loginSessionCheck(request)){
+            session.setAttribute("seq",seq);
+            model.addAttribute("nowurl0","/Bandlogmember");
+            returnValue = "/Band/BandTemplateModify.html";
+        }else{
+            returnValue = "login";
+        }
+        return returnValue;
+    }
+
+    @GetMapping("/BttemModify")
+    public String BttemModify(Model model, HttpServletRequest request){
+        String returnValue = "";
+        HttpSession session = request.getSession();
+        if(new SessionCheck().loginSessionCheck(request)){
+            model.addAttribute("nowurl0","/Bandlogmember");
+            Optional<BandTemplateEntity> s1 = bandTemplateRepository.findById((Long) session.getAttribute("seq"));
+            model.addAttribute("seq",s1.get().getBtseq());
+            model.addAttribute("temcode",s1.get().getBttemcode());
+            model.addAttribute("temname",s1.get().getBttemname());
+            model.addAttribute("temcontent",s1.get().getBttemcontent());
+            model.addAttribute("kakao",s1.get().getBtkakaostate());
+            model.addAttribute("email",s1.get().getBtemailstate());
+            model.addAttribute("sms",s1.get().getBtsmsstate());
+            model.addAttribute("band",s1.get().getBtbandstate());
+
+            returnValue = "/Band/BandTemplateModify";
+        }else{
+            returnValue = "login";
+        }
+        return returnValue;
+    }
+
+    @PostMapping("/EditBandTemplate")
+    public String EditBandTemplate(Model m, HttpServletRequest request,
+                                   @RequestParam(required = false, defaultValue = "", value = "seq") Long seq,
+                                   @RequestParam(required = false, defaultValue = "", value = "temcode") String temcode,
+                                   @RequestParam(required = false, defaultValue = "", value = "temname") String temname,
+                                   @RequestParam(required = false, defaultValue = "", value = "kakao") int kakao,
+                                   @RequestParam(required = false, defaultValue = "", value = "email") int email,
+                                   @RequestParam(required = false, defaultValue = "", value = "sms") int sms,
+                                   @RequestParam(required = false, defaultValue = "", value = "band") int band,
+                                   @RequestParam(required = false, defaultValue = "", value = "temcon") String temcon){
+        Optional <BandTemplateEntity> s1 = bandTemplateRepository.findById(seq);
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        BandTemplateDto bandTemplateDto = new BandTemplateDto(seq,temcode,temname,temcon,kakao,email,sms,band,1,0,s1.get().getBtidatetime(),sdf1);
+        bandService.saveTem(bandTemplateDto);
+        return "redirect:";
+    }
+
+    @PostMapping("/EditBandTemuse")
+    public String EditBandTemuse(Model m, HttpServletRequest request,
+                                 @RequestParam(required = false, defaultValue = "", value = "seq") Long seq,
+                                 @RequestParam(required = false, defaultValue = "", value = "usestate") int usestate){
+        bandService.changeuseState(seq,usestate);
+        return "redirect:";
+    }
+
+
+
+    ///
     @GetMapping("/Bandgreetinglist")
     public String bandgreetinglist(Model model, HttpServletRequest request,
                                    @RequestParam(required = false, defaultValue = "", value = "no") Long no) {

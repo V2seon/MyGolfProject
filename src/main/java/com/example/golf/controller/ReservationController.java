@@ -711,6 +711,38 @@ public class ReservationController {
         return "redirect:";
     }
 
+    @PostMapping("/EditWaitRegisterInfo")
+    public String EditWaitRegisterInfo(HttpServletRequest request, Model model,
+                                       @RequestParam(required = false, defaultValue = "", value = "seq") Long seq,
+                                       @RequestParam(required = false, defaultValue = "", value = "mountin") Long ccname,
+                                       @RequestParam(required = false, defaultValue = "", value = "type") int type,
+                                       @RequestParam(required = false, defaultValue = "", value = "id") String id,
+                                       @RequestParam(required = false, defaultValue = "", value = "hope_c") int course,
+                                       @RequestParam(required = false, defaultValue = "", value = "startdate") String startdate,
+                                       @RequestParam(required = false, defaultValue = "", value = "enddate") String enddate,
+                                       @RequestParam(required = false, defaultValue = "", value = "choice") int choice,
+                                       @RequestParam(required = false, defaultValue = "", value = "hope_t1") int hope_t1,
+                                       @RequestParam(required = false, defaultValue = "", value = "hope_t2") int hope_t2,
+                                       @RequestParam(required = false, defaultValue = "", value = "hope_h") int hole){
+
+        Optional<CountryAccountEntity> s1 = countryAccountRepository.findByCaccnoAndCaid(ccname,id);
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        System.out.println(s1.get().getCano());
+        System.out.println(s1.get().getCauino());
+        System.out.println(s1.get().getCaccno());
+        Optional <CountryClubEntity> s2 = countryClubRepository.findById(s1.get().getCaccno());
+        Optional <ReservationInfoEntity> s3 = reservationInfoRepository.findById(seq);
+        String cday = String.valueOf(s2.get().getCccancelday());
+
+        ReservationInfoDto reservationInfoDto = new ReservationInfoDto(seq,s1.get().getCano(),s1.get().getCauino(),s1.get().getCaccno(),
+                id,s1.get().getCapassword(),startdate,enddate,hope_t1,hope_t2,hole,course,0,0,choice,0,null,type,cday,
+                null,s3.get().getRiidatetime(),sdf1);
+        reservationInfoService.insertData1(reservationInfoDto);
+//        reservationStateRepository.deleteById(seq);
+        return "redirect:";
+    }
+
 
     @GetMapping("/Reservationgo")
     public String Reservationgo(Model model, HttpServletRequest request,
@@ -733,7 +765,18 @@ public class ReservationController {
         String returnValue = "";
         if(new SessionCheck().loginSessionCheck(request)){
             Optional<ReservationInfoEntity> s1 = reservationInfoRepository.findById((Long) session.getAttribute("seq"));
-            model.addAttribute("info",s1);
+            model.addAttribute("Rino",s1.get().getRino());
+            model.addAttribute("Riccno",s1.get().getRiccno());
+            model.addAttribute("Richoice",s1.get().getRichoice());
+            model.addAttribute("Ricourse",s1.get().getRicourse());
+            model.addAttribute("Ricaid",s1.get().getRicaid());
+            model.addAttribute("Ristartdate",s1.get().getRistartdate());
+            model.addAttribute("Rienddate",s1.get().getRienddate());
+            model.addAttribute("Ristarttime",s1.get().getRistarttime());
+            model.addAttribute("Riendtime",s1.get().getRiendtime());
+            model.addAttribute("Rihall",s1.get().getRihall());
+            model.addAttribute("Ritype",s1.get().getRitype());
+
             List<CountryClubEntity> s2 = countryClubRepository.findAll1();
             model.addAttribute("country",s2);
             List<CourseEntity> s3 = courseRepository.findAll1(s1.get().getRiccno());
