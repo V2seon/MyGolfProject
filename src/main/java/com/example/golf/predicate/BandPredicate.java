@@ -141,10 +141,6 @@ public class BandPredicate {
     }
 
 
-
-
-
-
     public static BooleanBuilder BLMsearch(String selectKey, String titleText){
         QBandLogMemberEntity qBandLogMemberEntity = QBandLogMemberEntity.bandLogMemberEntity;
 

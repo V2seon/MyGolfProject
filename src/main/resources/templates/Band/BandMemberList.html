@@ -9,6 +9,7 @@
 
     <title>Android Golf</title>
 
+    <!-- Bootstrap -->
     <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -32,7 +33,6 @@
 
     <!-- Custom Theme Style -->
     <link href="/css/custom.min.css" rel="stylesheet">
-<!--    <link href="/css/adminlte.min.css" rel="stylesheet">-->
     <style>
             th, td {
               text-align: center;
@@ -40,8 +40,11 @@
             #datatable{
                 width:1100px;
             }
-
+            .tdbox{
+                border: 2px solid black;
+            }
     </style>
+
 
 
 </head>
@@ -62,7 +65,7 @@
             <div class="">
                 <div class="page-title">
                     <div class="title_left">
-                        <h3>사용자 정보</h3>
+                        <h3>밴드회원관리</h3>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -70,7 +73,7 @@
                     <div class="col-md-12 col-sm-12 ">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>사용자 정보 목록<small>User info list</small></h2>
+                                <h2>밴드 회원 목록<small>Band member list</small></h2>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
@@ -81,90 +84,55 @@
                                             <div class="offset-md-9 form-group pull-right top_search">
                                                 <div class="input-group">
                                                     <select id="selectKey" style="margin-left:10px;">
-                                                        <option value="전체">전체</option>
-                                                        <option value="No">No</option>
-                                                        <option value="이름">이름</option>
-                                                        <option value="연락처">연락처</option>
+                                                        <!--                                                        <option value="전체">전체</option>-->
+<!--                                                        <option value="BAND">밴드이름</option>-->
+                                                        <option value="NAME">이름</option>
                                                     </select>
                                                     <input id="titleText" type="text" class="form-control" placeholder="Search for...">
                                                     <span class="input-group-btn">
-                                                        <button onclick="searching()" class="btn btn-default==" type="button">검색</button>
+                                                        <button onclick="searching('bml')" class="btn btn-default==" type="button">검색</button>
                                                     </span>
-                                                    <button onclick="AddUserInfo()" class="btn btn-primary" type="button">등록</button>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="x_content" style="width:100%" >
-                                                <div class="col-sm-12">
-                                                    <div class="card-box table-responsive">
-                                                        <p class="text-muted font-13 m-b-30">
-                                                        </p>
-                                                        <div id="infotable" class="table-responsive">
+                                            <div class="col-sm-12">
+                                                <div class="card-box table-responsive">
+                                                    <p class="text-muted font-13 m-b-30">
+                                                    </p>
+                                                    <div id="bmltable" class="table-responsive">
                                                         <table id="datatable" class="table table-striped table-bordered" style="width:100%">
                                                             <thead>
                                                             <tr>
                                                                 <th>No</th>
-                                                                <th>이름</th>
-                                                                <th>연락처</th>
-                                                                <th>예약 대기 수</th>
-                                                                <th>미확정 예약 수</th>
-                                                                <th>확정 예약 수</th>
-                                                                <th>가입일</th>
-                                                                <th>상세정보</th>
+                                                                <th>밴드명</th>
+                                                                <th>멤버 이름</th>
+                                                                <th>날짜</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                            <tr  th:if="${userlist}!=null" th:each="Co : ${userlist}" style="text-align:center;">
-                                                                <td style="text-align:center;">
-                                                                    <span th:if="${Co.Uino}!= null"
-                                                                          th:text="${Co.Uino}">
-                                                                    </span>
-                                                                </td>
-                                                                <td style="text-align:center;">
-                                                                    <span th:if="${Co.Uiname}!= null"
-                                                                          th:text="${Co.Uiname}"
-                                                                          id="tiuserid">
-                                                                    </span>
-                                                                </td>
-                                                                <td style="text-align:center;">
-                                                                    <span th:if="${Co.Uiphone}!= null"
-                                                                          th:text="${Co.Uiphone}">
-                                                                    </span>
-                                                                </td>
-                                                                <td style="text-align:center;" >
-                                                                    <span th:if="${Co.State0}!= null"
-                                                                          th:text="${Co.State0}">
-                                                                    </span>
-                                                                </td>
-                                                                <td style="text-align:center;" >
-                                                                    <span th:if="${Co.State1}!= null"
-                                                                          th:text="${Co.State1}">
-                                                                    </span>
-                                                                </td>
-                                                                <td style="text-align:center;" >
-                                                                    <span th:if="${Co.State2}!= null"
-                                                                          th:text="${Co.State2}">
-                                                                    </span>
-                                                                </td>
-                                                                <td style="text-align:center;" >
-                                                                    <span th:if="${Co.Uiidatetime}!= null"
-                                                                          th:text="${Co.Uiidatetime}">
-                                                                    </span>
-                                                                </td>
-                                                                <td><button th:onclick="|javascript:detailUser(${Co.Uino})|" class="btn btn-primary" type="button">보기</button></td>
+                                                            <tr th:if="${bandlist}!=null" th:each="Co : ${bandlist}">
+                                                                <td th:text="${Co.Bmseq}" style="text-align:center;"></td>
+                                                                <td th:text="${Co.Bmbandname}" style="text-align:center;"></td>
+                                                                <td th:text="${Co.Bmname}" style="text-align:center;"></td>
+                                                                <td th:text="${Co.Bmdatetime}" style="text-align:center;"></td>
                                                             </tr>
                                                             </tbody>
                                                         </table>
+                                                        <div style="display:none">
+                                                            <input id="code" th:value="${code}">
+                                                            <input id="date" th:value="${date}">
+                                                        </div>
                                                         <div style="margin-top:20px; " class="card-footer clearfix">
                                                             <ul class="pagination pagination-sm m-0 justify-content-center" id="pageList">
-                                                                <div class="page-item1" th:onclick="|javascript:paging(0)|">
+                                                                <div class="page-item1" th:onclick="|javascript:paging(0,'bml')|">
                                                                     <a class="page-link" aria-label="Previous">
                                                                         <<
                                                                     </a>
                                                                 </div>
 
                                                                 <div class="page-item1 prev-page" th:if="${isPrevSection}"
-                                                                     th:value="${thisSection}" th:onclick="|javascript:paging(${firstBtnIndex}-1)|">
+                                                                     th:value="${thisSection}" th:onclick="|javascript:paging(${firstBtnIndex}-1,'bml')|">
                                                                     <a class="page-link" aria-label="Previous">
                                                                         <
                                                                     </a>
@@ -172,7 +140,7 @@
 
                                                                 <!--            onclick 구현-->
                                                                 <div th:each="page: ${#numbers.sequence(firstBtnIndex,lastBtnIndex)}"
-                                                                     id="pageItem" class="page-item" th:onclick="|javascript:paging(${page})|"
+                                                                     id="pageItem" class="page-item" th:onclick="|javascript:paging(${page},'bml')|"
                                                                      th:classappend="${thisPage} ==  ${page} ?  'active'" th:value="${page}">
                                                                     <a class="page-link">
                                                                         <span th:text="${page+1}"></span>
@@ -182,7 +150,7 @@
 
                                                                 <!--다음버튼2-->
                                                                 <div class="page-item1 next-page" th:if="${isNextSection}"
-                                                                     th:onclick="|javascript:paging(${lastBtnIndex}+1)|"
+                                                                     th:onclick="|javascript:paging(${lastBtnIndex}+1,'bml')|"
                                                                      th:value="${thisSection}">
                                                                     <a class="page-link" aria-label="Next">
                                                                         >
@@ -190,20 +158,17 @@
                                                                 </div>
                                                                 <!--다음버튼2-->
 
-                                                                <div class="page-item1" th:onclick="|javascript:paging(${totalPage})|">
+                                                                <div class="page-item1" th:onclick="|javascript:paging(${totalPage},'bml')|">
                                                                     <a class="page-link" id="pageItem2" aria-label="Previous">
                                                                         >>
                                                                     </a>
                                                                 </div>
                                                             </ul>
                                                         </div>
-                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            </div>
                                         </div>
-                                    </div>
-                                </div>
                                     </div>
                                 </div>
                             </div>
@@ -212,16 +177,20 @@
                 </div>
             </div>
         </div>
-        <footer>
-            <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-            </div>
-            <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
     </div>
 </div>
+</div>
+<footer>
+    <div class="pull-right">
+        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+    </div>
+    <div class="clearfix"></div>
+</footer>
+<!-- /footer content -->
+</div>
+</div>
 
+<!-- jQuery -->
 <script src="/vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -229,11 +198,36 @@
 <script src="/vendors/fastclick/lib/fastclick.js"></script>
 <!-- NProgress -->
 <script src="/vendors/nprogress/nprogress.js"></script>
-<!-- Custom Theme Scripts -->
+<!--&lt;!&ndash; bootstrap-progressbar &ndash;&gt;-->
+<!--<script src="/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>-->
+<!--&lt;!&ndash; iCheck &ndash;&gt;-->
+<!--<script src="/vendors/iCheck/icheck.min.js"></script>-->
+<!--&lt;!&ndash; bootstrap-daterangepicker &ndash;&gt;-->
+<!--<script src="/vendors/moment/min/moment.min.js"></script>-->
+<!--<script src="/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>-->
+<!--&lt;!&ndash; bootstrap-wysiwyg &ndash;&gt;-->
+<!--<script src="/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>-->
+<!--<script src="/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>-->
+<!--<script src="/vendors/google-code-prettify/src/prettify.js"></script>-->
+<!--&lt;!&ndash; jQuery Tags Input &ndash;&gt;-->
+<!--<script src="/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>-->
+<!--&lt;!&ndash; Switchery &ndash;&gt;-->
+<!--<script src="/vendors/switchery/dist/switchery.min.js"></script>-->
+<!--&lt;!&ndash; Select2 &ndash;&gt;-->
+<!--<script src="/vendors/select2/dist/js/select2.full.min.js"></script>-->
+<!--&lt;!&ndash; Parsley &ndash;&gt;-->
+<!--<script src="/vendors/parsleyjs/dist/parsley.min.js"></script>-->
+<!--&lt;!&ndash; Autosize &ndash;&gt;-->
+<!--<script src="/vendors/autosize/dist/autosize.min.js"></script>-->
+<!--&lt;!&ndash; jQuery autocomplete &ndash;&gt;-->
+<!--<script src="/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>-->
+<!--&lt;!&ndash; starrr &ndash;&gt;-->
+<!--<script src="/vendors/starrr/dist/starrr.js"></script>-->
 
-<script src="/js/Userinfo/Userinfo.js"></script>
-
+<!-- jQuery custom content scroller -->
 <script src="/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<script src="/js/band.js"></script>
 <!-- Custom Theme Scripts -->
 <script src="/js/custom.min.js"></script>
 <script src="https://code.jquery.com/jquery-latest.js"></script>

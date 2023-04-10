@@ -30,7 +30,11 @@
         <div class="menu_section">
             <ul class="nav side-menu">
                 <li th:class="${nowurl0 == '/Userinfo' ? 'current-page' : ''}">
-                    <a href="/Userinfo"><!--<i class="fa fa-home"></i>--> 사용자 정보 <!--<span class="fa fa-chevron-down"></span>--></a>
+                    <a><!--<i class="fa fa-home"></i>--> 사용자 정보 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/Userinfo">회원정보</a></li>
+                        <li><a href="#">CC계정관리</a></li>
+                    </ul>
                 </li>
                 <li th:class="${nowurl0 == '/Countryclub' ? 'current-page' : ''}">
                     <a href="/Countryclub"><!--<i class="fa fa-edit"></i>--> CC 정보 <!--<span class="fa fa-chevron-down"></span>--></a>

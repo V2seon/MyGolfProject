@@ -135,6 +135,7 @@
                                                                     <a th:text="${Co.Blmpredata3}" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"></a>
                                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                                     <div th:each="nicks: ${#strings.arraySplit(Co.Blmpredata4, '|||')}">
+<!--                                                                    <div th:each="nicks: ${#strings.arraySplitByWholeSeparatorPreserveAllTokens (Co.Blmpredata4, '(?<=\\|{3})|(?=\\|{3})')}">-->
                                                                         <p th:text="${nicks}" class="dropdown-item" href="#"></p>
 <!--                                                                        <a class="dropdown-item" href="#">Another action</a>-->
 <!--                                                                        <a class="dropdown-item" href="#">Something else here</a>-->
@@ -145,7 +146,7 @@
                                                                 <td style="text-align:center;">
                                                                     <a th:text="${Co.Blmtodaydata3}" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"></a>
                                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                        <div th:each="nicks: ${#strings.arraySplit(Co.Blmtodaydata4, '|||')}">
+                                                                        <div th:each="nicks: ${#strings.arraySplit (Co.Blmtodaydata4, '|||')}">
                                                                             <p th:text="${nicks}" class="dropdown-item" href="#"></p>
                                                                         </div>
                                                                     </div>
@@ -154,13 +155,13 @@
                                                                 <td style="text-align:center;">
                                                                     <a th:text="${Co.Blmnickchangecnt}" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"></a>
                                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                    <div th:each="nicks: ${#strings.arraySplit(Co.Blmnickchangedata, '|||')}">
+                                                                    <div th:each="nicks: ${#strings.arraySplit (Co.Blmnickchangedata, '|||')}">
                                                                         <p th:text="${nicks}" class="dropdown-item" href="#"></p>
                                                                     </div>
                                                                     </div>
                                                                 </td>
                                                                 <td style="text-align:center;">
-                                                                    <button th:onclick="AllMember([[${Co.Blmseq}]])" class="btn btn-primary" type="button">전체보기</button>
+                                                                    <button th:onclick="AllMember([[${Co.Blmbiseq}]], [[${Co.Blmtodaydata}]])" class="btn btn-primary" type="button">전체보기</button>
                                                                 </td>
                                                             </tr>
                                                             </tbody>

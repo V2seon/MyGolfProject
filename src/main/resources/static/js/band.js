@@ -14,7 +14,14 @@ function searching(db){
 
     //값 가져오기 (페이지네이션)
     const myPageQuery = new URLSearchParams(location.search);
-    var querydata = { "page" : myPageQuery.get('page'), "selectKey":myPageQuery.get('selectKey'),"titleText":myPageQuery.get('titleText')};
+
+    if(db == 'bml'){
+        var code = document.getElementById('code').value;
+        var date = document.getElementById('date').value;
+        var querydata = { "code" : code,  "date" : date,  "page" : myPageQuery.get('page'), "selectKey":myPageQuery.get('selectKey'),"titleText":myPageQuery.get('titleText')};
+    }else{
+        var querydata = { "page" : myPageQuery.get('page'), "selectKey":myPageQuery.get('selectKey'),"titleText":myPageQuery.get('titleText')};
+    }
 
 
     if(db == 'bi'){
@@ -48,6 +55,14 @@ function searching(db){
             type:"POST",
         }).done(function (fragment) {
             $("#bmtable").replaceWith(fragment);
+        });
+    }else if(db == 'bml'){
+        $.ajax({
+            url: "/Bandmemberlist_search",
+            data: querydata,
+            type:"POST",
+        }).done(function (fragment) {
+            $("#bmltable").replaceWith(fragment);
         });
     }
 }
@@ -79,7 +94,13 @@ function paging(pageValue,db){
     history.pushState(null, '', replaceUri);
     //url 주소 바꾸기 끝
 
-    var querydata = { "page" : pageValue, "selectKey":selectKey, "titleText":titleText};
+    if(db == 'bml'){
+        var code = document.getElementById('code').value;
+        var date = document.getElementById('date').value;
+        var querydata = { "code" : code,  "date" : date,  "page" : pageValue, "selectKey":selectKey, "titleText":titleText};
+    }else{
+        var querydata = { "page" : pageValue, "selectKey":selectKey, "titleText":titleText};
+    }
 
     if(db == 'bi'){
         $.ajax({
@@ -117,6 +138,15 @@ function paging(pageValue,db){
             $("#bmtable").replaceWith(fragment);
             $("#load").hide();
         });
+    }else if(db == 'bml'){
+        $.ajax({
+            url: "/Bandmemberlist_search",
+            data: querydata,
+            type:"POST",
+        }).done(function (fragment) {
+            $("#bmltable").replaceWith(fragment);
+            $("#load").hide();
+        });
     }
 }
 
@@ -137,8 +167,27 @@ function GreetingSet(biseq){
 }
 
 
-function AllMember(blmseq){
+function AllMember(blmbiseq,blmtodaydata){
  // 클릭시 seq에 맞는 날짜/밴드 멤버리스트 페이지로 이동
+    $('#load').show();
+    var regex = /[^0-9]/g;
+    var get_date = blmtodaydata.replace(regex, "");
+    console.log(blmbiseq+","+get_date)
+    location.href = "/Bandmemberlist?no="+blmbiseq+"&date="+get_date+"";
+//
+//    let sendData = {
+//        'biseq' : blmbiseq,
+//        'date' : get_date
+//    };
+//    $.ajax({
+//        url : '/Bandmemberlist',
+//        data : sendData,
+//        type : 'POST',
+//        success : function(result){
+//            $("#load").hide();
+//
+//        }
+//    })
 }
 
 

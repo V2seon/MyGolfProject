@@ -63,4 +63,19 @@ public class BandService {
     public Page <BandMemberEntity> selectALLBandMember(String selectKey, String titleText, Pageable pageable){
         return bandMemberRepository.findAll(BandPredicate.BMsearch(selectKey, titleText),pageable);
     }
+
+    @Transactional
+    public Page<BandMemberEntity> selectALLBandMemberList0(String code, String date, String titleText, Pageable pageable){
+        return bandMemberRepository.findData(code, date, titleText, pageable);
+    }
+
+//    @Transactional
+//    public Page <BandMemberEntity> selectALLBandMemberList(String code, String date, String selectKey, String titleText, Pageable pageable){
+//        return bandMemberRepository.findAll(BandPredicate.BMLsearch(code, date, selectKey, titleText), pageable);
+//    }
+
+    @Transactional
+    public Page <BandMemberEntity> selectALLBandMemberList(String code, String date, String selectKey, String titleText, Pageable pageable){
+        return bandMemberRepository.findData(code, date, titleText, pageable);
+    }
 }

@@ -5,6 +5,7 @@ import com.example.golf.common.SessionCheck;
 import com.example.golf.entity.*;
 import com.example.golf.repository.BandGreetingRepository;
 import com.example.golf.repository.BandInfoRepository;
+import com.example.golf.repository.BandMemberRepository;
 import com.example.golf.service.BandService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -30,7 +31,8 @@ public class BandController {
 
     private BandService bandService;
     private BandGreetingRepository bgRepository;
-    private BandInfoRepository bandInfoRepository;
+    private BandInfoRepository biRepository;
+    private BandMemberRepository bmRepository;
 
     @GetMapping("/Bandinfo")
     public String bandinfo(Model model, HttpServletRequest request, Pageable pageable,
@@ -213,7 +215,7 @@ public class BandController {
             pageable = PageRequest.of(page, 10);
 //            Page<BandMemberEntity> s1 = bandService.selectALLBandMember0(pageable);
             Page<BandLogMemberEntity> s1 = bandService.selectALLBandLogMember0(pageable);
-            List<BandInfoEntity> s2 = bandInfoRepository.findAll();
+            List<BandInfoEntity> s2 = biRepository.findAll();
             Map<Long,String> seqname = new HashMap<Long,String>();
             for (int i=0;i<s2.size();i++){
                 seqname.put(s2.get(i).getBiseq(),s2.get(i).getBiname());
@@ -246,7 +248,7 @@ public class BandController {
                                   @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText){
         HttpSession session = request.getSession();
 
-        List<BandInfoEntity> s2 = bandInfoRepository.findAll();
+        List<BandInfoEntity> s2 = biRepository.findAll();
         Map<Long, String> seqname = new HashMap<Long, String>();
         for (int i = 0; i < s2.size(); i++) {
             seqname.put(s2.get(i).getBiseq(), s2.get(i).getBiname());
@@ -339,7 +341,7 @@ public class BandController {
         }
         return returnValue;
     }
-///
+
     @GetMapping("/Bandgreetinglist")
     public String bandgreetinglist(Model model, HttpServletRequest request,
                                    @RequestParam(required = false, defaultValue = "", value = "no") Long no) {
@@ -353,5 +355,75 @@ public class BandController {
             returnValue = "login";
         }
         return returnValue;
+    }
+
+    @GetMapping("/Bandmemberlist")
+    public String bandmemberlist(Model model, HttpServletRequest request, Pageable pageable,
+                                 @RequestParam(required = false, defaultValue = "0", value = "page") int page,
+                                   @RequestParam(required = false, defaultValue = "", value = "no") Long no,
+                                 @RequestParam(required = false, defaultValue = "", value = "date") String date,
+                                 @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText) {
+        String returnValue = "";
+        String code = biRepository.findCode(no);
+//        if(new SessionCheck().loginSessionCheck(request)){
+//            List<BandMemberEntity> bmdata = bmRepository.findData(bicode, date);
+//            model.addAttribute("bandlist", bmdata);
+        if(new SessionCheck().loginSessionCheck(request)){
+            HttpSession session = request.getSession();
+
+            pageable = PageRequest.of(page, 10);
+            Page<BandMemberEntity> s1 = bandService.selectALLBandMemberList0(code, date, titleText, pageable);
+
+            Pagination pagination = new Pagination(s1.getTotalPages(), page);
+
+            model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
+            model.addAttribute("isNextSection", pagination.isNextSection()); //다음버튼 유무 확인하기 위함
+            model.addAttribute("isPrevSection", pagination.isPrevSection()); //이전버튼 유무 확인하기 위함
+            model.addAttribute("firstBtnIndex", pagination.getFirstBtnIndex()); //버튼 페이징 - 첫시작 인덱스
+            model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
+            model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
+
+            model.addAttribute("bandlist", s1); //페이지 객체 리스트
+            model.addAttribute("code", code); //페이지 객체 리스트
+            model.addAttribute("date", date); //페이지 객체 리스트
+            model.addAttribute("nowurl0","/Bandmemberlist");
+
+            returnValue = "/Band/BandMemberList.html";
+        }else{
+            returnValue = "login";
+        }
+        return returnValue;
+    }
+
+    @RequestMapping(value = "/Bandmemberlist_search", method = RequestMethod.POST)
+    public String bandmemberlist_search(Model model, HttpServletRequest request,
+                                        @RequestParam(required = false, defaultValue = "", value = "code") String code,
+                                        @RequestParam(required = false, defaultValue = "", value = "date") String date,
+                                       @RequestParam(required = false ,defaultValue = "0" , value="page") int page,
+                                       @RequestParam(required = false ,defaultValue = "" , value="selectKey") String selectKey,
+                                       @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText){
+        HttpSession session = request.getSession();
+
+        Pageable pageable = PageRequest.of(page, 10);
+        int totalPages = bandService.selectALLBandMemberList(code, date, selectKey, titleText, pageable).getTotalPages();
+        Pagination pagination = new Pagination(totalPages, page);
+
+        model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
+        model.addAttribute("isNextSection", pagination.isNextSection()); //다음버튼 유무 확인하기 위함
+        model.addAttribute("isPrevSection", pagination.isPrevSection()); //이전버튼 유무 확인하기 위함
+        model.addAttribute("firstBtnIndex", pagination.getFirstBtnIndex()); //버튼 페이징 - 첫시작 인덱스
+        model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
+        model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
+
+        //서비스 엔티티 추가후 주석 풀고 사용
+        Page<BandMemberEntity> pageList = bandService.selectALLBandMemberList(code, date, selectKey, titleText, pageable);
+        model.addAttribute("nowurl0","/Bandmemberlist");
+
+
+        model.addAttribute("bandlist", pageList); //페이지 객체 리스트
+        model.addAttribute("code", code); //페이지 객체 리스트
+        model.addAttribute("date", date); //페이지 객체 리스트
+
+        return "/Band/BandMemberList :: #bmltable";
     }
 }
