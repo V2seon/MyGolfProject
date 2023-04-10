@@ -2,12 +2,11 @@ package com.example.golf.controller;
 
 import com.example.golf.common.Pagination;
 import com.example.golf.common.SessionCheck;
-import com.example.golf.entity.BandGreetingEntity;
-import com.example.golf.entity.BandInfoEntity;
-import com.example.golf.entity.BandLogEntity;
-import com.example.golf.entity.BandLogMemberEntity;
+import com.example.golf.dto.BandTemplateDto;
+import com.example.golf.entity.*;
 import com.example.golf.repository.BandGreetingRepository;
 import com.example.golf.repository.BandInfoRepository;
+import com.example.golf.repository.BandMemberRepository;
 import com.example.golf.repository.BandTemplateRepository;
 import com.example.golf.service.BandService;
 import lombok.AllArgsConstructor;
@@ -17,16 +16,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor

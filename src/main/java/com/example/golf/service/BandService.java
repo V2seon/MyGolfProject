@@ -1,12 +1,10 @@
 package com.example.golf.service;
 
+import com.example.golf.dto.BandTemplateDto;
 import com.example.golf.entity.*;
 import com.example.golf.predicate.BandPredicate;
-import com.example.golf.repository.BandInfoRepository;
-import com.example.golf.repository.BandLogMemberRepository;
-import com.example.golf.repository.BandLogRepository;
-import com.example.golf.repository.BandMemberRepository;
-import com.example.golf.repository.BandGreetingRepository;
+import com.example.golf.predicate.BandTemPredicate;
+import com.example.golf.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +21,7 @@ public class BandService {
     private BandLogMemberRepository bandLogMemberRepository;
     private BandMemberRepository bandMemberRepository;
     private BandGreetingRepository bandGreetingRepository;
+    private BandTemplateRepository bandTemplateRepository;
 
     @Transactional
     public Page<BandInfoEntity> selectALLBandInfo0(Pageable pageable){
