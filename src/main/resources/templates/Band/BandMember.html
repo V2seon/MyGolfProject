@@ -124,7 +124,8 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                            <tr th:if="${bandlist}!=null" th:each="Co : ${bandlist}" th:classappend="tdbox">
+<!--                                                            <tr th:if="${bandlist}!=null" th:each="Co : ${bandlist}" th:classappend="tdbox">-->
+                                                            <tr th:if="${bandlist}!=null" th:each="Co : ${bandlist}">
                                                                 <td th:text="${Co.Blmtodaydata}" style="text-align:center;"></td>
                                                                 <td th:text="${seqname[Co.Blmbiseq]}" style="text-align:center;"></td>
                                                                 <td th:text="${Co.Blmtodaydata2}" style="text-align:center;"></td>

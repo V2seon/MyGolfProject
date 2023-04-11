@@ -70,7 +70,7 @@
                     <div class="col-md-12 col-sm-12 ">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>사용자 상세 정보<small>Detail User info</small></h2>
+                                <h2>사용자 등록</h2>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
@@ -87,32 +87,33 @@
                                                 <label class="col-form-label col-md-3 col-sm-3 label-align" >아이디
                                                     <span class="required">*</span>
                                                 </label>
-                                                <div class="col-form-label col-md-3 col-sm-3">
-                                                    <input id="uiid">
+                                                <div class="col-md-6 col-sm-6 ">
+                                                    <input type="text" id="uiid" required="required" class="form-control">
                                                 </div>
                                             </div>
-                                            <div th:if="${addCheck}" class="form-group row">
+                                            <div class="form-group row">
                                                 <label class="col-form-label col-md-3 col-sm-3 label-align" >비밀번호
                                                     <span class="required">*</span>
                                                 </label>
-                                                <div class="col-form-label col-md-3 col-sm-3">
-                                                    <input id="uipw">
+<!--                                                <div class="col-form-label col-md-3 col-sm-3">-->
+                                                    <div class="col-md-6 col-sm-6 ">
+                                                    <input id="uipw" type="password" required="required" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-form-label col-md-3 col-sm-3 label-align" >이름
                                                     <span class="required">*</span>
                                                 </label>
-                                                <div class="col-form-label col-md-3 col-sm-3">
-                                                    <input id="uiname">
+                                                <div class="col-md-6 col-sm-6 ">
+                                                    <input id="uiname" type="text" required="required" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-form-label col-md-3 col-sm-3 label-align" >전화번호
                                                     <span class="required">*</span>
                                                 </label>
-                                                <div class="col-form-label col-md-3 col-sm-3">
-                                                    <input id="uiphone">
+                                                <div class="col-md-6 col-sm-6 ">
+                                                    <input id="uiphone" type="text" required="required" class="form-control">
                                                 </div>
                                             </div>
 <!--                                            <div class="form-group row">-->
@@ -126,38 +127,26 @@
                                                 <label class="col-form-label col-md-3 col-sm-3 label-align">SMS 동의
                                                     <span class="required">*</span>
                                                 </label>
-                                                <div class="col-form-label col-md-3 col-sm-3">
-                                                    <p>
-                                                        수신동의
-                                                        <input type="radio" name="sms" class="uisms" value="1" checked="" required />
-                                                        &nbsp;&nbsp;
-                                                        미동의
-                                                        <input type="radio" name="sms" class="uisms" value="0" checked="" /></p>
-                                                    </p>
+                                                <div class="col-md-6 col-sm-6 ">
+                                                    <input type="radio" class="sms" name="sms" value="1" checked required/> 수신동의
+                                                    <input type="radio" class="sms" name="sms" value="0" /> 미동의
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-form-label col-md-3 col-sm-3 label-align" >이용상태
                                                     <span class="required">*</span>
                                                 </label>
-                                                <div class="col-form-label col-md-3 col-sm-3">
-                                                    <p>
-                                                        이용가능
-                                                        <input type="radio" name="state" class="uistate" value="0" checked="" required />
-                                                        &nbsp;&nbsp;
-                                                        이용정지
-                                                        <input type="radio" name="state" class="uistate" value="1" checked="" /></p>
-                                                    </p>
-<!--                                                    <span th:text="${userdata.get().getUistate() == 0 ? '이용가능' : '이용정지'}"></span>-->
-<!--                                                    <input 라디오 th:text="${userdata.get().getUistate() == 0 ? '이용가능' : '이용정지'}"></input>-->
+                                                <div class="col-md-6 col-sm-6 ">
+                                                    <input type="radio" name="state" class="state" value="0" checked required /> 이용가능
+                                                    <input type="radio" name="state" class="state" value="1" /> 이용정지
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-form-label col-md-3 col-sm-3 label-align">정지기간
-                                                    <span class="required">*</span>
+<!--                                                    <span class="required">*</span>-->
                                                 </label>
-                                                <div class="col-form-label col-md-3 col-sm-3">
-                                                    <input id="uiban">
+                                                <div class="col-md-6 col-sm-6 ">
+                                                    <input id="uiban" type="datetime-local" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="ln_solid"></div>
@@ -166,13 +155,8 @@
                                             <div class="offset-md-10">
                                                 <button class="btn btn-primary" onclick="uiadd()" >등록</button>
                                                 <button class="btn btn-primary" onclick="userinfo()" >목록</button>
-                                                <!--<button onclick="login()">로그인</button>-->
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -181,17 +165,21 @@
                 </div>
             </div>
         </div>
-        <!-- /page content -->
-
-        <!-- footer content -->
-        <footer>
-            <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-            </div>
-            <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
     </div>
+</div>
+</div>
+</div>
+<!-- /page content -->
+
+<!-- footer content -->
+<footer>
+    <div class="pull-right">
+        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+    </div>
+    <div class="clearfix"></div>
+</footer>
+<!-- /footer content -->
+</div>
 </div>
 
 <script src="/vendors/jquery/dist/jquery.min.js"></script>

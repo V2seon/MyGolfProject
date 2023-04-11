@@ -2,6 +2,7 @@ package com.example.golf.controller;
 
 import com.example.golf.common.Pagination;
 import com.example.golf.common.SessionCheck;
+import com.example.golf.dto.UserinfoDto;
 import com.example.golf.entity.CountryAccountEntity;
 import com.example.golf.entity.CountryClubEntity;
 import com.example.golf.entity.UserinfoEntity;
@@ -12,18 +13,18 @@ import com.example.golf.repository.ReservationInfoRepository;
 import com.example.golf.repository.UserinfoRepository;
 import com.example.golf.service.UserinfoService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +41,7 @@ public class UserinfoController {
     private CountryAccountRepository countryAccountRepository;
     private CountryClubRepository countryClubRepository;
     private UserinfoService userinfoService;
+    private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName()); // log찍기용
 
 
     @GetMapping("/Userinfo")
@@ -132,8 +134,87 @@ public class UserinfoController {
         model.addAttribute("userdata",s1);
         model.addAttribute("nowurl0","/Userinfo");
 
-//        return "/Userinfo/DetailUserinfo";
-        return "/Userinfo/testDetailUserinfo";
+        return "/Userinfo/DetailUserinfo";
+//        return "/Userinfo/testDetailUserinfo";
+    }
+
+
+    @GetMapping("/userinfo_add")
+    public String userinfo_add(Model model, HttpServletRequest request){
+        String returnValue = "";
+        if(new SessionCheck().loginSessionCheck(request)){
+            HttpSession session = request.getSession();
+            returnValue = "/Userinfo/AddUserinfo";
+        }else{
+            returnValue = "login";
+        }
+        return returnValue;
+    }
+
+    // 사용자 정보 수정 저장
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/userinfo_editsave")
+    public HashMap<String, String> UIEditsave(Model model, HttpServletRequest request,
+                                                    @RequestParam(required = false, defaultValue = "", value = "seq") Long no,
+                                                    @RequestParam(required = false, defaultValue = "", value = "uiname") String uiname,
+                                                    @RequestParam(required = false, defaultValue = "", value = "uiphone") String uiphone,
+                                                    @RequestParam(required = false, defaultValue = "", value = "uistate") int uistate,
+                                                    @RequestParam(required = false, defaultValue = "NULL", value = "uiban") String uiban) {
+        UserinfoEntity uiEtt = userinfoRepository.getUino(no);
+        String timecheck = String.valueOf(uiEtt.getUiudatetime());
+//        log.info("in EDITSAVE ==> "+no+','+uiname+','+uiphone+','+uistate+','+uiban);
+
+        LocalDateTime sdf = LocalDateTime.now();
+        userinfoRepository.updateUIData(no, uiname, uiphone, uistate, uiban, sdf);
+        UserinfoEntity uiEtt2 = userinfoRepository.getUino(no);
+        log.info(String.valueOf(uiEtt2.getUiudatetime())+"///"+timecheck);
+
+        HashMap<String, String> msg = new HashMap<String, String>();
+        if(String.valueOf(uiEtt2.getUiudatetime()).equals(timecheck)){
+            msg.put("save", "0");
+        }else {
+            msg.put("save", "1");
+        }
+        return msg;
+    }
+
+    // 사용자 정보 수정 등록
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/userinfo_addsave")
+    public HashMap<String, String> UIAddsave(Model model, HttpServletRequest request,
+                                             @RequestParam(required = false, defaultValue = "", value = "uiid") String uiid,
+                                             @RequestParam(required = false, defaultValue = "", value = "uipw") String uipassword,
+                                             @RequestParam(required = false, defaultValue = "", value = "uiname") String uiname,
+                                             @RequestParam(required = false, defaultValue = "", value = "uiphone") String uiphone,
+                                             @RequestParam(required = false, defaultValue = "", value = "uisms") int uisms,
+                                             @RequestParam(required = false, defaultValue = "", value = "uistate") int uistate,
+                                             @RequestParam(required = false, defaultValue = "", value = "uiban") LocalDateTime uiban) {
+        LocalDateTime sdf = LocalDateTime.now();
+        UserinfoDto uiDto = new UserinfoDto(null, uiid, uipassword, uiname, uiphone, uisms, uistate, uiban, sdf, sdf);
+        userinfoService.UISave(uiDto);
+
+        HashMap<String, String> msg = new HashMap<String, String>();
+        if(userinfoRepository.checkUiid(uiid) == 1){
+            msg.put("save", "1");
+        }else {
+            msg.put("save", "0");
+        }
+        return msg;
+    }
+
+    // 사용자 등록 아이디 중복 확인
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/userinfo_idcheck")
+    public HashMap<String, String> UIidcheck(Model model, HttpServletRequest request,
+                                             @RequestParam(required = false, defaultValue = "", value = "uiid") String uiid) {
+
+        HashMap<String, String> msg = new HashMap<String, String>();
+        if(userinfoRepository.checkUiid(uiid) == 0){
+            msg.put("save", "1");
+        }else {
+            msg.put("save", "0");
+        }
+        return msg;
     }
 
 }

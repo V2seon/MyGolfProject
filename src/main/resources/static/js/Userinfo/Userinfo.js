@@ -106,20 +106,170 @@ function detailUser(seq){
     });
 }
 
-function userinfo(){
+function userinfo(){ // 목록으로 이동
     $("#load").show();
     location.href="/Userinfo";
 }
 
-function AddUserInfo(){
+function AddUserInfo(){ // 등록페이지로 이동
     $("#load").show();
-    location.href="/userinfo_detail";
+    location.href="/userinfo_add";
 }
 
-function uiedit(){
-    location.href="/Userinfo";
+function uiedit(seq){ // 수정저장
+    var uiname = $('#uiname').val();
+    var uiphone = $('#uiphone').val();
+    var uistate = $('input[name="state"]:checked').val();
+    var uiban = $('#uiban').val();
+    console.log(uistate)
+
+    if(uiname==null||uiname==""){
+        swal({
+            text: "이름을 입력해주세요.",
+            icon: "info"
+        });
+    }else if(uiphone==null||uiphone==""){
+        swal({
+            text: "전화번호를 입력해주세요.",
+            icon: "info"
+        });
+    }else{
+        $('#load').show();
+        let sendData = {
+            "seq" : seq,
+            "uiname" : uiname,
+            "uiphone" : uiphone,
+            "uistate" : uistate,
+            "uiban" : uiban
+        };
+        console.log(sendData);
+        $.ajax({
+            url : "/userinfo_editsave",
+            data : sendData,
+            type : "POST",
+            success : function(result){
+                $("#load").hide();
+                if(result.save == "1"){
+                    location.href = "/Userinfo";
+                }else if(result.save == "0"){
+                    swal({
+                        text : "저장에 실패하였습니다.",
+                        icon : "error"
+                    });
+                }
+            }, error:function(request, status, error){
+                $("#load").hide();
+                swal({
+                    text: "통신 오류",
+                    icon: "warning"
+                }).then(function(){
+                    location.href = "/Userinfo";
+                });
+            }
+        });
+    }
 }
 
-function uiedit(){
-    location.href="/Userinfo";
+function uiadd(){ // 등록저장
+    var uiid = $('#uiid').val();
+    var uipw = $('#uipw').val();
+    var uiname = $('#uiname').val();
+    var uiphone = $('#uiphone').val();
+    var uisms = $('input[name="sms"]:checked').val();
+    var uistate = $('input[name="state"]:checked').val();
+    var uiban = $('#uiban').val();
+    let sendData = {
+        "uiid" : uiid
+    };
+    if(uiid==null||uiid==""){
+        swal({
+            text: "아이디를 입력해주세요.",
+            icon: "info"
+        });
+    }else{
+        $('#load').show();
+        $.ajax({
+            url : "/userinfo_idcheck",
+            data : sendData,
+            type : "POST",
+            success : function(result){
+                if(result.save == "1"){ // 1:동일아이디 없음, 0: 동일있음
+                    if(uipw==null||uipw==""){
+                        swal({
+                            text: "비밀번호를 입력해주세요.",
+                            icon: "info"
+                        });
+                    }else if(uiname==null||uiname==""){
+                        swal({
+                            text: "이름 입력해주세요.",
+                            icon: "info"
+                        });
+                    }else if(uiphone==null||uiphone==""){
+                        swal({
+                            text: "전화번호를 입력해주세요.",
+                            icon: "info"
+                        });
+                    }else if(uisms==null||uisms==""){
+                        swal({
+                            text: "SMS 동의 형태를 선택해주세요.",
+                            icon: "info"
+                        });
+                    }else if(uistate==null||uistate==""){
+                        swal({
+                            text: "이용상태를 선택해주세요.",
+                            icon: "info"
+                        });
+                    }else{
+                        let sendData = {
+                            "uiid" : uiid,
+                            "uipw" : uipw,
+                            "uiname" : uiname,
+                            "uiphone" : uiphone,
+                            "uisms" : uisms,
+                            "uistate" : uistate,
+                            "uiban" : uiban
+                        };
+                        $.ajax({
+                            url : "/userinfo_addsave",
+                            data : sendData,
+                            type : "POST",
+                            success : function(result){
+                                $("#load").hide();
+                                if(result.save == "1"){
+                                    location.href = "/Userinfo";
+                                }else if(result.save == "0"){
+                                    swal({
+                                        text : "저장에 실패하였습니다.",
+                                        icon : "error"
+                                    });
+                                }
+                            }, error:function(request, status, error){
+                                $("#load").hide();
+                                swal({
+                                    text: "통신 오류",
+                                    icon: "warning"
+                                }).then(function(){
+                                    location.href = "/Userinfo";
+                                });
+                            }
+                        });
+                    }
+                }else if(result.save == "0"){
+                    $("#load").hide();
+                    swal({
+                        text: "중복된 아이디입니다.",
+                        icon: "warning"
+                    });
+                }
+            }, error:function(request, status, error){
+                $("#load").hide();
+                swal({
+                    text: "통신 오류",
+                    icon: "warning"
+                }).then(function(){
+                    location.href = "/Userinfo";
+                });
+            }
+        });
+    }
 }

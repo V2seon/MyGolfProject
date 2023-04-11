@@ -91,21 +91,12 @@
                                                     <span th:text="${userdata.get().getUiid()}"></span>
                                                 </div>
                                             </div>
-<!--                                            <div th:if="${addCheck}" class="form-group row">-->
-<!--                                                <label class="col-form-label col-md-3 col-sm-3 label-align" >비밀번호-->
-<!--                                                    <span class="required">*</span>-->
-<!--                                                </label>-->
-<!--                                                <div class="col-form-label col-md-3 col-sm-3">-->
-<!--                                                    <input id="uipw">-->
-<!--                                                </div>-->
-<!--                                            </div>-->
                                             <div class="form-group row">
                                                 <label class="col-form-label col-md-3 col-sm-3 label-align" >이름
                                                     <span class="required">*</span>
                                                 </label>
                                                 <div class="col-form-label col-md-3 col-sm-3">
-<!--                                                    <span th:text="${userdata.get().getUiname()}"></span>-->
-                                                    <input id="uiname" th:value="${userdata.get().getUiname()}">
+                                                    <span th:text="${userdata.get().getUiname()}"></span>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -113,26 +104,25 @@
                                                     <span class="required">*</span>
                                                 </label>
                                                 <div class="col-form-label col-md-3 col-sm-3">
-<!--                                                    <span th:text="${userdata.get().getUiphone()}"></span>-->
-                                                    <input id="uiphone" th:value="${userdata.get().getUiphone()}">
+                                                    <span th:text="${userdata.get().getUiphone()}"></span>
                                                 </div>
                                             </div>
-<!--                                            <div class="form-group row">-->
-<!--                                                <label class="col-form-label col-md-3 col-sm-3 label-align" >생년월일-->
-<!--                                                    <span class="required">*</span>-->
-<!--                                                </label>-->
-<!--                                                <div class="col-form-label col-md-3 col-sm-3">-->
-<!--                                                    <span th:text="${userdata.get().getUiname()}"></span>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="form-group row">-->
-<!--                                                <label class="col-form-label col-md-3 col-sm-3 label-align" >이메일-->
-<!--                                                    <span class="required">*</span>-->
-<!--                                                </label>-->
-<!--                                                <div class="col-form-label col-md-3 col-sm-3">-->
-<!--                                                    <span th:text="${userdata.get().getUiname()}"></span>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
+                                            <!--                                            <div class="form-group row">-->
+                                            <!--                                                <label class="col-form-label col-md-3 col-sm-3 label-align" >생년월일-->
+                                            <!--                                                    <span class="required">*</span>-->
+                                            <!--                                                </label>-->
+                                            <!--                                                <div class="col-form-label col-md-3 col-sm-3">-->
+                                            <!--                                                    <span th:text="${userdata.get().getUiname()}"></span>-->
+                                            <!--                                                </div>-->
+                                            <!--                                            </div>-->
+                                            <!--                                            <div class="form-group row">-->
+                                            <!--                                                <label class="col-form-label col-md-3 col-sm-3 label-align" >이메일-->
+                                            <!--                                                    <span class="required">*</span>-->
+                                            <!--                                                </label>-->
+                                            <!--                                                <div class="col-form-label col-md-3 col-sm-3">-->
+                                            <!--                                                    <span th:text="${userdata.get().getUiname()}"></span>-->
+                                            <!--                                                </div>-->
+                                            <!--                                            </div>-->
                                             <div class="form-group row">
                                                 <label class="col-form-label col-md-3 col-sm-3 label-align" >CC 계정정보
                                                 </label>
@@ -145,7 +135,7 @@
                                                     <span class="required">*</span>
                                                 </label>
                                                 <div class="col-form-label col-md-3 col-sm-3">
-                                                    <span th:if!="${addCheck}" th:text="${userdata.get().getUisms() == 1 ? '수신동의' : '미동의'}"></span>
+                                                    <span th:text="${userdata.get().getUisms() == 1 ? '수신동의' : '미동의'}"></span>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -153,14 +143,7 @@
                                                     <span class="required">*</span>
                                                 </label>
                                                 <div class="col-form-label col-md-3 col-sm-3">
-                                                    <p>
-                                                        이용가능
-<!--                                                        <input type="radio" name="state" class="uistate" value="0" th:checked="userdata.get().getUistate() == 0" required />-->
-                                                        <input type="radio" name="state" class="uistate" value="0" th:checked="${userdata.get().getUistate() == 0}" />
-                                                        &nbsp;&nbsp;
-                                                        이용정지
-                                                        <input type="radio" name="state" class="uistate" value="1" th:checked="${userdata.get().getUistate() != 0}" /></p>
-                                                    </p>
+                                                    <span th:text="${userdata.get().getUistate() == 0 ? '이용가능' : '이용정지'}"></span>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -168,7 +151,7 @@
                                                     <span class="required">*</span>
                                                 </label>
                                                 <div class="col-form-label col-md-3 col-sm-3">
-                                                    <input id="uiban" th:value="${userdata.get().getUiban()}">
+                                                    <span th:text="${userdata.get().getUiban()}"></span>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -179,17 +162,10 @@
                                                     <span th:text="${userdata.get().getUiidatetime()}"></span>
                                                 </div>
                                             </div>
-                                        <div style="display:none">
-                                            <input id="uiname0" th:value="${userdata.get().getUiname()}">
-                                            <input id="uiphone0" th:value="${userdata.get().getUiphone()}">
-                                            <input id="uistate0" th:value="${userdata.get().getUistate()}">
-                                            <input id="uiban0" th:value="${userdata.get().getUiban()}">
-                                        </div>
                                             <div class="ln_solid"></div>
                                         </div>
                                         <div class="item form-group">
-                                            <div class="offset-md-10">
-                                                <button class="btn btn-primary" onclick="uiedit()" >수정</button>
+                                            <div class="offset-md-11">
                                                 <button class="btn btn-primary" onclick="userinfo()" >목록</button>
                                                 <!--<button onclick="login()">로그인</button>-->
                                             </div>
@@ -198,25 +174,25 @@
                                 </div>
                             </div>
                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /page content -->
-
-        <!-- footer content -->
-        <footer>
-            <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-            </div>
-            <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
     </div>
+</div>
+</div>
+</div>
+<!-- /page content -->
+
+<!-- footer content -->
+<footer>
+    <div class="pull-right">
+        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+    </div>
+    <div class="clearfix"></div>
+</footer>
+<!-- /footer content -->
+</div>
 </div>
 
 <script src="/vendors/jquery/dist/jquery.min.js"></script>
