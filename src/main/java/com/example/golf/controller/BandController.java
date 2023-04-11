@@ -359,7 +359,7 @@ public class BandController {
     }
 
     @GetMapping("/BandTemplateRegister")
-    public String BandTemplateRegister(Model model, HttpServletRequest request, Pageable pageable){
+    public String BandTemplateRegister(Model model, HttpServletRequest request){
         String returnValue = "";
         if(new SessionCheck().loginSessionCheck(request)){
             HttpSession session = request.getSession();
@@ -373,8 +373,9 @@ public class BandController {
         return returnValue;
     }
 
-    @PostMapping("/inBandTemplate")
-    public String inBandTemplate(Model m, HttpServletRequest request,
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/inBandTemplate")
+    public HashMap<String, String> inBandTemplate(Model m, HttpServletRequest request,
                            @RequestParam(required = false, defaultValue = "", value = "temcode") String temcode,
                            @RequestParam(required = false, defaultValue = "", value = "temname") String temname,
                            @RequestParam(required = false, defaultValue = "", value = "kakao") int kakao,
@@ -382,11 +383,18 @@ public class BandController {
                            @RequestParam(required = false, defaultValue = "", value = "sms") int sms,
                            @RequestParam(required = false, defaultValue = "", value = "band") int band,
                            @RequestParam(required = false, defaultValue = "", value = "temcon") String temcon){
-        LocalDateTime localDateTime = LocalDateTime.now();
-        String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        BandTemplateDto bandTemplateDto = new BandTemplateDto(null,temcode,temname,temcon,kakao,email,sms,band,1,0,sdf1,null);
-        bandService.saveTem(bandTemplateDto);
-        return "redirect:";
+        HashMap<String, String> msg = new HashMap<String, String>();
+        Optional<BandTemplateEntity> s1 = bandTemplateRepository.findByBttemcode(temcode);
+        if(!s1.isPresent()){
+            LocalDateTime localDateTime = LocalDateTime.now();
+            String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            BandTemplateDto bandTemplateDto = new BandTemplateDto(null,temcode,temname,temcon,kakao,email,sms,band,1,0,sdf1,null);
+            bandService.saveTem(bandTemplateDto);
+            msg.put("Result", "1");
+        }else {
+            msg.put("Result", "0");
+        }
+        return msg;
     }
 
     @GetMapping("/Bttemgo")
@@ -427,8 +435,9 @@ public class BandController {
         return returnValue;
     }
 
-    @PostMapping("/EditBandTemplate")
-    public String EditBandTemplate(Model m, HttpServletRequest request,
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/EditBandTemplate")
+    public HashMap<String, String> EditBandTemplate(Model m, HttpServletRequest request,
                                    @RequestParam(required = false, defaultValue = "", value = "seq") Long seq,
                                    @RequestParam(required = false, defaultValue = "", value = "temcode") String temcode,
                                    @RequestParam(required = false, defaultValue = "", value = "temname") String temname,
@@ -438,11 +447,26 @@ public class BandController {
                                    @RequestParam(required = false, defaultValue = "", value = "band") int band,
                                    @RequestParam(required = false, defaultValue = "", value = "temcon") String temcon){
         Optional <BandTemplateEntity> s1 = bandTemplateRepository.findById(seq);
-        LocalDateTime localDateTime = LocalDateTime.now();
-        String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        BandTemplateDto bandTemplateDto = new BandTemplateDto(seq,temcode,temname,temcon,kakao,email,sms,band,1,0,s1.get().getBtidatetime(),sdf1);
-        bandService.saveTem(bandTemplateDto);
-        return "redirect:";
+        Optional <BandTemplateEntity> s2 = bandTemplateRepository.findByBttemcode(temcode);
+        HashMap<String, String> msg = new HashMap<String, String>();
+        if(!s2.isPresent()){
+            LocalDateTime localDateTime = LocalDateTime.now();
+            String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            BandTemplateDto bandTemplateDto = new BandTemplateDto(seq,temcode,temname,temcon,kakao,email,sms,band,1,0,s1.get().getBtidatetime(),sdf1);
+            bandService.saveTem(bandTemplateDto);
+            msg.put("Result", "1");
+        }else {
+            if(s2.get().getBtseq() == seq){
+                LocalDateTime localDateTime = LocalDateTime.now();
+                String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                BandTemplateDto bandTemplateDto = new BandTemplateDto(seq,temcode,temname,temcon,kakao,email,sms,band,1,0,s1.get().getBtidatetime(),sdf1);
+                bandService.saveTem(bandTemplateDto);
+                msg.put("Result", "1");
+            }else {
+                msg.put("Result", "0");
+            }
+        }
+        return msg;
     }
 
     @PostMapping("/EditBandTemuse")

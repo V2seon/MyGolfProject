@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 public interface BandTemplateRepository extends JpaRepository<BandTemplateEntity, Long>, QuerydslPredicateExecutor<BandTemplateEntity> {
 
@@ -14,6 +15,8 @@ public interface BandTemplateRepository extends JpaRepository<BandTemplateEntity
     @Transactional
     @Query(value = "UPDATE band_template bt SET bt.BT_USE_STATE =:use_state, BT_UDATETIME= now() WHERE bt.BT_SEQ =:num" , nativeQuery = true)
     void updateuseState(Long num, int use_state);
+
+    Optional<BandTemplateEntity> findByBttemcode(String Bttemcode);
 
 }
 
