@@ -61,7 +61,7 @@
             <div class="">
                 <div class="page-title">
                     <div class="title_left">
-                        <h3>템플릿 설정</h3>
+                        <h3>연동 설정</h3>
                     </div>
                     <div class="title_right">
                     </div>
@@ -71,7 +71,7 @@
                     <div class="col-md-12 col-sm-12 ">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>템플릿 목록<small></small></h2>
+                                <h2>회원 알림 설정 목록<small></small></h2>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
@@ -82,9 +82,9 @@
                                                 <div class="input-group">
                                                     <select class="form-control" id="selectKey" style="margin-left:10px;">
                                                         <option value="전체">전체</option>
-                                                        <option value="코드">템플릿 코드</option>
-                                                        <option value="이름">템플릿명</option>
-                                                        <option value="내용">내용</option>
+                                                        <option value="이름">밴드이름</option>
+                                                        <option value="타입">알림타입</option>
+                                                        <option value="템플릿명">템플릿명</option>
                                                         <!--                                                                        <option value="등록일">등록일</option>-->
                                                         <!--                                                                        <option value="수정일">수정일</option>-->
                                                     </select>
@@ -92,7 +92,7 @@
                                                     <span class="input-group-btn">
                                                         <button onclick="searching()" class="btn btn-default==" type="button">검색</button>
                                                     </span>
-                                                    <button onclick="inTem()" class="btn btn-primary" type="button">등록</button>
+                                                    <button onclick="inAlarm()" class="btn btn-primary" type="button">등록</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -105,41 +105,34 @@
                                                     <table id="datatable" class="table table-striped table-bordered" style="width:100%">
                                                         <thead>
                                                         <tr>
-                                                            <th>템플릿코드</th>
+                                                            <th>No</th>
+                                                            <th>밴드이름</th>
+                                                            <th>알림타입</th>
                                                             <th>템플릿명</th>
-                                                            <th>템플릿 내용</th>
-                                                            <th>알림톡</th>
+                                                            <th>알림시간</th>
+                                                            <th>카카오알림톡</th>
                                                             <th>이메일</th>
                                                             <th>SMS</th>
-                                                            <th>밴드글</th>
-                                                            <th>상태</th>
-                                                            <th>사용여부</th>
+                                                            <th>밴드게시글</th>
+                                                            <th>알림상태</th>
+                                                            <th>수정</th>
+                                                            <th>삭제</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <tr class="temcode" th:if="${bandlist} != null" th:each="Co : ${bandlist}">
-                                                            <td th:if="${Co.Bttemcode}"
-                                                                th:text="${Co.Bttemcode}"
-                                                                th:onclick="|javascript:EditTem(${Co.Btseq})|"></td>
-                                                            <td th:if="${Co.Bttemname}"
-                                                                th:text="${Co.Bttemname}"
-                                                                th:onclick="|javascript:EditTem(${Co.Btseq})|"></td>
-                                                            <td th:if="${Co.Bttemcontent}"
-                                                                th:text="${Co.Bttemcontent}"
-                                                                th:onclick="|javascript:EditTem(${Co.Btseq})|"></td>
-                                                            <td th:text="${Co.Btkakaostate == 1 ? 'O' : 'X'}"
-                                                                th:onclick="|javascript:EditTem(${Co.Btseq})|"></td>
-                                                            <td th:text="${Co.Btemailstate == 1 ? 'O' : 'X'}"
-                                                                th:onclick="|javascript:EditTem(${Co.Btseq})|"></td>
-                                                            <td th:text="${Co.Btsmsstate == 1 ? 'O' : 'X'}"
-                                                                th:onclick="|javascript:EditTem(${Co.Btseq})|"></td>
-                                                            <td th:text="${Co.Btbandstate == 1 ? 'O' : 'X'}"
-                                                                th:onclick="|javascript:EditTem(${Co.Btseq})|"></td>
-                                                            <td th:id="Bts+${Co.Btseq}" th:text="${Co.Btusestate == 1 ? '사용' : '대기'}"
-                                                                th:onclick="|javascript:EditTem(${Co.Btseq})|"></td>
-                                                            <td>
-                                                                <input th:onchange="|javascript:EditTemuse(this)|" th:checked="${Co.Btusestate == 1}" th:value="${Co.Btseq}" type="checkbox" id="chbttem">
-                                                            </td>
+                                                        <tr>
+                                                            <td>No</td>
+                                                            <td>밴드이름</td>
+                                                            <td>알림타입</td>
+                                                            <td>d템플릿명</td>
+                                                            <td>알림시간</td>
+                                                            <td>카카오알림톡</td>
+                                                            <td>이메일</td>
+                                                            <td>SMS</td>
+                                                            <td>밴드게시글</td>
+                                                            <td>알림상태</td>
+                                                            <td>수정</td>
+                                                            <td>삭제</td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -222,7 +215,7 @@
 <!-- NProgress -->
 <script src="/vendors/nprogress/nprogress.js"></script>
 <!-- Custom Theme Scripts -->
-<script src="/js/Band/BandTem.js"></script>
+<script src="/js/Band/BandAlarm.js"></script>
 
 <script src="/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 <!-- Custom Theme Scripts -->

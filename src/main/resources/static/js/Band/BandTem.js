@@ -183,6 +183,11 @@ let sendData = {
         type     : "POST",
         success : function(result) {
             $('#load').hide();
+            if(e.checked == false){
+                document.getElementById("Bts"+seq).innerText="대기";
+            }else{
+                document.getElementById("Bts"+seq).innerText="사용";
+            }
 //            location.href="/BttemModify"
         },
         error:function(request,status,error){
@@ -240,3 +245,12 @@ let sendData = {
                 }
             });
 }
+
+function checkReg(event) {
+//  const regExp = /[^0-9a-zA-Z]/g; // 숫자와 영문자만 허용
+  const regExp = /[^ㄱ-ㅎ|가-힣]/g; // 한글만 허용
+  const del = event.target;
+  if (regExp.test(del.value)) {
+    del.value = del.value.replace(regExp, '');
+  }
+};

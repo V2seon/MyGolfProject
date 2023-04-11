@@ -22,6 +22,7 @@ public class BandService {
     private BandMemberRepository bandMemberRepository;
     private BandGreetingRepository bandGreetingRepository;
     private BandTemplateRepository bandTemplateRepository;
+    private BandAlarmRepository bandAlarmRepository;
 
     @Transactional
     public Page<BandInfoEntity> selectALLBandInfo0(Pageable pageable){
@@ -97,5 +98,10 @@ public class BandService {
     @Transactional
     public void changeuseState(Long num, int use_state){
         bandTemplateRepository.updateuseState(num, use_state);
+    }
+
+    @Transactional
+    public Page <BandAlarmEntity> selectALLBandAlarm(Pageable pageable){
+        return bandAlarmRepository.findAll(pageable);
     }
 }
