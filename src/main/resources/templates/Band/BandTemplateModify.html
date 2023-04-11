@@ -81,7 +81,7 @@
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="temcode"> 템플릿코드*
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <input th:value="${temcode}" type="text" id="temcode" required="required" class="form-control  ">
+                                            <input th:value="${temcode}" type="text" id="temcode" required="required" class="form-control" onkeyup="checkReg(event)">
                                         </div>
                                     </div>
                                     <div class="form-group row">

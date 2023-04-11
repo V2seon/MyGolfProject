@@ -538,9 +538,16 @@ public class BandController {
         String returnValue = "";
         if(new SessionCheck().loginSessionCheck(request)){
             HttpSession session = request.getSession();
-
+            List<BandInfoEntity> s1 = bandInfoRepository.findAll();
+            List<BandTemplateEntity> s2 = bandTemplateRepository.findAll1();
+            Optional<BandTemplateEntity> s3 = bandTemplateRepository.findById(s2.get(0).getBtseq());
+            model.addAttribute("bandlist",s1);
+            model.addAttribute("temlist",s2);
+            model.addAttribute("kakao",s3.get().getBtkakaostate());
+            model.addAttribute("email",s3.get().getBtemailstate());
+            model.addAttribute("sms",s3.get().getBtsmsstate());
+            model.addAttribute("band",s3.get().getBtbandstate());
             model.addAttribute("nowurl0","/Bandlogmember");
-
             returnValue = "/Band/BandAlarmRegister.html";
         }else{
             returnValue = "login";

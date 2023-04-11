@@ -78,51 +78,110 @@
                                 <br />
                                 <div id="demo-form2">
                                     <div class="form-group row">
-                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="temcode"> 템플릿코드*
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="bandname"> 밴드이름*
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <input type="text" id="temcode" required="required" onkeyup="checkReg(event)" class="form-control  ">
+                                            <select id="bandname" class="form-control">
+                                                <option th:if="${bandlist}!=null" th:each="Co : ${bandlist}" th:value="${Co.Biseq}" th:text="${Co.Biname}"></option>
+                                            </select>
                                         </div>
-<!--                                        <div id="chtemcode">-->
-<!--                                            중복확인-->
-<!--                                        </div>-->
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">알림타입*
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 " style="display:flex; align-items: center;">
+                                            <input checked style="margin-right:5px;" type="radio" value="0" name="choice" id="al">
+                                            <label style="margin-right:10px;" for="al">예약티</label>
+                                            <input style="margin-right:5px;" type="radio" value="1" name="choice" id="py">
+                                            <label style="margin-right:10px;" for="py">참가자정보</label>
+                                            <input style="margin-right:5px;" type="radio" value="2" name="choice" id="ju">
+                                            <label for="ju">프로필정책</label>
+                                        </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="temname"> 템플릿명*
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <input type="text" id="temname" required="required" class="form-control  ">
+                                            <select id="temname" class="form-control">
+                                                <option th:if="${temlist}!=null" th:each="Co : ${temlist}" th:value="${Co.Btseq}" th:text="${Co.Bttemname}"></option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-form-label col-md-3 col-sm-3 label-align"> 알림설정*
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 " style="display:flex; align-items: center;">
-                                            <input style="margin-right:5px;" type="checkbox" id="kakao">
-                                            <label style="margin-right:10px;" for="kakao">카카오알림톡</label>
-                                            <input style="margin-right:5px;" type="checkbox" id="email">
-                                            <label style="margin-right:10px;" for="email">이메일</label>
-                                            <input style="margin-right:5px;" type="checkbox" id="sms">
-                                            <label style="margin-right:10px;" for="sms">SMS</label>
-                                            <input style="margin-right:5px;" type="checkbox" id="band">
-                                            <label for="band">밴드게시글</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="temcon"> 템플릿 내용
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="alarmtime">알림시간설정*
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <textarea style="height:200px; resize:none;" type="text" id="temcon" class="form-control"></textarea>
+                                            <input class="form-control" type="time" id="alarmtime">
+                                        </div>
+                                    </div>
+                                    <div th:if="${kakao} == 1" class="form-group row" name="kakao">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align"> 카카오알림톡
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 ">
+                                            <input id="kakaophnum" class="form-control" type="text" onkeyup="checkReg(event)" maxlength="11">
                                             <br>
-                                            <span>* 변수가 들어가는 부분은 #{고객이름} 형태로 작성 바람</span>
+                                            <span>* 핸드폰 번호만 입력해주세요</span>
+                                        </div>
+                                        <div>
+                                            <button onclick="kakaophnum()" class="btn btn-primary" style="margin:auto;">추가</button>
+                                        </div>
+                                    </div>
+                                    <div th:if="${kakao} == 1" class="form-group row" name="kakao">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 ">
+                                            <div id="kakaophlist" class="form-control" style="height: auto; min-height: 76px;max-height: 250px;overflow-x: hidden;overflow-y: scroll;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div th:if="${email} == 1" class="form-group row" name="email">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align"> 이메일
+                                        </label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <input id="emailtext" class="form-control" type="text" onkeyup="onkeyemail()">
+                                        </div>
+                                        <div>
+                                            <button onclick="emailtext()" class="btn btn-primary" style="margin:auto;">추가</button>
+                                        </div>
+                                    </div>
+                                    <div th:if="${email} == 1" class="form-group row" name="kakao">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 ">
+                                            <div id="emaillist" class="form-control" style="height: auto; min-height: 76px;max-height: 250px;overflow-x: hidden;overflow-y: scroll;">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div th:if="${sms} == 1" class="form-group row" name="sms">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align"> SMS
+                                        </label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="form-control" style="text-align:center;">
+                                                핸드폰 번호
+                                            </div>
+                                            <span>*핸드폰 번호만 입력해주세요.</span>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-primary" style="margin:auto;">추가</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">실행 상태
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 " style="display:flex; align-items: center;">
+                                            <input checked style="margin-right:5px;" type="radio" value="0" name="choice1" id="stop">
+                                            <label style="margin-right:10px;" for="stop">정지</label>
+                                            <input style="margin-right:5px;" type="radio" value="1" name="choice1" id="go">
+                                            <label for="go">실행</label>
                                         </div>
                                     </div>
                                     <div class="ln_solid"></div>
                                 </div>
                                 <div class="item form-group">
                                     <div class="offset-md-11">
-                                        <button onclick="Temgo()" class="btn btn-primary" ><a>목록</a></button>
-                                        <button onclick="SaveTem()" class="btn btn-primary" ><a>등록</a></button>
+                                        <button onclick="Temgo()" class="btn btn-primary"><a>목록</a></button>
+                                        <button onclick="SaveAlarm()" class="btn btn-primary"><a>등록</a></button>
                                     </div>
                                 </div>
 
