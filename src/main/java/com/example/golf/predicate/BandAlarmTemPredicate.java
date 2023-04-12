@@ -19,12 +19,12 @@ public class BandAlarmTemPredicate {
         }
         else if(selectKey.equals("전체")){
             try{
-                builder.and(qViewBandAlarmEntity.biname.contains(titleText));
+                builder.and(
+                        (qViewBandAlarmEntity.biname.contains(titleText)).or
+                                (qViewBandAlarmEntity.bttemname.contains(titleText)));
             }
             catch (Exception e){
-                builder.and(
-                        (qViewBandAlarmEntity.bttemname.contains(titleText)).or
-                                (qViewBandAlarmEntity.biname.contains(titleText)));
+                builder.and(qViewBandAlarmEntity.bttemname.contains(titleText));
             }
         }
         return builder;
