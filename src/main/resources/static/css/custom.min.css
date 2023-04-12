@@ -136,8 +136,17 @@ border: 1px solid #dee2e6
 	height: 190px;
 	padding: 10px;
 }
-.popupLayer div {
+.popupLayer,.popupLayer0 div {
 	position: absolute;
+}
+.popupLayer0 {
+	position: absolute;
+	display: none;
+	background-color: #ffffff;
+	border: solid 2px #d0d0d0;
+	width: 160px;
+	height: 100px;
+	padding: 10px;
 }
 
 .daycol1{

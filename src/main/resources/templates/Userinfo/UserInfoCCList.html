@@ -81,9 +81,10 @@
                                                         <select class="form-control" id="selectKey" style="margin-left:10px;">
                                                             <option value="전체">전체</option>
                                                             <option value="No">No</option>
-                                                            <option value="아이디">아이디</option>
                                                             <option value="CC">CC</option>
-                                                            <option value="코스정보">코스정보</option>
+                                                            <option value="이름">이름</option>
+                                                            <option value="아이디">아이디</option>
+                                                            <option value="로그인">로그인</option>
                                                         </select>
                                                         <input id="titleText" type="text" class="form-control" placeholder="Search for..." onkeyup="if(window.event.keyCode==13){searching()}">
                                                         <span class="input-group-btn">
@@ -105,82 +106,41 @@
                                                             <tr>
                                                                 <th>No</th>
                                                                 <th>CC</th>
-                                                                <th>코스정보</th>
-                                                                <th>예약일</th>
-                                                                <th>취소가능일</th>
-                                                                <th>예약티 시간</th>
+                                                                <th>사용자이름</th>
                                                                 <th>아이디</th>
-                                                                <th>밴드 글작성</th>
-                                                                <th>참가자</th>
-                                                                <th>확정</th>
-                                                                <th>연동삭제</th>
-                                                                <th>DB삭제</th>
+                                                                <th>비밀번호</th>
+                                                                <th>로그인</th>
+                                                                <th>수정</th>
+                                                                <th>삭제</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                            <tr th:if="${userlist}!=null" th:each="Co : ${userlist}"
-                                                                th:classappend="${Co.Rsiuino < 4 ? 'ctx' : ''}">
-                                                                <td th:if="${Co.Rsino}!= null"
-                                                                    th:text="${Co.Rsino}"></td>
-                                                                <td th:if="${Co.Rsiccno}!= null" th:class="${Co.Rsiuino < 4 ? 'ctx' : ''}"
-                                                                    th:text="${Co.Rsiccno}"  th:classappend="${(Co.Rsiccno =='어등산' ? 'Tt17': '') +
-                                                                                                                (Co.Rsiccno =='해피니스' ? 'Tt40': '')+
-                                                                                                                (Co.Rsiccno =='광주컨트리클럽' ? 'Tt39': '')+
-                                                                                                                (Co.Rsiccno =='무안컨트리클럽' ? 'Tt41': '')+
-                                                                                                                (Co.Rsiccno =='아크로컨트리클럽' ? 'Tt42': '')+
-                                                                                                                (Co.Rsiccno =='무안클린밸리' ? 'Tt45': '')}"></td>
-                                                                <td th:if="${Co.Rsicno}!= null"
-                                                                    th:text="${Co.Rsicno}">
-                                                                </td>
-                                                                <td th:if="${Co.Rsitime}!= null">
-                                                                    <span th:text="${#strings.substring(Co.Rsitime,0,10)}"></span>&nbsp;
-                                                                    <span th:text="${#strings.substring(Co.Rsitime,17,20)}"
-                                                                          th:classappend="${(#strings.substring(Co.Rsitime,17,20) =='(토)' ? 'daycol1': '') +
-                                                                                            (#strings.substring(Co.Rsitime,17,20) =='(일)' ? 'daycol2': '')}"></span>
-                                                                </td>
-                                                                <td th:if="${Co.Rsicanceldate}!= null">
-                                                                    <span th:text="${Co.Rsicanceldate}"></span>
-                                                                    <br th:if="${Co.Rsiuino < 4}">
-                                                                    <span th:if="${Co.Rsiuino == 3}">취소일 +3일</span>
-                                                                    <span th:if="${Co.Rsiuino == 2}">취소일 +2일</span>
-                                                                    <span th:if="${Co.Rsiuino == 1}">취소일 +1일</span>
-                                                                    <span th:if="${Co.Rsiuino == 0}">취소일</span>
-                                                                </td>
-                                                                <td th:if="${Co.Rsitime}!= null"
-                                                                    th:text="${#strings.substring(Co.Rsitime,11,16)}">
-                                                                </td>
-                                                                <td th:if="${Co.Rsicaid}!= null"
-                                                                    th:text="${Co.Rsicaid}">
+                                                            <tr th:if="${userlist}!=null" th:each="Co : ${userlist}">
+                                                                <td th:if="${Co.Cano}!= null" th:text="${Co.Cano}"></td>
+                                                                <td th:if="${Co.Caccno}!= null" th:text="${ccnames[Co.Caccno]}"></td>
+                                                                <td th:if="${Co.Cauino}!= null" th:text="${uinames[Co.Cauino]}"></td>
+                                                                <td th:if="${Co.Caid}!= null" th:text="${Co.Caid}"></td>
+                                                                <td th:if="${Co.Capassword}!= null" th:text="${Co.Capassword}"></td>
+                                                                <td th:if="${Co.Castate}!= null" th:text="${Co.Castate == 1 ? '성공':'실패'}"></td>
+                                                                <td>
+                                                                    <button th:onclick="|javascript:uiccedit(${Co.Cano})|" class="btn btn-primary" type="button">수정</button>
                                                                 </td>
                                                                 <td>
-                                                                    <button th:if="${Co.Rsibandstate} == 0" th:onclick="|javascript:band(${Co.Rsino})|" class="btn btn-success" type="button">작성</button>
-                                                                    <span th:if="${Co.Rsibandstate} == 1">작성됨</span>
-                                                                </td>
-                                                                <td>
-                                                                    <button name="ckuser" th:value="${Co.Rsino}" class="btn btn-success ckuser" type="button" th:text="${Co.Bandnicknamecount} +' 명'"></button>
-                                                                </td>
-                                                                <td>
-                                                                    <button th:onclick="|javascript:Defno(${Co.Rsino})|" class="btn btn-success" type="button">확정</button>
-                                                                </td>
-                                                                <td>
-                                                                    <button th:onclick="|javascript:DelReservation(${Co.Rsino})|" class="btn btn-primary" type="button">연동삭제</button>
-                                                                </td>
-                                                                <td>
-                                                                    <button th:onclick="|javascript:Delinfo(${Co.Rsino})|" class="btn btn-primary" type="button">DB삭제</button>
+                                                                    <button th:onclick="|javascript:uiccdel(${Co.Cano})|" class="btn btn-primary" type="button">삭제</button>
                                                                 </td>
                                                             </tr>
                                                             </tbody>
                                                         </table>
                                                         <div style="margin-top:20px; " class="card-footer clearfix">
                                                             <ul class="pagination pagination-sm m-0 justify-content-center" id="pageList">
-                                                                <div class="page-item1" th:onclick="|javascript:paging(0)|">
+                                                                <div class="page-item1" th:onclick="|javascript:paging(0,'ca')|">
                                                                     <a class="page-link" aria-label="Previous">
                                                                         <<
                                                                     </a>
                                                                 </div>
 
                                                                 <div class="page-item1 prev-page" th:if="${isPrevSection}"
-                                                                     th:value="${thisSection}" th:onclick="|javascript:paging(${firstBtnIndex}-1)|">
+                                                                     th:value="${thisSection}" th:onclick="|javascript:paging(${firstBtnIndex}-1,'ca')|">
                                                                     <a class="page-link" aria-label="Previous">
                                                                         <
                                                                     </a>
@@ -188,7 +148,7 @@
 
                                                                 <!--            onclick 구현-->
                                                                 <div th:each="page: ${#numbers.sequence(firstBtnIndex,lastBtnIndex)}"
-                                                                     id="pageItem" class="page-item" th:onclick="|javascript:paging(${page})|"
+                                                                     id="pageItem" class="page-item" th:onclick="|javascript:paging(${page},'ca')|"
                                                                      th:classappend="${thisPage} ==  ${page} ?  'active'" th:value="${page}">
                                                                     <a class="page-link">
                                                                         <span th:text="${page+1}"></span>
@@ -198,7 +158,7 @@
 
                                                                 <!--다음버튼2-->
                                                                 <div class="page-item1 next-page" th:if="${isNextSection}"
-                                                                     th:onclick="|javascript:paging(${lastBtnIndex}+1)|"
+                                                                     th:onclick="|javascript:paging(${lastBtnIndex}+1,'ca')|"
                                                                      th:value="${thisSection}">
                                                                     <a class="page-link" aria-label="Next">
                                                                         >
@@ -206,7 +166,7 @@
                                                                 </div>
                                                                 <!--다음버튼2-->
 
-                                                                <div class="page-item1" th:onclick="|javascript:paging(${totalPage})|">
+                                                                <div class="page-item1" th:onclick="|javascript:paging(${totalPage},'ca')|">
                                                                     <a class="page-link" id="pageItem2" aria-label="Previous">
                                                                         >>
                                                                     </a>
@@ -264,7 +224,8 @@
 <script src="/vendors/nprogress/nprogress.js"></script>
 <!-- Custom Theme Scripts -->
 
-<script src="/js/Reservationinfo/Re1.js"></script>
+<script src="/js/Userinfo/Userinfo.js"></script>
+<script src="/js/Userinfo/Uicc.js"></script>
 
 <script src="/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 <!-- Custom Theme Scripts -->
@@ -272,30 +233,4 @@
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function() {
-
-    $(document).on("mouseover",".ckuser", function() {
-        var seq = $(this).val();
-
-        w1 = $(this).offset().left;
-        h1 = $(this).offset().top;
-
-        w1center = w1;
-        h1center = h1 - 210;
-
-        view(seq);
-        $('.popupLayer').css({
-            "top": h1center,
-            "left": w1center,
-            "position": "absolute"
-        }).show();
-    });
-
-    $(document).on("mouseout",".ckuser", function() {
-        $('tr.nickid').remove();
-        $('.popupLayer').hide();
-    });
-});
-</script>
 </body></html>

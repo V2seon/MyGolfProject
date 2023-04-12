@@ -23,6 +23,9 @@ public interface UserinfoRepository extends JpaRepository<UserinfoEntity, Long>,
     @Query(value = "SELECT * FROM test_user_info " , nativeQuery = true)
     Page<UserinfoEntity> findAll(Pageable pageable);
 
+    @Query(value = "SELECT * FROM test_user_info " , nativeQuery = true)
+    List<UserinfoEntity> findAll();
+
     // 사용자 정보 데이터 수정
     @Modifying
     @Transactional

@@ -148,7 +148,7 @@
                                                                 </td>
                                                                 <td style="text-align:center;" >
                                                                     <span th:if="${Co.Uiidatetime}!= null"
-                                                                          th:text="${Co.Uiidatetime}">
+                                                                          th:text="${#strings.substring(Co.Uiidatetime,0,10)}">
                                                                     </span>
                                                                 </td>
                                                                 <td><button th:onclick="|javascript:detailUser(${Co.Uino})|" class="btn btn-primary" type="button">보기</button></td>
@@ -157,14 +157,14 @@
                                                         </table>
                                                         <div style="margin-top:20px; " class="card-footer clearfix">
                                                             <ul class="pagination pagination-sm m-0 justify-content-center" id="pageList">
-                                                                <div class="page-item1" th:onclick="|javascript:paging(0)|">
+                                                                <div class="page-item1" th:onclick="|javascript:paging(0,'ui')|">
                                                                     <a class="page-link" aria-label="Previous">
                                                                         <<
                                                                     </a>
                                                                 </div>
 
                                                                 <div class="page-item1 prev-page" th:if="${isPrevSection}"
-                                                                     th:value="${thisSection}" th:onclick="|javascript:paging(${firstBtnIndex}-1)|">
+                                                                     th:value="${thisSection}" th:onclick="|javascript:paging(${firstBtnIndex}-1,'ui')|">
                                                                     <a class="page-link" aria-label="Previous">
                                                                         <
                                                                     </a>
@@ -172,7 +172,7 @@
 
                                                                 <!--            onclick 구현-->
                                                                 <div th:each="page: ${#numbers.sequence(firstBtnIndex,lastBtnIndex)}"
-                                                                     id="pageItem" class="page-item" th:onclick="|javascript:paging(${page})|"
+                                                                     id="pageItem" class="page-item" th:onclick="|javascript:paging(${page},'ui')|"
                                                                      th:classappend="${thisPage} ==  ${page} ?  'active'" th:value="${page}">
                                                                     <a class="page-link">
                                                                         <span th:text="${page+1}"></span>
@@ -182,7 +182,7 @@
 
                                                                 <!--다음버튼2-->
                                                                 <div class="page-item1 next-page" th:if="${isNextSection}"
-                                                                     th:onclick="|javascript:paging(${lastBtnIndex}+1)|"
+                                                                     th:onclick="|javascript:paging(${lastBtnIndex}+1,'ui')|"
                                                                      th:value="${thisSection}">
                                                                     <a class="page-link" aria-label="Next">
                                                                         >
@@ -190,7 +190,7 @@
                                                                 </div>
                                                                 <!--다음버튼2-->
 
-                                                                <div class="page-item1" th:onclick="|javascript:paging(${totalPage})|">
+                                                                <div class="page-item1" th:onclick="|javascript:paging(${totalPage},'ui')|">
                                                                     <a class="page-link" id="pageItem2" aria-label="Previous">
                                                                         >>
                                                                     </a>

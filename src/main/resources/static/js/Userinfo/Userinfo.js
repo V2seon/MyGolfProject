@@ -32,14 +32,12 @@ function searching(){
 }
 
 // 페이징
-function paging(pageValue){
+function paging(pageValue,db){
     const myPageQuery = new URLSearchParams(location.search);
-
-    console.log(pageValue);
-
     var titleText = myPageQuery.get('titleText');
     var selectKey = myPageQuery.get('selectKey');
 
+    console.log(pageValue);
     $("#load").show();
 
     //문자열 "null" 이 들어가는것 방지하기 위해 값이 null 이라면 공백 문자열 대입
@@ -63,16 +61,25 @@ function paging(pageValue){
 
     var querydata = { "page" : pageValue, "selectKey":selectKey, "titleText":titleText};
 
-
-    $.ajax({
-        url: "/userinfo_search",
-        data: querydata,
-        type:"POST",
-    }).done(function (fragment) {
-        $("#infotable").replaceWith(fragment);
-        $("#load").hide();
-
-    });
+    if(db == 'ui'){
+        $.ajax({
+            url: "/userinfo_search",
+            data: querydata,
+            type:"POST",
+        }).done(function (fragment) {
+            $("#infotable").replaceWith(fragment);
+            $("#load").hide();
+        });
+    }else if(db == 'ca'){
+        $.ajax({
+            url: "/userinfoCCList_search",
+            data: querydata,
+            type:"POST",
+        }).done(function (fragment) {
+            $("#intable").replaceWith(fragment);
+            $("#load").hide();
+        });
+    }
 
 }
 

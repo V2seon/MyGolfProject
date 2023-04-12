@@ -3,14 +3,8 @@ package com.example.golf.controller;
 import com.example.golf.common.Pagination;
 import com.example.golf.common.SessionCheck;
 import com.example.golf.dto.UserinfoDto;
-import com.example.golf.entity.CountryAccountEntity;
-import com.example.golf.entity.CountryClubEntity;
-import com.example.golf.entity.UserinfoEntity;
-import com.example.golf.entity.ViewUserInfoEntity;
-import com.example.golf.repository.CountryAccountRepository;
-import com.example.golf.repository.CountryClubRepository;
-import com.example.golf.repository.ReservationInfoRepository;
-import com.example.golf.repository.UserinfoRepository;
+import com.example.golf.entity.*;
+import com.example.golf.repository.*;
 import com.example.golf.service.UserinfoService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -18,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Controller
@@ -121,15 +113,15 @@ public class UserinfoController {
         List<CountryAccountEntity> s2 = countryAccountRepository.findByCauino((Long) session.getAttribute("seq"));
 
         // 나중엔 등록된 cc사이트 길이만큼 배열생성
-        HashMap<String,Object> ad = new HashMap<String,Object>();
+        HashMap<String,Object> adcc = new HashMap<String,Object>();
         List cclist = new ArrayList<>();
         for(int i=0; i<s2.size(); i++){
             Optional<CountryClubEntity> s3 = countryClubRepository.findById(s2.get(i).getCaccno());
             if(s3.isPresent()){
-                ad.put("ccname",s3.get().getCcname());
+                adcc.put("ccname",s3.get().getCcname());
             }
         }
-        cclist.add(ad);
+        cclist.add(adcc);
         model.addAttribute("cc",cclist);
         model.addAttribute("userdata",s1);
         model.addAttribute("nowurl0","/Userinfo");
@@ -144,6 +136,8 @@ public class UserinfoController {
         String returnValue = "";
         if(new SessionCheck().loginSessionCheck(request)){
             HttpSession session = request.getSession();
+
+            model.addAttribute("nowurl0","/Userinfo");
             returnValue = "/Userinfo/AddUserinfo";
         }else{
             returnValue = "login";
@@ -217,4 +211,142 @@ public class UserinfoController {
         return msg;
     }
 
+    @GetMapping("/UserInfoCCList")
+    public String userInfoCCList(Model model, HttpServletRequest request, Pageable pageable,
+                        @RequestParam(required = false, defaultValue = "0", value = "page") int page){
+        String returnValue = "";
+        if(new SessionCheck().loginSessionCheck(request)){
+            HttpSession session = request.getSession();
+
+            pageable = PageRequest.of(page, 10);
+            Page<CountryAccountEntity> s1 = userinfoService.selectALLCountryAccount0(pageable);
+            List<CountryClubEntity> s2 = countryClubRepository.findAll1();
+            Map<Long,String> seqname = new HashMap<Long,String>();
+            for (int i=0;i<s2.size();i++){
+                seqname.put(s2.get(i).getCcno(),s2.get(i).getCcname());
+            }
+            List<UserinfoEntity> s3 = userinfoRepository.findAll();
+            Map<Long,String> seqname2 = new HashMap<Long,String>();
+            for (int i=0;i<s3.size();i++){
+                seqname2.put(s3.get(i).getUino(),s3.get(i).getUiname());
+            }
+
+            Pagination pagination = new Pagination(s1.getTotalPages(), page);
+
+            model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
+            model.addAttribute("isNextSection", pagination.isNextSection()); //다음버튼 유무 확인하기 위함
+            model.addAttribute("isPrevSection", pagination.isPrevSection()); //이전버튼 유무 확인하기 위함
+            model.addAttribute("firstBtnIndex", pagination.getFirstBtnIndex()); //버튼 페이징 - 첫시작 인덱스
+            model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
+            model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
+
+            model.addAttribute("userlist", s1);
+            model.addAttribute("country",s2);
+            model.addAttribute("ccnames", seqname);
+            model.addAttribute("uinames", seqname2);
+            model.addAttribute("nowurl0","/Userinfo");
+
+            returnValue = "/Userinfo/UserInfoCCList";
+        }else{
+            returnValue = "login";
+        }
+        System.out.println("여기");
+        return returnValue;
+    }
+
+    @RequestMapping(value = "/userinfoCCList_search", method = RequestMethod.POST)
+    public String userinfoCCList_search(Model model, HttpServletRequest request,
+                                  @RequestParam(required = false ,defaultValue = "0" , value="page") int page,
+                                  @RequestParam(required = false ,defaultValue = "" , value="selectKey") String selectKey,
+                                  @RequestParam(required = false ,defaultValue = "" , value="titleText") String titleText,
+                                  @RequestParam(required = false ,defaultValue = "0" , value="set") String set){
+        HttpSession session = request.getSession();
+
+        List<CountryClubEntity> s2 = countryClubRepository.findAll1();
+        Map<Long,String> seqname = new HashMap<Long,String>();
+        for (int i=0;i<s2.size();i++){
+            seqname.put(s2.get(i).getCcno(),s2.get(i).getCcname());
+        }
+        List<UserinfoEntity> s3 = userinfoRepository.findAll();
+        Map<Long,String> seqname2 = new HashMap<Long,String>();
+        for (int i=0;i<s3.size();i++){
+            seqname2.put(s3.get(i).getUino(),s3.get(i).getUiname());
+        }
+
+        if(selectKey.equals("CC") || selectKey.equals("전체")) { // band이름으로 검색
+            boolean selectKeyCheck = false;
+            for (String value : seqname.values()) { // band이름이 포함되어 있는지 체크
+                if (value.contains(titleText)) {
+                    selectKeyCheck = true;
+                    break;
+                }
+            }
+            if (selectKeyCheck) { // band이름이 포함되어 있을경우 seq값으로 변경
+                for (Long key : seqname.keySet()) {
+                    if (seqname.get(key).contains(titleText)) {
+                        titleText = String.valueOf(key);
+                        break;
+                    }
+                }
+            }
+        }else if(selectKey.equals("이름") || selectKey.equals("전체")) { // band이름으로 검색
+            boolean selectKeyCheck = false;
+            for (String value : seqname2.values()) { // band이름이 포함되어 있는지 체크
+                if (value.contains(titleText)) {
+                    selectKeyCheck = true;
+                    break;
+                }
+            }
+            if (selectKeyCheck) { // band이름이 포함되어 있을경우 seq값으로 변경
+                for (Long key : seqname2.keySet()) {
+                    if (seqname.get(key).contains(titleText)) {
+                        titleText = String.valueOf(key);
+                        break;
+                    }
+                }
+            }
+//        }else if(selectKey.equals("로그인") || selectKey.equals("전체")) { // band이름으로 검색
+//            boolean selectKeyCheck = false;
+//            for (String value : seqname.values()) { // band이름이 포함되어 있는지 체크
+//                if (value.contains(titleText)) {
+//                    selectKeyCheck = true;
+//                    break;
+//                }
+//            }
+//            if (selectKeyCheck) { // band이름이 포함되어 있을경우 seq값으로 변경
+//                for (Long key : seqname.keySet()) {
+//                    if (seqname.get(key).contains(titleText)) {
+//                        titleText = String.valueOf(key);
+//                        break;
+//                    }
+//                }
+//            }
+        }
+
+        Pageable pageable = PageRequest.of(page, 10);
+        int totalPages = 0;
+        if(!set.equals("0")){
+            totalPages = userinfoService.selectALLCountryAccount("CC", set, pageable).getTotalPages();
+        }else {
+            totalPages = userinfoService.selectALLCountryAccount(selectKey, titleText, pageable).getTotalPages();
+        }
+        Pagination pagination = new Pagination(totalPages, page);
+
+        model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
+        model.addAttribute("isNextSection", pagination.isNextSection()); //다음버튼 유무 확인하기 위함
+        model.addAttribute("isPrevSection", pagination.isPrevSection()); //이전버튼 유무 확인하기 위함
+        model.addAttribute("firstBtnIndex", pagination.getFirstBtnIndex()); //버튼 페이징 - 첫시작 인덱스
+        model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
+        model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
+
+        //서비스 엔티티 추가후 주석 풀고 사용
+        Page<CountryAccountEntity> pageList = userinfoService.selectALLCountryAccount(selectKey, titleText, pageable);
+        model.addAttribute("nowurl0","/Userinfo");
+
+        model.addAttribute("userlist", pageList);
+        model.addAttribute("ccnames", seqname);
+        model.addAttribute("uinames", seqname2);
+
+        return "/Userinfo/UserInfoCCList :: #intable";
+    }
 }

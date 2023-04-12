@@ -191,3 +191,37 @@ function AllMember(blmbiseq,blmtodaydata){
 }
 
 
+
+// 마우스 호버 기능
+function view(members,check) { // 체크는 out, in, change
+    $("#popupLayer").css('overflow','Visible');
+    if(check == 'out'){
+        for(var i=0; i<members.length; i++){
+            $("#Omembers").css('display','block');
+            $("#Imembers").css('display','none');
+            $("#Cmembers").css('display','none');
+            $("#Omembers").append(
+                "<tr class='nickid'><td>"+members[i]+"</td></tr>"
+            )
+        }
+    }else if(check == 'in'){
+        for(var i=0; i<members.length; i++){
+            $("#Omembers").css('display','none');
+            $("#Imembers").css('display','block');
+            $("#Cmembers").css('display','none');
+            $("#Imembers").append(
+                "<tr class='nickid'><td>"+members[i]+"</td></tr>"
+            )
+        }
+    }else if(check == 'change'){
+        for(var i=0; i<members.length; i++){
+            $("#Omembers").css('display','none');
+            $("#Imembers").css('display','none');
+            $("#Cmembers").css('display','block');
+            $("#Cmembers").append(
+                "<tr class='nickid'><td>"+members[i]+"</td></tr>"
+            )
+        }
+    }
+};
+

@@ -1,9 +1,12 @@
 package com.example.golf.service;
 
 import com.example.golf.dto.UserinfoDto;
+import com.example.golf.entity.CountryAccountEntity;
 import com.example.golf.entity.UserinfoEntity;
 import com.example.golf.entity.ViewUserInfoEntity;
+import com.example.golf.predicate.BandPredicate;
 import com.example.golf.predicate.ViewUserInfoPredicate;
+import com.example.golf.repository.CountryAccountRepository;
 import com.example.golf.repository.UserinfoRepository;
 import com.example.golf.repository.ViewUserInfoRepository;
 import lombok.AllArgsConstructor;
@@ -19,6 +22,7 @@ public class UserinfoService {
 
     private ViewUserInfoRepository viewUserInfoRepository;
     private UserinfoRepository userinfoRepository;
+    private CountryAccountRepository countryAccountRepository;
 
     @Transactional
     public Page<ViewUserInfoEntity> selectALLTable0(Pageable pageable){
@@ -35,5 +39,15 @@ public class UserinfoService {
         UserinfoEntity uiEntity = uiDto.toEntity();
         userinfoRepository.save(uiEntity);
         return uiDto.getUino();
+    }
+
+    @Transactional
+    public Page<CountryAccountEntity> selectALLCountryAccount0(Pageable pageable){
+        return countryAccountRepository.findAll(pageable);
+    }
+
+    @Transactional
+    public Page <CountryAccountEntity> selectALLCountryAccount(String selectKey, String titleText, Pageable pageable){
+        return countryAccountRepository.findAll(BandPredicate.BLMsearch(selectKey, titleText),pageable);
     }
 }
