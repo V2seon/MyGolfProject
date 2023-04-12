@@ -2,12 +2,10 @@ package com.example.golf.controller;
 
 import com.example.golf.common.Pagination;
 import com.example.golf.common.SessionCheck;
+import com.example.golf.dto.BandAlarmDto;
 import com.example.golf.dto.BandTemplateDto;
 import com.example.golf.entity.*;
-import com.example.golf.repository.BandGreetingRepository;
-import com.example.golf.repository.BandInfoRepository;
-import com.example.golf.repository.BandMemberRepository;
-import com.example.golf.repository.BandTemplateRepository;
+import com.example.golf.repository.*;
 import com.example.golf.service.BandService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,10 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @AllArgsConstructor
@@ -37,6 +32,7 @@ public class BandController {
     private BandTemplateRepository bandTemplateRepository;
     private BandInfoRepository biRepository;
     private BandMemberRepository bmRepository;
+    private BandAlarmRepository bandAlarmRepository;
 
     @GetMapping("/Bandinfo")
     public String bandinfo(Model model, HttpServletRequest request, Pageable pageable,
@@ -485,7 +481,7 @@ public class BandController {
             HttpSession session = request.getSession();
 
             pageable = PageRequest.of(page, 10);
-            Page<BandAlarmEntity> s1 = bandService.selectALLBandAlarm(pageable);
+            Page<ViewBandAlarmEntity> s1 = bandService.selectALLBandAlarm(pageable);
 
             Pagination pagination = new Pagination(s1.getTotalPages(), page);
 
@@ -514,7 +510,7 @@ public class BandController {
         HttpSession session = request.getSession();
 
         Pageable pageable = PageRequest.of(page, 10);
-        int totalPages = bandService.selectALLBandTem1(selectKey, titleText, pageable).getTotalPages();
+        int totalPages = bandService.selectALLBandAl1(selectKey, titleText, pageable).getTotalPages();
         Pagination pagination = new Pagination(totalPages, page);
 
         model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
@@ -525,7 +521,7 @@ public class BandController {
         model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
 
         //서비스 엔티티 추가후 주석 풀고 사용
-        Page<BandTemplateEntity> pageList = bandService.selectALLBandTem1(selectKey, titleText, pageable);
+        Page<ViewBandAlarmEntity> pageList = bandService.selectALLBandAl1(selectKey, titleText, pageable);
 
         model.addAttribute("bandlist", pageList); //페이지 객체 리스트
         model.addAttribute("nowurl0","/Bandlogmember");
@@ -555,6 +551,37 @@ public class BandController {
         return returnValue;
     }
 
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/chTem")
+    public Object chTem(HttpServletRequest request, Model model,
+                       @RequestParam(required = false, defaultValue = "", value = "seq") Long seq){
+        HttpSession session = request.getSession();
+        Optional<BandTemplateEntity> s1 = bandTemplateRepository.findById(seq);
+        HashMap<String, Object> msg = new HashMap<String, Object>();
+        msg.put("tem", s1);
+        return msg;
+    }
+
+    @PostMapping("/inBandalarm")
+    public String inBandalarm(Model m, HttpServletRequest request,
+                              @RequestParam(required = false, defaultValue = "", value = "bandname") int bandname,
+                              @RequestParam(required = false, defaultValue = "", value = "alarmtype") int alarmtype,
+                              @RequestParam(required = false, defaultValue = "", value = "temname") int temname,
+                              @RequestParam(required = false, defaultValue = "", value = "alarmtime") String alarmtime,
+                              @RequestParam(required = false, defaultValue = "", value = "kaphlist") String kaphlist,
+                              @RequestParam(required = false, defaultValue = "", value = "kaphcount") int kaphcount,
+                              @RequestParam(required = false, defaultValue = "", value = "emphlist") String emphlist,
+                              @RequestParam(required = false, defaultValue = "", value = "emphcount") int emphcount,
+                              @RequestParam(required = false, defaultValue = "", value = "smphlist") String smphlist,
+                              @RequestParam(required = false, defaultValue = "", value = "smphcount") int smphcount,
+                              @RequestParam(required = false, defaultValue = "", value = "bandch") int bandch,
+                              @RequestParam(required = false, defaultValue = "", value = "alarmstate") int alarmstate){
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        BandAlarmDto bandAlarmDto = new BandAlarmDto(null,temname,bandname,alarmtype,alarmtime,kaphlist,smphlist,emphlist,kaphcount,smphcount,emphcount,bandch,alarmstate,sdf1,null);
+        bandService.saveAlarm(bandAlarmDto);
+        return "redirect:";
+    }
 
     ///
     @GetMapping("/Bandgreetinglist")

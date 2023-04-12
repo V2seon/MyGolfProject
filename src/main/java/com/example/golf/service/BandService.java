@@ -1,7 +1,9 @@
 package com.example.golf.service;
 
+import com.example.golf.dto.BandAlarmDto;
 import com.example.golf.dto.BandTemplateDto;
 import com.example.golf.entity.*;
+import com.example.golf.predicate.BandAlarmTemPredicate;
 import com.example.golf.predicate.BandPredicate;
 import com.example.golf.predicate.BandTemPredicate;
 import com.example.golf.repository.*;
@@ -23,6 +25,7 @@ public class BandService {
     private BandGreetingRepository bandGreetingRepository;
     private BandTemplateRepository bandTemplateRepository;
     private BandAlarmRepository bandAlarmRepository;
+    private ViewBandAlarmRepository viewbandAlarmRepository;
 
     @Transactional
     public Page<BandInfoEntity> selectALLBandInfo0(Pageable pageable){
@@ -101,7 +104,17 @@ public class BandService {
     }
 
     @Transactional
-    public Page <BandAlarmEntity> selectALLBandAlarm(Pageable pageable){
-        return bandAlarmRepository.findAll(pageable);
+    public Page <ViewBandAlarmEntity> selectALLBandAlarm(Pageable pageable){
+        return viewbandAlarmRepository.findAll(pageable);
+    }
+
+    @Transactional
+    public Long saveAlarm(BandAlarmDto bandAlarmDto){
+        return bandAlarmRepository.save(bandAlarmDto.toEntity()).getBaseq();
+    }
+
+    @Transactional
+    public Page <ViewBandAlarmEntity> selectALLBandAl1(String selectKey, String titleText, Pageable pageable){
+        return viewbandAlarmRepository.findAll(BandAlarmTemPredicate.BAsearch(selectKey, titleText),pageable);
     }
 }

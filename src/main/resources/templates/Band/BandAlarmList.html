@@ -82,8 +82,7 @@
                                                 <div class="input-group">
                                                     <select class="form-control" id="selectKey" style="margin-left:10px;">
                                                         <option value="전체">전체</option>
-                                                        <option value="이름">밴드이름</option>
-                                                        <option value="타입">알림타입</option>
+                                                        <option value="밴드">밴드이름</option>
                                                         <option value="템플릿명">템플릿명</option>
                                                         <!--                                                                        <option value="등록일">등록일</option>-->
                                                         <!--                                                                        <option value="수정일">수정일</option>-->
@@ -120,17 +119,19 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <tr>
-                                                            <td>No</td>
-                                                            <td>밴드이름</td>
-                                                            <td>알림타입</td>
-                                                            <td>d템플릿명</td>
-                                                            <td>알림시간</td>
-                                                            <td>카카오알림톡</td>
-                                                            <td>이메일</td>
-                                                            <td>SMS</td>
-                                                            <td>밴드게시글</td>
-                                                            <td>알림상태</td>
+                                                        <tr th:if="${bandlist} != null" th:each="Co : ${bandlist}">
+                                                            <td th:text="${Co.Baseq}"></td>
+                                                            <td th:text="${Co.Biname}"></td>
+                                                            <td th:text="${(Co.Baalarmtype == 0 ? '예약티' : '')+
+                                                                            (Co.Baalarmtype == 1 ? '참가자정보' : '')+
+                                                                            (Co.Baalarmtype == 2 ? '프로필정책' : '')}"></td>
+                                                            <td th:text="${Co.Bttemname}"></td>
+                                                            <td th:text="${Co.Baslarmtime}"></td>
+                                                            <td th:text="${Co.Bakakaocount}"></td>
+                                                            <td th:text="${Co.Baemailcount}"></td>
+                                                            <td th:text="${Co.Basmscount}"></td>
+                                                            <td th:text="${Co.Babandcontentstate == 1 ? 'O' : 'X'}"></td>
+                                                            <td th:text="${Co.Baalarmstate == 1? '실행중' : '정지'}"></td>
                                                             <td>수정</td>
                                                             <td>삭제</td>
                                                         </tr>
