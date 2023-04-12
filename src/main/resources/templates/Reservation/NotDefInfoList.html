@@ -132,7 +132,7 @@
                                                                 <td th:if="${Co.Rsicno}!= null"
                                                                     th:text="${Co.Rsicno}">
                                                                 </td>
-                                                                <td th:if="${Co.Rsitime}!= null">
+                                                                <td th:if="${Co.Rsitime}!= null" style="font-size:20px;">
                                                                     <span th:text="${#strings.substring(Co.Rsitime,0,10)}"></span>&nbsp;
                                                                     <span th:text="${#strings.substring(Co.Rsitime,17,20)}"
                                                                           th:classappend="${(#strings.substring(Co.Rsitime,17,20) =='(토)' ? 'daycol1': '') +
@@ -146,7 +146,7 @@
                                                                     <span th:if="${Co.Rsiuino == 1}">취소일 +1일</span>
                                                                     <span th:if="${Co.Rsiuino == 0}">취소일</span>
                                                                 </td>
-                                                                <td th:if="${Co.Rsitime}!= null"
+                                                                <td th:if="${Co.Rsitime}!= null" style="font-size:20px;"
                                                                     th:text="${#strings.substring(Co.Rsitime,11,16)}">
                                                                 </td>
                                                                 <td th:if="${Co.Rsicaid}!= null"
