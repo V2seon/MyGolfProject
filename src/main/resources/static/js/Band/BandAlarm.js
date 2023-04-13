@@ -223,9 +223,8 @@ function chtem(){
                     if(result.tem.btkakaostate == 0){
                        document.getElementById("kb").style.display= 'none';
                        var kadiv = document.getElementsByName("kadiv");
-                       for(var i=0; i<kadiv.length; i++){
-                           console.log("순서: " +i);
-                           console.log("길이: " +kadiv.length);
+                       var kl = kadiv.length;
+                       for(var i=0; i<kl; i++){
                            kadiv[i].remove();
                        }
                     }else if(result.tem.btkakaostate == 1){
@@ -234,8 +233,8 @@ function chtem(){
                     if(result.tem.btemailstate == 0){
                        document.getElementById("eb").style.display= 'none';
                        var emdiv = document.getElementsByName("emdiv");
-                       for(var i=0; i<emdiv.length; i++){
-                            console.log(emdiv.length);
+                       var el = emdiv.length;
+                       for(var i=0; i<el; i++){
                            emdiv[i].remove();
                        }
                     }else if(result.tem.btemailstate == 1){
@@ -244,8 +243,8 @@ function chtem(){
                     if(result.tem.btsmsstate == 0){
                        document.getElementById("sb").style.display= 'none';
                        var smdiv = document.getElementsByName("smdiv");
-                       for(var i=0; i<smdiv.length; i++){
-                                                   console.log(smdiv.length);
+                       var sl = smdiv.length;
+                       for(var i=0; i<sl; i++){
                            smdiv[i].remove();
                        }
                     }else if(result.tem.btsmsstate == 1){
