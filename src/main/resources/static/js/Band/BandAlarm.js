@@ -222,31 +222,28 @@ function chtem(){
                     $('#load').hide();
                     if(result.tem.btkakaostate == 0){
                        document.getElementById("kb").style.display= 'none';
-                       var kadiv = document.getElementsByName("kadiv");
-                       var kl = kadiv.length;
-                       for(var i=0; i<kl; i++){
-                           kadiv[i].remove();
-                       }
+                       var kadiv = document.getElementById("kakaophlist");
+                       while (kadiv.hasChildNodes()) {
+                               kadiv.removeChild(kadiv.firstChild);
+                           }
                     }else if(result.tem.btkakaostate == 1){
                        document.getElementById("kb").style.display= 'block';
                     }
                     if(result.tem.btemailstate == 0){
                        document.getElementById("eb").style.display= 'none';
-                       var emdiv = document.getElementsByName("emdiv");
-                       var el = emdiv.length;
-                       for(var i=0; i<el; i++){
-                           emdiv[i].remove();
-                       }
+                       var emdiv = document.getElementById("emaillist");
+                       while (emdiv.hasChildNodes()) {
+                          emdiv.removeChild(emdiv.firstChild);
+                      }
                     }else if(result.tem.btemailstate == 1){
                        document.getElementById("eb").style.display= 'block';
                     }
                     if(result.tem.btsmsstate == 0){
                        document.getElementById("sb").style.display= 'none';
-                       var smdiv = document.getElementsByName("smdiv");
-                       var sl = smdiv.length;
-                       for(var i=0; i<sl; i++){
-                           smdiv[i].remove();
-                       }
+                       var smdiv = document.getElementById("smsphlist");
+                       while (smdiv.hasChildNodes()) {
+                         smdiv.removeChild(smdiv.firstChild);
+                     }
                     }else if(result.tem.btsmsstate == 1){
                        document.getElementById("sb").style.display= 'block';
                     }
