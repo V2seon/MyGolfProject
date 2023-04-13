@@ -15,18 +15,15 @@
     <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!--    &lt;!&ndash; iCheck &ndash;&gt;-->
-    <!--    <link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">-->
-    <!--    &lt;!&ndash; bootstrap-wysiwyg &ndash;&gt;-->
-    <!--    <link href="/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">-->
-    <!--    &lt;!&ndash; Select2 &ndash;&gt;-->
-    <!--    <link href="/vendors/select2/dist/css/select2.min.css" rel="stylesheet">-->
-    <!--    &lt;!&ndash; Switchery &ndash;&gt;-->
-    <!--    <link href="/vendors/switchery/dist/switchery.min.css" rel="stylesheet">-->
-    <!--    &lt;!&ndash; starrr &ndash;&gt;-->
-    <!--    <link href="/vendors/starrr/dist/starrr.css" rel="stylesheet">-->
-    <!--    &lt;!&ndash; bootstrap-daterangepicker &ndash;&gt;-->
-    <!--    <link href="/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">-->
+
+    <!-- iCheck -->
+    <link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- PNotify -->
+    <link href="/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
 
     <!-- jQuery custom content scroller -->
     <link href="/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet"/>
@@ -39,12 +36,6 @@
             }
             #datatable{
                 width:1100px;
-            }
-            .tdbox{
-                border: 2px solid black;
-            }
-            .nickid{
-                font-size: small;
             }
     </style>
 
@@ -136,20 +127,24 @@
                                                                 <td th:text="${Co.Blmtodaydata2-Co.Blmpredata2 > 0 ? '+' + (Co.Blmtodaydata2-Co.Blmpredata2) : Co.Blmtodaydata2-Co.Blmpredata2}" style="text-align:center;"></th>
 <!--                                                                <td th:text="${Co.Blmpredata3}" style="text-align:center;">-->
                                                                 <td style="text-align:center;">
-                                                                    <button name="ckuser" th:value="${Co.Blmpredata4}" class="btn btn-success ckuser outM" type="button" th:text="${Co.Blmpredata3} +' 명'"></button>
-<!--                                                                    <a th:text="${Co.Blmpredata3}" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"></a>-->
-<!--                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-<!--                                                                    <div th:each="nicks: ${#strings.arraySplit(Co.Blmpredata4, '|||')}">-->
-<!--&lt;!&ndash;                                                                    <div th:each="nicks: ${#strings.arraySplitByWholeSeparatorPreserveAllTokens (Co.Blmpredata4, '(?<=\\|{3})|(?=\\|{3})')}">&ndash;&gt;-->
-<!--                                                                        <p th:text="${nicks}" class="dropdown-item" href="#"></p>-->
-<!--&lt;!&ndash;                                                                        <a class="dropdown-item" href="#">Another action</a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                                                        <a class="dropdown-item" href="#">Something else here</a>&ndash;&gt;-->
-<!--                                                                    </div>-->
+<!--                                                                    <a th:text="${Co.Blmpredata3} +' 명'" th:title="${#strings.replace(Co.Blmpredata4,'|||','&#10;')}" href="#" data-toggle="tooltip" data-placement="bottom"></a>-->
+                                                                    <button th:text="${Co.Blmpredata3} +' 명'" th:title="${#strings.replace(Co.Blmpredata4,'|||','&#10;')}" type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom"></button>
+<!--&lt;!&ndash;                                                                    <button name="ckuser" th:value="${Co.Blmpredata4}" class="btn btn-success ckuser outM" type="button" th:text="${Co.Blmpredata3} +' 명'"></button>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                                    <a th:text="${Co.Blmpredata3}" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"></a>&ndash;&gt;-->
+<!--                                                                    <a th:text="${Co.Blmpredata3}" class="outM" th:value="${Co.Blmpredata4}" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"></a>-->
+<!--&lt;!&ndash;                                                                    <div class="dropdown-menu" id="dropdownMenu" aria-labelledby="dropdownMenuButton">&ndash;&gt;-->
+<!--                                                                    <div class="dropdown-menu" id="Omemgers" aria-labelledby="dropdownMenuButton">-->
+<!--                                                                        <span th:value="${Co.Blmpredata4}" class="OMembers" style="display:none"></span>-->
+<!--&lt;!&ndash;                                                                        <div th:each="nicks: ${#strings.arraySplit(Co.Blmpredata4, '|||')}">&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                                                        <div th:each="nicks: ${#strings.arraySplitByWholeSeparatorPreserveAllTokens (Co.Blmpredata4, '(?<=\\|{3})|(?=\\|{3})')}">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                                            <p th:text="${nicks}" class="dropdown-item" href="#"></p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                                        </div>&ndash;&gt;-->
 <!--                                                                    </div>-->
                                                                 </td>
 <!--                                                                <td th:text="${Co.Blmtodaydata3}" style="text-align:center;"></td>-->
                                                                 <td style="text-align:center;">
-                                                                    <button name="ckuser" th:value="${Co.Blmtodaydata4}" class="btn btn-success ckuser inM" type="button" th:text="${Co.Blmtodaydata3} +' 명'"></button>
+                                                                    <button th:text="${Co.Blmtodaydata3} +' 명'" th:title="${#strings.replace(Co.Blmtodaydata4,'|||','&#10;')}" type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom"></button>
+<!--                                                                    <button name="ckuser" th:value="${Co.Blmtodaydata4}" class="btn btn-success ckuser inM" type="button" th:text="${Co.Blmtodaydata3} +' 명'"></button>-->
 <!--                                                                    <a th:text="${Co.Blmtodaydata3}" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"></a>-->
 <!--                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
 <!--                                                                        <div th:each="nicks: ${#strings.arraySplit (Co.Blmtodaydata4, '|||')}">-->
@@ -159,12 +154,13 @@
                                                                 </td>
 <!--                                                                <td th:text="${Co.Blmnickchangecnt}" th:onclick="" style="text-align:center;"></td>-->
                                                                 <td style="text-align:center;">
-                                                                    <button name="ckuser" th:value="${Co.Blmnickchangedata}" class="btn btn-success ckuser changeM" type="button" th:text="${Co.Blmnickchangecnt} +' 명'"></button>
+                                                                    <button th:text="${Co.Blmnickchangecnt} +' 명'" th:title="${#strings.replace(Co.Blmnickchangedata,'|||','&#10;')}" type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom"></button>
+<!--                                                                    <button name="ckuser" th:value="${Co.Blmnickchangedata}" class="btn btn-success ckuser changeM" type="button" th:text="${Co.Blmnickchangecnt} +' 명'"></button>-->
 <!--                                                                    <a th:text="${Co.Blmnickchangecnt}" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"></a>-->
 <!--                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-<!--                                                                    <div th:each="nicks: ${#strings.arraySplit (Co.Blmnickchangedata, '|||')}">-->
-<!--                                                                        <p th:text="${nicks}" class="dropdown-item" href="#"></p>-->
-<!--                                                                    </div>-->
+<!--                                                                        <div th:each="nicks: ${#strings.arraySplit (Co.Blmnickchangedata, '|||')}">-->
+<!--                                                                            <p th:text="${nicks}" class="dropdown-item" href="#"></p>-->
+<!--                                                                        </div>-->
 <!--                                                                    </div>-->
                                                                 </td>
                                                                 <td style="text-align:center;">
@@ -231,26 +227,19 @@
 </div>
 </div>
 <footer>
-    <div class="pull-right">
-        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-    </div>
+<!--    <div class="pull-right">-->
+<!--        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>-->
+<!--    </div>-->
     <div class="clearfix"></div>
 </footer>
 <!-- /footer content -->
 </div>
 </div>
-<div class="popupLayer0">
-    <div id="intable1" style="width:90%;">
-        <table class="option" id="Omembers">
-            <th>탈퇴</th>
-        </table>
-        <table class="option" id="Imembers">
-            <th>가입</th>
-        </table>
-        <table class="option" id="Cmembers">
-            <th>수정</th>
-        </table>
-    </div>
+<div id="custom_notifications" class="custom-notifications dsp_none">
+    <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group">
+    </ul>
+    <div class="clearfix"></div>
+    <div id="notif-group" class="tabbed_notifications"></div>
 </div>
 
 <!-- jQuery -->
@@ -261,31 +250,14 @@
 <script src="/vendors/fastclick/lib/fastclick.js"></script>
 <!-- NProgress -->
 <script src="/vendors/nprogress/nprogress.js"></script>
-<!--&lt;!&ndash; bootstrap-progressbar &ndash;&gt;-->
-<!--<script src="/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>-->
-<!--&lt;!&ndash; iCheck &ndash;&gt;-->
-<!--<script src="/vendors/iCheck/icheck.min.js"></script>-->
-<!--&lt;!&ndash; bootstrap-daterangepicker &ndash;&gt;-->
-<!--<script src="/vendors/moment/min/moment.min.js"></script>-->
-<!--<script src="/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>-->
-<!--&lt;!&ndash; bootstrap-wysiwyg &ndash;&gt;-->
-<!--<script src="/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>-->
-<!--<script src="/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>-->
-<!--<script src="/vendors/google-code-prettify/src/prettify.js"></script>-->
-<!--&lt;!&ndash; jQuery Tags Input &ndash;&gt;-->
-<!--<script src="/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>-->
-<!--&lt;!&ndash; Switchery &ndash;&gt;-->
-<!--<script src="/vendors/switchery/dist/switchery.min.js"></script>-->
-<!--&lt;!&ndash; Select2 &ndash;&gt;-->
-<!--<script src="/vendors/select2/dist/js/select2.full.min.js"></script>-->
-<!--&lt;!&ndash; Parsley &ndash;&gt;-->
-<!--<script src="/vendors/parsleyjs/dist/parsley.min.js"></script>-->
-<!--&lt;!&ndash; Autosize &ndash;&gt;-->
-<!--<script src="/vendors/autosize/dist/autosize.min.js"></script>-->
-<!--&lt;!&ndash; jQuery autocomplete &ndash;&gt;-->
-<!--<script src="/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>-->
-<!--&lt;!&ndash; starrr &ndash;&gt;-->
-<!--<script src="/vendors/starrr/dist/starrr.js"></script>-->
+<!-- bootstrap-progressbar -->
+<script src="/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<!-- iCheck -->
+<script src="/vendors/iCheck/icheck.min.js"></script>
+<!-- PNotify -->
+<script src="/vendors/pnotify/dist/pnotify.js"></script>
+<script src="/vendors/pnotify/dist/pnotify.buttons.js"></script>
+<script src="/vendors/pnotify/dist/pnotify.nonblock.js"></script>
 
 <!-- jQuery custom content scroller -->
 <script src="/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
@@ -295,75 +267,5 @@
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function() {
-
-    $(document).on("mouseover",".outM", function() {
-        var Omember = $(this).val();
-        var members = Omember.split('|||');
-        var h0 = members.length*20 + 80
-        console.log(h0)
-
-        w1 = $(this).offset().left;
-        h1 = $(this).offset().top;
-
-        w1center = w1;
-        h1center = h1 - h0;
-
-        view(members,'out');
-        $('.popupLayer0').css({
-            "top": h1center,
-            "left": w1center,
-            "height": h0,
-            "position": "absolute"
-        }).show();
-    });
-
-    $(document).on("mouseover",".inM", function() {
-        var Imember = $(this).val();
-        var members = Imember.split('|||');
-        var h0 = members.length*20 + 80
-
-        w1 = $(this).offset().left;
-        h1 = $(this).offset().top;
-
-        w1center = w1;
-        h1center = h1 - h0;
-
-        view(members,'in');
-        $('.popupLayer0').css({
-            "top": h1center,
-            "left": w1center,
-            "height": h0,
-            "position": "absolute"
-        }).show();
-    });
-
-    $(document).on("mouseover",".changeM", function() {
-        var Cmember = $(this).val();
-        var members = Cmember.split('|||');
-        var h0 = members.length*20 + 80
-
-        w1 = $(this).offset().left;
-        h1 = $(this).offset().top;
-
-        w1center = w1;
-        h1center = h1 - h0;
-
-        view(members,'change');
-        $('.popupLayer0').css({
-            "top": h1center,
-            "left": w1center,
-            "height": h0,
-            "position": "absolute"
-        }).show();
-    });
-
-    $(document).on("mouseout",".ckuser", function() {
-        $('tr.nickid').remove();
-        $('.popupLayer0').hide();
-    });
-});
-</script>
 <script src="/js/band.js"></script>
 </body></html>

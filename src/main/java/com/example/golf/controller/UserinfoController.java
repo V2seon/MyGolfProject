@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -130,7 +131,7 @@ public class UserinfoController {
 //        return "/Userinfo/testDetailUserinfo";
     }
 
-
+    // 회원정보 등록페이지 이동
     @GetMapping("/userinfo_add")
     public String userinfo_add(Model model, HttpServletRequest request){
         String returnValue = "";
@@ -145,7 +146,7 @@ public class UserinfoController {
         return returnValue;
     }
 
-    // 사용자 정보 수정 저장
+    // 회원정보 수정 저장
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/userinfo_editsave")
     public HashMap<String, String> UIEditsave(Model model, HttpServletRequest request,
@@ -211,6 +212,9 @@ public class UserinfoController {
         return msg;
     }
 
+
+
+
     @GetMapping("/UserInfoCCList")
     public String userInfoCCList(Model model, HttpServletRequest request, Pageable pageable,
                         @RequestParam(required = false, defaultValue = "0", value = "page") int page){
@@ -231,6 +235,12 @@ public class UserinfoController {
                 seqname2.put(s3.get(i).getUino(),s3.get(i).getUiname());
             }
 
+            Map<Long, Integer> seqname3 = new HashMap<Long, Integer>();
+            for (int i=0;i<s2.size();i++){
+                int getCnt = countryAccountRepository.findCnt(s2.get(i).getCcno());
+                seqname3.put(s2.get(i).getCcno(),getCnt);
+            }
+
             Pagination pagination = new Pagination(s1.getTotalPages(), page);
 
             model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
@@ -244,6 +254,7 @@ public class UserinfoController {
             model.addAttribute("country",s2);
             model.addAttribute("ccnames", seqname);
             model.addAttribute("uinames", seqname2);
+            model.addAttribute("ccuicnt", seqname3);
             model.addAttribute("nowurl0","/Userinfo");
 
             returnValue = "/Userinfo/UserInfoCCList";
@@ -285,11 +296,13 @@ public class UserinfoController {
                 for (Long key : seqname.keySet()) {
                     if (seqname.get(key).contains(titleText)) {
                         titleText = String.valueOf(key);
+                        selectKey = "CC";
                         break;
                     }
                 }
             }
-        }else if(selectKey.equals("이름") || selectKey.equals("전체")) { // band이름으로 검색
+        }
+        if(selectKey.equals("NAME") || selectKey.equals("전체")) { // band이름으로 검색
             boolean selectKeyCheck = false;
             for (String value : seqname2.values()) { // band이름이 포함되어 있는지 체크
                 if (value.contains(titleText)) {
@@ -299,28 +312,41 @@ public class UserinfoController {
             }
             if (selectKeyCheck) { // band이름이 포함되어 있을경우 seq값으로 변경
                 for (Long key : seqname2.keySet()) {
-                    if (seqname.get(key).contains(titleText)) {
+                    if (seqname2.get(key).contains(titleText)) {
                         titleText = String.valueOf(key);
+                        selectKey = "NAME";
                         break;
                     }
                 }
             }
-//        }else if(selectKey.equals("로그인") || selectKey.equals("전체")) { // band이름으로 검색
-//            boolean selectKeyCheck = false;
-//            for (String value : seqname.values()) { // band이름이 포함되어 있는지 체크
-//                if (value.contains(titleText)) {
-//                    selectKeyCheck = true;
-//                    break;
-//                }
-//            }
-//            if (selectKeyCheck) { // band이름이 포함되어 있을경우 seq값으로 변경
-//                for (Long key : seqname.keySet()) {
-//                    if (seqname.get(key).contains(titleText)) {
-//                        titleText = String.valueOf(key);
-//                        break;
-//                    }
-//                }
-//            }
+        }
+        if(selectKey.equals("NAME") || selectKey.equals("전체")) { // band이름으로 검색
+            if(titleText.equals("성공")){
+                titleText = "1";
+                selectKey = "로그인";
+            }else if(titleText.equals("실패")){
+                titleText = "0";
+                selectKey = "로그인";
+            }else if(titleText.equals("확인전")){
+                titleText = "2";
+                selectKey = "로그인";
+            }
+            boolean selectKeyCheck = false;
+            for (String value : seqname2.values()) { // band이름이 포함되어 있는지 체크
+                if (value.contains(titleText)) {
+                    selectKeyCheck = true;
+                    break;
+                }
+            }
+            if (selectKeyCheck) { // band이름이 포함되어 있을경우 seq값으로 변경
+                for (Long key : seqname2.keySet()) {
+                    if (seqname2.get(key).contains(titleText)) {
+                        titleText = String.valueOf(key);
+                        selectKey = "NAME";
+                        break;
+                    }
+                }
+            }
         }
 
         Pageable pageable = PageRequest.of(page, 10);
@@ -348,5 +374,36 @@ public class UserinfoController {
         model.addAttribute("uinames", seqname2);
 
         return "/Userinfo/UserInfoCCList :: #intable";
+    }
+
+    // CC계정 삭제
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, value = "/userinfoCC_delete")
+    public HashMap<String, String> userinfoCC_delete(Model m, HttpServletRequest request,
+                                                      @RequestParam(required = false, defaultValue = "", value = "no") Long no) {
+        countryAccountRepository.deleteData(no);
+
+        HashMap<String, String> msg = new HashMap<String, String>();
+        if(countryAccountRepository.checkNo(no)==0){
+            msg.put("save", "1");
+        }else {
+            msg.put("save", "0");
+        }
+        return msg;
+    }
+
+    // CC계정 등록페이지 이동
+    @GetMapping("/ccacount_add")
+    public String ccacount_add(Model model, HttpServletRequest request){
+        String returnValue = "";
+        if(new SessionCheck().loginSessionCheck(request)){
+            HttpSession session = request.getSession();
+
+            model.addAttribute("nowurl0","/Userinfo");
+            returnValue = "/Userinfo/AddCCAcount";
+        }else{
+            returnValue = "login";
+        }
+        return returnValue;
     }
 }

@@ -1,5 +1,5 @@
 // 검색필터
-function searching(){
+function searching(db){
 
     var titleText = $('#titleText').val();
     var selectKey = $('#selectKey').val();
@@ -21,6 +21,7 @@ function searching(){
 
     var querydata = { "page" : myPageQuery.get('page'), "selectKey":myPageQuery.get('selectKey'),"titleText":myPageQuery.get('titleText')};
 
+    if(db == 'ui'){
     $.ajax({
         url: "/userinfo_search",
         data: querydata,
@@ -28,6 +29,15 @@ function searching(){
     }).done(function (fragment) {
         $("#infotable").replaceWith(fragment);
     });
+    }else if(db == 'ca'){
+    $.ajax({
+        url: "/userinfoCCList_search",
+        data: querydata,
+        type:"POST",
+    }).done(function (fragment) {
+        $("#intable").replaceWith(fragment);
+    });
+    }
 
 }
 
@@ -118,7 +128,7 @@ function userinfo(){ // 목록으로 이동
     location.href="/Userinfo";
 }
 
-function AddUserInfo(){ // 등록페이지로 이동
+function AddUserInfo(){ // 회원정보 등록페이지로 이동
     $("#load").show();
     location.href="/userinfo_add";
 }

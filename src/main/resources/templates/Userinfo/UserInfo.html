@@ -88,7 +88,7 @@
                                                     </select>
                                                     <input id="titleText" type="text" class="form-control" placeholder="Search for...">
                                                     <span class="input-group-btn">
-                                                        <button onclick="searching()" class="btn btn-default==" type="button">검색</button>
+                                                        <button onclick="searching('ui')" class="btn btn-default==" type="button">검색</button>
                                                     </span>
                                                     <button onclick="AddUserInfo()" class="btn btn-primary" type="button">등록</button>
                                                 </div>
@@ -148,7 +148,7 @@
                                                                 </td>
                                                                 <td style="text-align:center;" >
                                                                     <span th:if="${Co.Uiidatetime}!= null"
-                                                                          th:text="${#strings.substring(Co.Uiidatetime,0,10)}">
+                                                                          th:text="${#strings.replace(Co.Uiidatetime,'T',' ')}">
                                                                     </span>
                                                                 </td>
                                                                 <td><button th:onclick="|javascript:detailUser(${Co.Uino})|" class="btn btn-primary" type="button">보기</button></td>

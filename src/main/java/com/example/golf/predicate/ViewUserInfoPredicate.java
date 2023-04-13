@@ -38,7 +38,7 @@ public class ViewUserInfoPredicate {
         return builder;
     }
 
-    public static BooleanBuilder BMsearch(String selectKey, String titleText){
+    public static BooleanBuilder CAsearch(String selectKey, String titleText){
         QCountryAccountEntity qCountryAccountEntityy = QCountryAccountEntity.countryAccountEntity;
 
         BooleanBuilder builder = new BooleanBuilder();
@@ -50,26 +50,25 @@ public class ViewUserInfoPredicate {
             else if(selectKey.equals("CC")){
                 builder.and(qCountryAccountEntityy.caccno.eq(Long.valueOf(titleText)));
             }
-            else if(selectKey.equals("이름")){
+            else if(selectKey.equals("NAME")){
                 builder.and(qCountryAccountEntityy.cauino.eq(Long.valueOf(titleText)));
             }
             else if(selectKey.equals("아이디")){
                 builder.and(qCountryAccountEntityy.caid.contains(titleText));
             }
             else if(selectKey.equals("로그인")){
-                builder.and(qCountryAccountEntityy.capassword.contains(titleText));
+                builder.and(qCountryAccountEntityy.castate.eq(Integer.valueOf(titleText)));
             }
         }
         else if(selectKey.equals("전체")){
             try{
-                builder.and(qCountryAccountEntityy.cano.eq(Long.valueOf(titleText)));
+                builder.and(qCountryAccountEntityy.cano.eq(Long.valueOf(titleText)).or
+                        (qCountryAccountEntityy.caccno.eq(Long.valueOf(titleText))).or
+                        (qCountryAccountEntityy.cauino.eq(Long.valueOf(titleText))).or
+                        (qCountryAccountEntityy.castate.eq(Integer.valueOf(titleText))));
             }
             catch (Exception e){
-                builder.and(
-                        (qCountryAccountEntityy.caccno.eq(Long.valueOf(titleText))).or
-                                (qCountryAccountEntityy.cauino.eq(Long.valueOf(titleText))).or
-                                (qCountryAccountEntityy.caid.contains(titleText)).or
-                                (qCountryAccountEntityy.capassword.contains(titleText)));
+                builder.and((qCountryAccountEntityy.caid.contains(titleText)));
             }
         }
         return builder;

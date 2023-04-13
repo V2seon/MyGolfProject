@@ -48,7 +48,7 @@
             <div class="">
                 <div class="page-title">
                     <div class="title_left">
-                        <h3>미확정 예약 정보</h3>
+                        <h3>CC계정관리</h3>
                     </div>
 
                 </div>
@@ -57,7 +57,7 @@
                     <div class="col-md-12 col-sm-12 ">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>예약정보 > 미확정 예약 정보<small></small></h2>
+                                <h2>골프 계정 목록</h2>
 
                                 <div class="clearfix"></div>
                             </div>
@@ -72,7 +72,7 @@
                                                         <button class="Cc ccbtn" onclick="searchingall()">전체</button>
                                                         <button th:if="${country}!=null" th:each="Co : ${country}"
                                                                 onclick="searching1(this)" class="Cc ccbtn"
-                                                                th:value="${Co.Ccname}" th:text="${Co.Ccname} +' : '+ ${Co.Cctype} +'개'">
+                                                                th:value="${Co.Ccname}" th:text="${Co.Ccname} +' : '+ ${ccuicnt[Co.Ccno]} +'명'">
                                                         </button>
                                                     </div>
                                                 </div>
@@ -82,15 +82,15 @@
                                                             <option value="전체">전체</option>
                                                             <option value="No">No</option>
                                                             <option value="CC">CC</option>
-                                                            <option value="이름">이름</option>
+                                                            <option value="NAME">이름</option>
                                                             <option value="아이디">아이디</option>
                                                             <option value="로그인">로그인</option>
                                                         </select>
                                                         <input id="titleText" type="text" class="form-control" placeholder="Search for..." onkeyup="if(window.event.keyCode==13){searching()}">
                                                         <span class="input-group-btn">
-                                                        <button onclick="searching()" class="btn btn-default==" type="button">검색</button>
-                                                    </span>
-                                                        <button onclick="infoin()" class="btn btn-primary" type="button">등록</button>
+                                                            <button onclick="searching('ca')" class="btn btn-default==" type="button">검색</button>
+                                                        </span>
+                                                        <button onclick="addccacount()" class="btn btn-primary" type="button">등록</button>
                                                     </div>
                                                 </div>
                                             </div>

@@ -48,6 +48,6 @@ public class UserinfoService {
 
     @Transactional
     public Page <CountryAccountEntity> selectALLCountryAccount(String selectKey, String titleText, Pageable pageable){
-        return countryAccountRepository.findAll(BandPredicate.BLMsearch(selectKey, titleText),pageable);
+        return countryAccountRepository.findAll(ViewUserInfoPredicate.CAsearch(selectKey, titleText),pageable);
     }
 }
