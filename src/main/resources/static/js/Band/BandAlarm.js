@@ -3,7 +3,7 @@ location.href="BandAlarmRegister";
 }
 
 function Alarmgo(){
-location.href="Bandalarm";
+location.href="/Bandalarm";
 }
 
 function SaveAlarm(){
@@ -15,8 +15,9 @@ const kaphnum = document.getElementsByName("kaphnum");
 const emailnum = document.getElementsByName("emailnum");
 const smsphnum = document.getElementsByName("smsphnum");
 const alarmstate = $('input[name=choice1]:checked').val();
+const bandch = document.getElementById("bandch").checked;
 var band = 0;
-if(document.getElementById("bandch").checked == false){
+if(bandch == false){
 band = 0;
 }else{
 band = 1;
@@ -209,7 +210,7 @@ function delsms(con){
 
 function chtem(){
     var temname = document.getElementById('temname').value;
-    console.log(temname);
+    document.getElementById("bandch").checked=false;
     const sendData = {
                         'seq' : temname
                     }
@@ -223,6 +224,8 @@ function chtem(){
                        document.getElementById("kb").style.display= 'none';
                        var kadiv = document.getElementsByName("kadiv");
                        for(var i=0; i<kadiv.length; i++){
+                           console.log("순서: " +i);
+                           console.log("길이: " +kadiv.length);
                            kadiv[i].remove();
                        }
                     }else if(result.tem.btkakaostate == 1){
@@ -232,6 +235,7 @@ function chtem(){
                        document.getElementById("eb").style.display= 'none';
                        var emdiv = document.getElementsByName("emdiv");
                        for(var i=0; i<emdiv.length; i++){
+                            console.log(emdiv.length);
                            emdiv[i].remove();
                        }
                     }else if(result.tem.btemailstate == 1){
@@ -241,6 +245,7 @@ function chtem(){
                        document.getElementById("sb").style.display= 'none';
                        var smdiv = document.getElementsByName("smdiv");
                        for(var i=0; i<smdiv.length; i++){
+                                                   console.log(smdiv.length);
                            smdiv[i].remove();
                        }
                     }else if(result.tem.btsmsstate == 1){
@@ -345,4 +350,110 @@ function enterkey(){
 if(window.event.keyCode == 13){
     searching();
   }
+}
+
+function EditAl(seq){
+location.href="/EditAl/"+seq+""
+}
+
+function EditAlarm(seq){
+const bandname = document.getElementById("bandname").value;
+const alarmtype = $('input[name=choice]:checked').val();
+const temname = document.getElementById("temname").value;
+const alarmtime = document.getElementById("alarmtime").value;
+const kaphnum = document.getElementsByName("kaphnum");
+const emailnum = document.getElementsByName("emailnum");
+const smsphnum = document.getElementsByName("smsphnum");
+const alarmstate = $('input[name=choice1]:checked').val();
+const bandch = document.getElementById("bandch").checked;
+var band = 0;
+if(bandch == false){
+band = 0;
+}else{
+band = 1;
+}
+var kaphlist = "";
+var emphlist = "";
+var smphlist = "";
+for(var i=0; i<kaphnum.length; i++){
+    kaphlist = kaphlist+"/"+kaphnum[i].innerText;
+}
+for(var i=0; i<emailnum.length; i++){
+    emphlist = emphlist+"/"+emailnum[i].innerText;
+}
+for(var i=0; i<smsphnum.length; i++){
+    smphlist = smphlist+"/"+smsphnum[i].innerText;
+}
+
+const sendData = {
+            'seq':seq,
+            'bandname' : bandname,
+            'alarmtype' : alarmtype,
+            'temname' : temname,
+            'alarmtime' : alarmtime,
+            'kaphlist' : kaphlist,
+            'kaphcount' : kaphnum.length,
+            'emphlist' : emphlist,
+            'emphcount' : emailnum.length,
+            'smphlist' : smphlist,
+            'smphcount' : smsphnum.length,
+            'bandch' : band,
+            'alarmstate' : alarmstate
+        }
+$.ajax({
+            url      : "/EditBandalarm",
+            data     : sendData,
+            type     : "POST",
+            success : function(result) {
+                 swal({
+                       text: "수정완료.",
+                       icon: "success" //"info,success,warning,error" 중 택1
+                 }).then(function(){
+                       location.href = "/Bandalarm";
+                 })
+            },
+            error:function(request,status,error){
+            }
+        });
+
+}
+
+function DelAl(seq){
+swal({
+        title: "연동 설정 삭제",
+          text: "해당 연동 설정을 삭제하시겠습니까?",
+          icon: "warning",
+          closeOnClickOutside : false,
+          buttons : ["취소", "삭제"],
+          dangerMode: true
+    }).then((result) => {
+    if(result){
+        const sendData = {
+                    'seq' : seq
+                    };
+        $.ajax({
+                url      : "/DelAlarm",
+                data     : sendData,
+                type     : "POST",
+                success : function(result) {
+                    $('#load').hide();
+                    swal({
+                            text: "삭제완료.",
+                            icon: "success",
+                            closeOnClickOutside : false,
+                            button: "확인"
+                        }).then(function(){
+                            location.href = "/Bandalarm";
+                        })
+                },
+                error:function(request,status,error){
+                    $('#load').hide();
+                    swal({
+                        text: "서버에 문제가 발생했습니다.",
+                        icon: "warning" //"info,success,warning,error" 중 택1
+                    });
+                }
+            });
+    }
+    });
 }

@@ -132,8 +132,14 @@
                                                             <td th:text="${Co.Basmscount}"></td>
                                                             <td th:text="${Co.Babandcontentstate == 1 ? 'O' : 'X'}"></td>
                                                             <td th:text="${Co.Baalarmstate == 1? '실행중' : '정지'}"></td>
-                                                            <td>수정</td>
-                                                            <td>삭제</td>
+                                                            <td>
+                                                                <button class="btn btn-success" type="button" th:onclick="|javascript:EditAl(${Co.Baseq})|">
+                                                                    수정
+                                                                </button>
+                                                            </td>
+                                                            <td>
+                                                                <button th:onclick="|javascript:DelAl(${Co.Baseq})|"  class="btn btn-primary" type="button">삭제</button>
+                                                            </td>
                                                         </tr>
                                                         </tbody>
                                                     </table>

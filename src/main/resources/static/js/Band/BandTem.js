@@ -1,8 +1,8 @@
 function inTem(){
-location.href="BandTemplateRegister";
+location.href="/BandTemplateRegister";
 }
 function Temgo(){
-location.href="Bandtemplate";
+location.href="/Bandtemplate";
 }
 
 function SaveTem(){
@@ -143,23 +143,24 @@ function enterkey(){
 }
 
 function EditTem(seq){
-console.log(seq);
-    let sendData = {
-            "seq" : seq
-        }
-
-        $.ajax({
-            url      : "/Bttemgo",
-            data     : sendData,
-            type     : "GET",
-            success : function(result) {
-                $('#load').hide();
-                location.href="/BttemModify"
-            },
-            error:function(request,status,error){
-                $('#load').hide();
-            }
-        });
+location.href="/BttemModify/"+seq+""
+//console.log(seq);
+//    let sendData = {
+//            "seq" : seq
+//        }
+//
+//        $.ajax({
+//            url      : "/Bttemgo",
+//            data     : sendData,
+//            type     : "GET",
+//            success : function(result) {
+//                $('#load').hide();
+//                location.href="/BttemModify"
+//            },
+//            error:function(request,status,error){
+//                $('#load').hide();
+//            }
+//        });
 }
 
 function EditTemuse(e){

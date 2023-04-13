@@ -61,7 +61,7 @@
             <div class="">
                 <div class="page-title">
                     <div class="title_left">
-                        <h3>템플릿 설정</h3>
+                        <h3>연동 설정</h3>
                     </div>
                     <div class="title_right">
                     </div>
@@ -71,55 +71,162 @@
                     <div class="col-md-12 col-sm-12 ">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>템플릿 등록<small></small></h2>
+                                <h2>연동 설정 등록<small></small></h2>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
                                 <br />
                                 <div id="demo-form2">
                                     <div class="form-group row">
-                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="temcode"> 템플릿코드*
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="bandname"> 밴드이름*
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <input th:value="${temcode}" type="text" id="temcode" required="required" class="form-control  ">
+                                            <select id="bandname" class="form-control">
+                                                <option th:selected="${aldata.get().getBabiseq()} == ${Co.Biseq}" th:if="${bandlist}!=null" th:each="Co : ${bandlist}" th:value="${Co.Biseq}" th:text="${Co.Biname}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">알림타입*
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 " style="display:flex; align-items: center;">
+                                            <input th:checked="${aldata.get().getBaalarmtype()} == 0" style="margin-right:5px;" type="radio" value="0" name="choice" id="al">
+                                            <label style="margin-right:10px;" for="al">예약티</label>
+                                            <input th:checked="${aldata.get().getBaalarmtype()} == 1" style="margin-right:5px;" type="radio" value="1" name="choice" id="py">
+                                            <label style="margin-right:10px;" for="py">참가자정보</label>
+                                            <input th:checked="${aldata.get().getBaalarmtype()} == 2" style="margin-right:5px;" type="radio" value="2" name="choice" id="ju">
+                                            <label for="ju">프로필정책</label>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="temname"> 템플릿명*
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <input th:value="${temname}" type="text" id="temname" required="required" class="form-control  ">
+                                            <select id="temname" class="form-control" onchange="chtem()">
+                                                <option th:selected="${aldata.get().getBabtseq()} == ${Co.Btseq}" th:if="${temlist}!=null" th:each="Co : ${temlist}" th:value="${Co.Btseq}" th:text="${Co.Bttemname}"></option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-form-label col-md-3 col-sm-3 label-align"> 알림설정*
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 " style="display:flex; align-items: center;">
-                                            <input th:checked="${kakao} == 1" style="margin-right:5px;" type="checkbox" id="kakao">
-                                            <label style="margin-right:10px;" for="kakao">카카오알림톡</label>
-                                            <input th:checked="${email} == 1" style="margin-right:5px;" type="checkbox" id="email">
-                                            <label style="margin-right:10px;" for="email">이메일</label>
-                                            <input th:checked="${sms} == 1" style="margin-right:5px;" type="checkbox" id="sms">
-                                            <label style="margin-right:10px;" for="sms">SMS</label>
-                                            <input th:checked="${band} == 1" style="margin-right:5px;" type="checkbox" id="band">
-                                            <label for="band">밴드게시글</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="temcon"> 템플릿 내용
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="alarmtime">알림시간설정*
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <textarea th:text="${temcontent}" style="height:200px; resize:none;" type="text" id="temcon" class="form-control"></textarea>
-                                            <br>
-                                            <span>* 변수가 들어가는 부분은 #{고객이름} 형태로 작성 바람</span>
+                                            <input th:value="${aldata.get().getBaslarmtime()}" class="form-control" type="time" id="alarmtime">
+                                        </div>
+                                    </div>
+                                    <div id="kb"th:style="${temstate.get().getBtkakaostate()} == 1 ? 'display:block' :'display:none'">
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-3 col-sm-3 label-align"> 카카오알림톡
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 ">
+                                                <input id="kakaophnum" class="form-control" type="text" onkeyup="checkReg(event)" maxlength="11">
+                                                <br>
+                                                <span>* 핸드폰 번호만 입력해주세요</span>
+                                            </div>
+                                            <div>
+                                                <button onclick="kakaophnum()" class="btn btn-primary" style="margin:auto;">추가</button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 ">
+                                                <div id="kakaophlist" class="form-control" style="height: auto; min-height: 76px;max-height: 250px;overflow-x: hidden;overflow-y: scroll;">
+                                                    <div th:if="${kaphlist}!=null" th:each="Co : ${kaphlist}" name='kadiv' style='margin-bottom:10px;'>
+                                                        <span th:text="${Co}" name='kaphnum'>
+
+                                                        </span>&nbsp&nbsp
+                                                        <button onclick='delkakao(this)' class='btn btn-primary' style='margin:auto;'>
+                                                            <a>삭제</a>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="eb" th:style="${temstate.get().getBtemailstate()} == 1 ? 'display:block' :'display:none'">
+                                        <div class="form-group row" name="email">
+                                            <label class="col-form-label col-md-3 col-sm-3 label-align"> 이메일
+                                            </label>
+                                            <div class="col-md-6 col-sm-6">
+                                                <input id="emailtext" class="form-control" type="text" onkeyup="onkeyemail()">
+                                            </div>
+                                            <div>
+                                                <button onclick="emailtext()" class="btn btn-primary" style="margin:auto;">추가</button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" name="email">
+                                            <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 ">
+                                                <div id="emaillist" class="form-control" style="height: auto; min-height: 76px;max-height: 250px;overflow-x: hidden;overflow-y: scroll;">
+                                                    <div th:if="${emphlist}!=null" th:each="Co : ${emphlist}" name='emdiv' style='margin-bottom:10px;'>
+                                                        <span th:text="${Co}" name='emailnum'>
+
+                                                        </span>&nbsp&nbsp
+                                                        <button onclick='delemail(this)' class='btn btn-primary' style='margin:auto;'>
+                                                            <a>삭제</a>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="sb" th:style="${temstate.get().getBtsmsstate()} == 1 ? 'display:block' :'display:none'">
+                                        <div class="form-group row" name="sms">
+                                            <label class="col-form-label col-md-3 col-sm-3 label-align"> SMS
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 ">
+                                                <input id="smsphnum" class="form-control" type="text" onkeyup="checkReg1(event)" maxlength="11">
+                                                <br>
+                                                <span>* 핸드폰 번호만 입력해주세요</span>
+                                            </div>
+                                            <div>
+                                                <button onclick="smsphnum()" class="btn btn-primary" style="margin:auto;">추가</button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" name="sms">
+                                            <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 ">
+                                                <div id="smsphlist" class="form-control" style="height: auto; min-height: 76px;max-height: 250px;overflow-x: hidden;overflow-y: scroll;">
+                                                    <div th:if="${smphlist}!=null" th:each="Co : ${smphlist}" name='smdiv' style='margin-bottom:10px;'>
+                                                        <span th:text="${Co}" name='smsphnum'>
+
+                                                        </span>&nbsp&nbsp
+                                                        <button onclick='delsms(this)' class='btn btn-primary' style='margin:auto;'>
+                                                            <a>삭제</a>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div th:style="${temstate.get().getBtbandstate()} == 1 ? 'display:block' :'display:none'" id="bb">
+                                        <div class="form-group row" id="band">
+                                            <label class="col-form-label col-md-3 col-sm-3 label-align">밴드게시글
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 " style="display:flex; align-items: center;">
+                                                <input th:checked="${aldata.get().getBabandcontentstate()} == 1" style="margin-right:5px;" type="checkbox" value="0" id="bandch">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">실행 상태
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 " style="display:flex; align-items: center;">
+                                            <input th:checked="${aldata.get().getBaalarmstate()} == 0" style="margin-right:5px;" type="radio" value="0" name="choice1" id="stop">
+                                            <label style="margin-right:10px;" for="stop">정지</label>
+                                            <input th:checked="${aldata.get().getBaalarmstate()} == 1" style="margin-right:5px;" type="radio" value="1" name="choice1" id="go">
+                                            <label for="go">실행</label>
                                         </div>
                                     </div>
                                     <div class="ln_solid"></div>
                                 </div>
                                 <div class="item form-group">
                                     <div class="offset-md-11">
-                                        <button onclick="Temgo()" class="btn btn-primary" ><a>목록</a></button>
-                                        <button  th:onclick="|javascript:ModifyTem(${seq})|" class="btn btn-primary" ><a>수정</a></button>
+                                        <button onclick="Alarmgo()" class="btn btn-primary"><a>이전</a></button>
+                                        <button th:onclick="|javascript:EditAlarm(${seq})|" class="btn btn-primary"><a>수정</a></button>
                                     </div>
                                 </div>
 

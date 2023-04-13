@@ -393,28 +393,14 @@ public class BandController {
         return msg;
     }
 
-    @GetMapping("/Bttemgo")
-    public String Bttemgo(Model model, HttpServletRequest request,
-                          @RequestParam(required = false ,defaultValue = "" , value="seq") Long seq){
-        String returnValue = "";
-        HttpSession session = request.getSession();
-        if(new SessionCheck().loginSessionCheck(request)){
-            session.setAttribute("seq",seq);
-            model.addAttribute("nowurl0","/Bandlogmember");
-            returnValue = "/Band/BandTemplateModify.html";
-        }else{
-            returnValue = "login";
-        }
-        return returnValue;
-    }
 
-    @GetMapping("/BttemModify")
-    public String BttemModify(Model model, HttpServletRequest request){
+    @GetMapping("/BttemModify/{seq}")
+    public String BttemModify(@PathVariable("seq") Long seq,Model model, HttpServletRequest request){
         String returnValue = "";
         HttpSession session = request.getSession();
         if(new SessionCheck().loginSessionCheck(request)){
             model.addAttribute("nowurl0","/Bandlogmember");
-            Optional<BandTemplateEntity> s1 = bandTemplateRepository.findById((Long) session.getAttribute("seq"));
+            Optional<BandTemplateEntity> s1 = bandTemplateRepository.findById(seq);
             model.addAttribute("seq",s1.get().getBtseq());
             model.addAttribute("temcode",s1.get().getBttemcode());
             model.addAttribute("temname",s1.get().getBttemname());
@@ -580,6 +566,70 @@ public class BandController {
         String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         BandAlarmDto bandAlarmDto = new BandAlarmDto(null,temname,bandname,alarmtype,alarmtime,kaphlist,smphlist,emphlist,kaphcount,smphcount,emphcount,bandch,alarmstate,sdf1,null);
         bandService.saveAlarm(bandAlarmDto);
+        return "redirect:";
+    }
+
+    @GetMapping("/EditAl/{seq}")
+    public String EditAl(HttpServletRequest request, Model model,
+                         @PathVariable("seq") Long seq){
+        HttpSession session = request.getSession();
+        Optional<BandAlarmEntity> s3 = bandAlarmRepository.findById(seq);
+        List<BandInfoEntity> s1 = bandInfoRepository.findAll();
+        List<BandTemplateEntity> s2 = bandTemplateRepository.findAll1();
+        Optional<BandTemplateEntity> s4 = bandTemplateRepository.findById((long) s3.get().getBabtseq());
+        model.addAttribute("bandlist",s1);
+        model.addAttribute("temlist",s2);
+        model.addAttribute("aldata",s3);
+        model.addAttribute("temstate",s4);
+        model.addAttribute("seq",seq);
+        String kaphlist[] = s3.get().getBakakaophonelist().split("/");
+        String emphlist[] = s3.get().getBaemaillist().split("/");
+        String smphlist[] = s3.get().getBasmsphonelist().split("/");
+        List kapharr = new ArrayList();
+        List emarr = new ArrayList();
+        List smsarr = new ArrayList();
+        for(int i=1; i<kaphlist.length; i++){
+            kapharr.add(kaphlist[i]);
+        }
+        for(int i=1; i<emphlist.length; i++){
+            emarr.add(emphlist[i]);
+        }
+        for(int i=1; i<smphlist.length; i++){
+            smsarr.add(smphlist[i]);
+        }
+        model.addAttribute("kaphlist",kapharr);
+        model.addAttribute("emphlist",emarr);
+        model.addAttribute("smphlist",smsarr);
+        return "/Band/BandAlarmModify.html";
+    }
+
+    @PostMapping("/EditBandalarm")
+    public String EditBandalarm(Model m, HttpServletRequest request,
+                              @RequestParam(required = false, defaultValue = "", value = "seq") Long seq,
+                              @RequestParam(required = false, defaultValue = "", value = "bandname") int bandname,
+                              @RequestParam(required = false, defaultValue = "", value = "alarmtype") int alarmtype,
+                              @RequestParam(required = false, defaultValue = "", value = "temname") int temname,
+                              @RequestParam(required = false, defaultValue = "", value = "alarmtime") String alarmtime,
+                              @RequestParam(required = false, defaultValue = "", value = "kaphlist") String kaphlist,
+                              @RequestParam(required = false, defaultValue = "", value = "kaphcount") int kaphcount,
+                              @RequestParam(required = false, defaultValue = "", value = "emphlist") String emphlist,
+                              @RequestParam(required = false, defaultValue = "", value = "emphcount") int emphcount,
+                              @RequestParam(required = false, defaultValue = "", value = "smphlist") String smphlist,
+                              @RequestParam(required = false, defaultValue = "", value = "smphcount") int smphcount,
+                              @RequestParam(required = false, defaultValue = "", value = "bandch") int bandch,
+                              @RequestParam(required = false, defaultValue = "", value = "alarmstate") int alarmstate){
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        Optional<BandAlarmEntity> s3 = bandAlarmRepository.findById(seq);
+        BandAlarmDto bandAlarmDto = new BandAlarmDto(seq,temname,bandname,alarmtype,alarmtime,kaphlist,smphlist,emphlist,kaphcount,smphcount,emphcount,bandch,alarmstate,s3.get().getBaidatetime(),sdf1);
+        bandService.saveAlarm(bandAlarmDto);
+        return "redirect:";
+    }
+
+    @PostMapping("/DelAlarm")
+    public String DelAlarm(HttpServletRequest request, Model model,
+                           @RequestParam(required = false, defaultValue = "", value = "seq") Long seq){
+        bandAlarmRepository.deleteById(seq);
         return "redirect:";
     }
 
