@@ -217,6 +217,23 @@ public class UserinfoController {
         return msg;
     }
 
+    // CC계정 아이디 중복 확인
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/uicc_idcheck")
+    public HashMap<String, String> UICCidcheck(Model model, HttpServletRequest request,
+                                             @RequestParam(required = false, defaultValue = "", value = "ccno") Long ccno,
+                                               @RequestParam(required = false, defaultValue = "", value = "caid") String caid) {
+        log.info("!!!!!!!!! in idcheck"+ccno+"/"+caid);
+        HashMap<String, String> msg = new HashMap<String, String>();
+        if(countryAccountRepository.checkid(ccno, caid) == 0){
+            msg.put("save", "1");
+        }else {
+            msg.put("save", "0");
+        }
+        log.info("!!!!!!!!!"+msg);
+        return msg;
+    }
+
 
 
 

@@ -112,58 +112,77 @@ function addCASave(){
     var capassword = $("#capassword").val();
 //    var castate = $("#castate").val();
 
-    if(caccno === null || caccno === "") {
-            swal({
-                title: "골프장을 선택해주세요.",
-                icon: "info",
-                button: "확인"
-            });
-    }else if(cauino === null || cauino === "") {
-            swal({
-                title: "사용자정보를 선택해주세요.",
-                icon: "info",
-                button: "확인"
-            });
-    }else if(caid === null || caid === "") {
-            swal({
-                title: "아이디를 입력해주세요.",
-                icon: "info",
-                button: "확인"
-            });
-    }else if(capassword === null || capassword === "") {
-            swal({
-                title: "비밀번호를 입력해주세요.",
-                icon: "info",
-                button: "확인"
-            });
+    if(caccno==null||caccno==""){
+        swal({
+            text: "골프장을 선택해주세요.",
+            icon: "info"
+        });
+    }else if(cauino==null||cauino==""){
+        swal({
+            text: "사용자정보를 선택해주세요.",
+            icon: "info"
+        });
+    }else if(caid==null||caid==""){
+        swal({
+            text: "아이디를 입력해주세요.",
+            icon: "info"
+        });
+    }else if(capassword==null||capassword==""){
+        swal({
+            text: "비밀번호를 입력해주세요.",
+            icon: "info"
+        });
     }else{
         $('#load').show();
-        let sendData = {
-            'caccno':caccno,
-            'cauino':cauino,
-            'caid':caid,
-            'capassword':capassword,
-//            'castate':castate
-        }
         $.ajax({
-            url     : "/ccacount_addsave",
-            data    : sendData,
-            type    : "POST",
-            success : function(){
-                $('#load').hide();
-                swal({
-                    text: "등록완료.",
-                    icon: "success",
-                    closeOnClickOutside : false,
-                    button: "확인"
-                }).then(function(){
-                    location.href = "/UserInfoCCList";
-                });
-            }, error: function(request, status, error){
-                $('#load').hide();
+            url : "/uicc_idcheck",
+            data : {"ccno" : caccno, "caid" : caid},
+            type : "POST",
+            success : function(result){
+                if(result.save == "1"){ // 1:동일아이디 없음, 0: 동일있음
+                        let sendData = {
+                            'caccno':caccno,
+                            'cauino':cauino,
+                            'caid':caid,
+                            'capassword':capassword,
+//                            'castate':castate
+                        }
+                        $.ajax({
+                            url     : "/ccacount_addsave",
+                            data    : sendData,
+                            type    : "POST",
+                            success : function(){
+                                $('#load').hide();
+                                swal({
+                                    text: "등록완료.",
+                                    icon: "success",
+                                    closeOnClickOutside : false,
+                                    button: "확인"
+                                }).then(function(){
+                                    location.href = "/UserInfoCCList";
+                                });
+                            }, error: function(request, status, error){
+                                $('#load').hide();
+                                    swal({
+                                    text: "서버에 문제가 발생했습니다.",
+                                    icon: "warning" //"info,success,warning,error" 중 택1
+                                });
+                            }
+                        });
+                }else if(result.save == "0"){
+                    $("#load").hide();
                     swal({
-                    text: "서버에 문제가 발생했습니다.",
-                    icon: "warning" //"info,success,warning,error" 중 택1
+                        text: "중복된 아이디입니다.",
+                        icon: "warning"
+                    });
+                }
+            }, error:function(request, status, error){
+                $("#load").hide();
+                swal({
+                    text: "통신 오류",
+                    icon: "warning"
+                }).then(function(){
+                    location.href = "/Userinfo";
                 });
             }
         });

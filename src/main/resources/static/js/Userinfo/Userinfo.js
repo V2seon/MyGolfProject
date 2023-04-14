@@ -210,15 +210,7 @@ function uiadd(){ // 등록저장
             text: "아이디를 입력해주세요.",
             icon: "info"
         });
-    }else{
-        $('#load').show();
-        $.ajax({
-            url : "/userinfo_idcheck",
-            data : sendData,
-            type : "POST",
-            success : function(result){
-                if(result.save == "1"){ // 1:동일아이디 없음, 0: 동일있음
-                    if(uipw==null||uipw==""){
+                    }else if(uipw==null||uipw==""){
                         swal({
                             text: "비밀번호를 입력해주세요.",
                             icon: "info"
@@ -243,7 +235,16 @@ function uiadd(){ // 등록저장
                             text: "이용상태를 선택해주세요.",
                             icon: "info"
                         });
-                    }else{
+    }else{
+        $('#load').show();
+        $.ajax({
+            url : "/userinfo_idcheck",
+            data : sendData,
+            type : "POST",
+            success : function(result){
+                if(result.save == "1"){ // 1:동일아이디 없음, 0: 동일있음
+
+                        $('#load').show();
                         let sendData = {
                             "uiid" : uiid,
                             "uipw" : uipw,
@@ -284,7 +285,6 @@ function uiadd(){ // 등록저장
                                 });
                             }
                         });
-                    }
                 }else if(result.save == "0"){
                     $("#load").hide();
                     swal({
