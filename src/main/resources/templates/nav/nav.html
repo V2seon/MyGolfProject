@@ -57,8 +57,12 @@
                 <li th:class="${nowurl0 == '/Question' ? 'current-page' : ''}">
                     <a href="/Question"><!--<i class="fa fa-bar-chart-o"></i>--> 문의 정보 <!--<span class="fa fa-chevron-down"></span>--></a>
                 </li>
-                <li th:class="${nowurl0 == '/Log' ? 'current-page' : ''}">
-                    <a href="/Log"><!--<i class="fa fa-clone"></i>--> 로그 <!--<span class="fa fa-chevron-down"></span>--></a>
+                <li>
+                    <a><!--<i class="fa fa-edit"></i>--> 로그 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/Log">프로세스 로그</a></li>
+                        <li><a href="/Infolog">예약티 조회 로그</a></li>
+                    </ul>
                 </li>
 <!--                <li th:class="${nowurl0 == '/formRI' ? 'current-page' : ''}">-->
 <!--                    <a href="/formRI">&lt;!&ndash;<i class="fa fa-clone"></i>&ndash;&gt; 예약정보 입력 &lt;!&ndash;<span class="fa fa-chevron-down"></span>&ndash;&gt;</a>-->

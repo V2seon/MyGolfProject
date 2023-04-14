@@ -369,11 +369,13 @@ public class ReservationController {
                          @RequestParam(required = false, defaultValue = "", value = "seq") Long seq){
         HttpSession session = request.getSession();
         List<CourseEntity> s1 = courseRepository.findAll1(seq);
+        List<CountryAccountEntity> s2 = countryAccountRepository.findByCaccno(seq);
         Optional<CountryClubEntity> s3 = countryClubRepository.findById(seq);
         HashMap<String, List> msg = new HashMap<String, List>();
         List<String> s4 = new ArrayList<>();
         s4.add(s3.get().getCctip());
         msg.put("course", s1);
+        msg.put("ccid", s2);
         msg.put("cctip", s4);
         return msg;
     }
@@ -670,7 +672,8 @@ public class ReservationController {
             model.addAttribute("country",s2);
             List<CourseEntity> s1 = courseRepository.findAll1(17L);
             Optional<CountryClubEntity> s3 = countryClubRepository.findById(17L);
-
+            List<CountryAccountEntity> s4 = countryAccountRepository.findByCaccno(17L);
+            model.addAttribute("id",s4);
             model.addAttribute("cctip",s3.get().getCctip());
             model.addAttribute("course",s1);
             model.addAttribute("nowurl0","/Reservation");
@@ -693,7 +696,6 @@ public class ReservationController {
                                        @RequestParam(required = false, defaultValue = "", value = "hope_t1") int hope_t1,
                                        @RequestParam(required = false, defaultValue = "", value = "hope_t2") int hope_t2,
                                        @RequestParam(required = false, defaultValue = "", value = "hope_h") int hole){
-
         Optional<CountryAccountEntity> s1 = countryAccountRepository.findByCaccnoAndCaid(ccname,id);
         LocalDateTime localDateTime = LocalDateTime.now();
         String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -706,7 +708,7 @@ public class ReservationController {
         ReservationInfoDto reservationInfoDto = new ReservationInfoDto(null,s1.get().getCano(),s1.get().getCauino(),s1.get().getCaccno(),
                 id,s1.get().getCapassword(),startdate,enddate,hope_t1,hope_t2,hole,course,0,0,choice,0,null,type,cday,
                 null,sdf1,null);
-        reservationInfoService.insertData1(reservationInfoDto);
+//        reservationInfoService.insertData1(reservationInfoDto);
 //        reservationStateRepository.deleteById(seq);
         return "redirect:";
     }

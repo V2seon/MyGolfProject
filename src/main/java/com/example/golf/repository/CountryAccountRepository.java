@@ -19,6 +19,9 @@ public interface CountryAccountRepository extends JpaRepository<CountryAccountEn
     @Query(value = "SELECT * FROM test_club_account where CA_UI_NO=:CA_UI_NO and CA_STATE=1" , nativeQuery = true)
     List<CountryAccountEntity> findByCauino(Long CA_UI_NO);
 
+    @Query(value = "SELECT * FROM test_club_account where CA_CC_NO=:CA_CC_NO and CA_STATE=1" , nativeQuery = true)
+    List<CountryAccountEntity> findByCaccno(Long CA_CC_NO);
+
     @Query(value = "SELECT * FROM test_club_account" , nativeQuery = true)
     Page<CountryAccountEntity> findAll(Pageable pageable);
 

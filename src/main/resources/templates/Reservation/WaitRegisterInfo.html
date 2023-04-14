@@ -89,16 +89,22 @@
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="id">아이디
                                     </label>
                                     <div class="col-md-6 col-sm-6 ">
-                                        <input class="form-control" type="text" id="id">
+                                        <select id="id" class="form-control">
+                                            <option class="chid" th:if="${id}!=null" th:each="Co : ${id}" th:value="${Co.caid} +'/'+ ${Co.cano}" th:text="${Co.caid}"></option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <button onclick="idplus()" class="btn btn-primary" style="margin:auto;">추가</button>
                                     </div>
                                 </div>
-<!--                                <div class="item form-group">-->
-<!--                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="pw">비밀번호-->
-<!--                                    </label>-->
-<!--                                    <div class="col-md-6 col-sm-6 ">-->
-<!--                                        <input class="form-control" type="password" id="pw">-->
-<!--                                    </div>-->
-<!--                                </div>-->
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <div id="idlist" class="form-control" style="height: auto; min-height: 76px;max-height: 250px;overflow-x: hidden;overflow-y: scroll;">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" >코스정보
                                     </label>

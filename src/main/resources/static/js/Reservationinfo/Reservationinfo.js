@@ -128,6 +128,8 @@ location.href="/Reservation"
 
 function chCC(){
     $('option.chcourse').remove();
+    $('option.chid').remove();
+    $('div.idlist').remove();
     var cname = document.getElementById('ccname').value;
     const sendData = {
                         'seq' : cname
@@ -142,6 +144,9 @@ function chCC(){
                         for(var i=0; i<result.course.length; i++){
                             $("#course").append(
                                 "<option class='chcourse' value='"+result.course[i].cno+"'>"+result.course[i].cname+"</option>"
+                            )
+                            $("#idlist").append(
+                                "<option class='chid' value='"+result.id[i].cano+"'>"+result.id[i].caid+"</option>"
                             )
                         }
                         document.getElementById('cctip').innerText = result.cctip[0];
@@ -335,4 +340,40 @@ let sendData = {
             });
         }
     });
+}
+
+function idplus(){
+var id = document.getElementById("id").value;
+var idlist = id.split("/");
+if(id != null && id != ""){
+    const log = document.getElementById("idlist");
+    log.isScrollBottom = true;
+    log.addEventListener("scroll", (event) => {
+      if (event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight) {
+        log.isScrollBottom = true;
+      } else {
+        log.isScrollBottom = false;
+      }
+    });
+
+    $("#idlist").append(
+                        "<div name='idlist' class='idlist' style='margin-bottom:10px;'><span name='ccid' value='"+idlist[1]+"'>"+idlist[0]+
+                        "</span>&nbsp&nbsp<button onclick='delid(this)' class='btn btn-primary' style='margin:auto;'><a>삭제</a></button></div>"
+                    )
+    if (log.isScrollBottom) {
+        log.scrollTop = log.scrollHeight;
+      }
+
+}else{
+    swal({
+            text: "휴대폰 번호를 입력하세요",
+            icon: "info",
+            button: "확인"
+        })
+}
+}
+
+function delid(con){
+    var tagName = con.parentNode;
+    tagName.remove();
 }
