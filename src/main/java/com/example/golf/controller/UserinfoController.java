@@ -2,6 +2,7 @@ package com.example.golf.controller;
 
 import com.example.golf.common.Pagination;
 import com.example.golf.common.SessionCheck;
+import com.example.golf.dto.CountryAccountDto;
 import com.example.golf.dto.UserinfoDto;
 import com.example.golf.entity.*;
 import com.example.golf.repository.*;
@@ -154,13 +155,17 @@ public class UserinfoController {
                                                     @RequestParam(required = false, defaultValue = "", value = "uiname") String uiname,
                                                     @RequestParam(required = false, defaultValue = "", value = "uiphone") String uiphone,
                                                     @RequestParam(required = false, defaultValue = "", value = "uistate") int uistate,
-                                                    @RequestParam(required = false, defaultValue = "NULL", value = "uiban") String uiban) {
+                                                    @RequestParam(required = false, defaultValue = "", value = "uiban") String uiban) {
         UserinfoEntity uiEtt = userinfoRepository.getUino(no);
         String timecheck = String.valueOf(uiEtt.getUiudatetime());
-//        log.info("in EDITSAVE ==> "+no+','+uiname+','+uiphone+','+uistate+','+uiban);
+//        log.info("in EDITSAVE ==> "+no+'/'+uiname+'/'+uiphone+'/'+uistate+'/'+uiban);
 
         LocalDateTime sdf = LocalDateTime.now();
-        userinfoRepository.updateUIData(no, uiname, uiphone, uistate, uiban, sdf);
+        if(uiban.equals("") || uiban == null){
+            userinfoRepository.updateUIData(no, uiname, uiphone, uistate, sdf);
+        }else {
+            userinfoRepository.updateUIData(no, uiname, uiphone, uistate, uiban, sdf);
+        }
         UserinfoEntity uiEtt2 = userinfoRepository.getUino(no);
         log.info(String.valueOf(uiEtt2.getUiudatetime())+"///"+timecheck);
 
@@ -366,12 +371,17 @@ public class UserinfoController {
         model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
 
         //서비스 엔티티 추가후 주석 풀고 사용
-        Page<CountryAccountEntity> pageList = userinfoService.selectALLCountryAccount(selectKey, titleText, pageable);
-        model.addAttribute("nowurl0","/Userinfo");
+        if(!set.equals("0")){
+            Page<CountryAccountEntity> pageList = userinfoService.selectALLCountryAccount("CC", titleText, pageable);
+            model.addAttribute("userlist", pageList);
+        }else {
+            Page<CountryAccountEntity> pageList = userinfoService.selectALLCountryAccount(selectKey, titleText, pageable);
+            model.addAttribute("userlist", pageList);
+        }
 
-        model.addAttribute("userlist", pageList);
         model.addAttribute("ccnames", seqname);
         model.addAttribute("uinames", seqname2);
+        model.addAttribute("nowurl0","/Userinfo");
 
         return "/Userinfo/UserInfoCCList :: #intable";
     }
@@ -394,11 +404,15 @@ public class UserinfoController {
 
     // CC계정 등록페이지 이동
     @GetMapping("/ccacount_add")
-    public String ccacount_add(Model model, HttpServletRequest request){
+    public String CCAcount_add(Model model, HttpServletRequest request){
         String returnValue = "";
         if(new SessionCheck().loginSessionCheck(request)){
             HttpSession session = request.getSession();
+            List<CountryClubEntity> s2 = countryClubRepository.findAll1();
+            List<UserinfoEntity> s3 = userinfoRepository.findAll();
 
+            model.addAttribute("country",s2);
+            model.addAttribute("userinfo",s3);
             model.addAttribute("nowurl0","/Userinfo");
             returnValue = "/Userinfo/AddCCAcount";
         }else{
@@ -406,4 +420,45 @@ public class UserinfoController {
         }
         return returnValue;
     }
+
+    // CC계정 수정페이지 이동
+    @GetMapping("/ccacount_edit")
+    public String CCAcount_edit(Model model, HttpServletRequest request,
+                                @RequestParam(required = false, defaultValue = "", value = "no") Long no){
+        String returnValue = "";
+        if(new SessionCheck().loginSessionCheck(request)){
+            HttpSession session = request.getSession();
+            Optional<CountryAccountEntity> s1 = countryAccountRepository.findCAdata(no);
+            List<CountryClubEntity> s2 = countryClubRepository.findAll1();
+            List<UserinfoEntity> s3 = userinfoRepository.findAll();
+
+            model.addAttribute("userlist",s1);
+            model.addAttribute("country",s2);
+            model.addAttribute("userinfo",s3);
+            model.addAttribute("nowurl0","/Userinfo");
+            returnValue = "/Userinfo/EditCCAcount";
+        }else{
+            returnValue = "login";
+        }
+        return returnValue;
+    }
+
+
+    // 사용자 정보 등록 저장
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/ccacount_addsave")
+    public String CCAcount_addsave(Model model, HttpServletRequest request,
+                                             @RequestParam(required = false, defaultValue = "", value = "caccno") Long caccno,
+                                             @RequestParam(required = false, defaultValue = "", value = "cauino") Long cauino,
+                                             @RequestParam(required = false, defaultValue = "", value = "caid") String caid,
+                                             @RequestParam(required = false, defaultValue = "", value = "capassword") String capassword) {
+//                                             @RequestParam(required = false, defaultValue = "2", value = "castate") int castate) {
+        String sdf = String.valueOf(LocalDateTime.now());
+//        CountryAccountDto caDto = new CountryAccountDto(null, cauino, caccno, caid, capassword, castate, sdf, sdf);
+        CountryAccountDto caDto = new CountryAccountDto(null, cauino, caccno, caid, capassword, 2, sdf, sdf);
+        userinfoService.CASave(caDto);
+
+        return "redirect:";
+    }
+
 }

@@ -26,11 +26,20 @@ public interface UserinfoRepository extends JpaRepository<UserinfoEntity, Long>,
     @Query(value = "SELECT * FROM test_user_info " , nativeQuery = true)
     List<UserinfoEntity> findAll();
 
+    @Query(value = "SELECT * FROM test_user_info WHERE UI_NO=:no" , nativeQuery = true)
+    UserinfoEntity findAll(Long no);
+
     // 사용자 정보 데이터 수정
     @Modifying
     @Transactional
     @Query(value = "UPDATE test_user_info SET UI_NAME =:uiname, UI_PHONE =:uiphone, UI_STATE =:uistate, UI_BAN =:uiban, UI_UDATETIME =:sdf where UI_NO =:no" , nativeQuery = true)
     void updateUIData(Long no, String uiname, String uiphone, int uistate, String uiban, LocalDateTime sdf);
+
+    // 사용자 정보 데이터 수정(uiban = null)
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE test_user_info SET UI_NAME =:uiname, UI_PHONE =:uiphone, UI_STATE =:uistate, UI_BAN = null, UI_UDATETIME =:sdf where UI_NO =:no" , nativeQuery = true)
+    void updateUIData(Long no, String uiname, String uiphone, int uistate, LocalDateTime sdf);
 
     // 사용자 정보 데이터 수 가져오기(uiid)
     @Query(value = "SELECT COUNT(UI_ID) FROM test_user_info WHERE UI_ID =:uiid", nativeQuery = true)

@@ -71,7 +71,7 @@
                     <div class="col-md-12 col-sm-12 ">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>골프계정등록</h2>
+                                <h2>골프계정수정</h2>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
@@ -82,8 +82,8 @@
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <select id="caccno" class="form-control">
-                                                <option th:if="${country}!=null" th:each="Co : ${country}" th:value="${Co.ccno}" th:text="${Co.ccname}">어등산</option>
+                                            <select id="caccno" class="form-control" th:value="${userlist.get().getCaccno()}">
+                                                <option th:if="${country}!=null" th:each="Co : ${country}" th:value="${Co.ccno}" th:text="${Co.ccname}"></option>
                                             </select>
                                         </div>
                                     </div>
@@ -92,10 +92,7 @@
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-<!--                                            <select id="cauino" class="form-control" onchange="caUI()">-->
-<!--                                                <option th:if="${userinfo}!=null" th:each="Co : ${userinfo}" th:value="${Co.uino}" th:text="${Co.uiname}+'('+${Co.uiid}+')'" th:data-uiid="${Co.uiid}" th:data-uipassword="${Co.uipassword}"></option>-->
-<!--                                            </select>-->
-                                            <select id="cauino" class="form-control">
+                                            <select id="cauino" class="form-control" th:value="${userlist.get().getCauino()}">
                                                 <option th:if="${userinfo}!=null" th:each="Co : ${userinfo}" th:value="${Co.uino}" th:text="${Co.uiname}+'('+${Co.uiid}+')'"></option>
                                             </select>
                                         </div>
@@ -105,8 +102,7 @@
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-<!--                                            <input type="text" id="caid" required="required" class="form-control" th:value="${userinfo[0].uiid}">-->
-                                            <input type="text" id="caid" required="required" class="form-control">
+                                            <input type="text" id="caid" required="required" class="form-control"  th:value="${userlist.get().getCaid()}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -114,8 +110,7 @@
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-<!--                                            <input type="text" id="capassword" required="required" class="form-control" th:value="${userinfo[0].uipassword}">-->
-                                            <input type="text" id="capassword" required="required" class="form-control">
+                                            <input type="text" id="capassword" required="required" class="form-control" th:value="${userlist.get().getCapassword()}">
                                         </div>
                                     </div>
 <!--                                    <div class="form-group row">-->

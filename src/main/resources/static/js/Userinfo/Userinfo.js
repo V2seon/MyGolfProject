@@ -167,7 +167,14 @@ function uiedit(seq){ // 수정저장
             success : function(result){
                 $("#load").hide();
                 if(result.save == "1"){
-                    location.href = "/Userinfo";
+                    swal({
+                        text: "수정완료.",
+                        icon: "success",
+                        closeOnClickOutside : false,
+                        button: "확인"
+                    }).then(function(){
+                        location.href = "/Userinfo";
+                    })
                 }else if(result.save == "0"){
                     swal({
                         text : "저장에 실패하였습니다.",
@@ -253,7 +260,14 @@ function uiadd(){ // 등록저장
                             success : function(result){
                                 $("#load").hide();
                                 if(result.save == "1"){
-                                    location.href = "/Userinfo";
+                    swal({
+                        text: "등록완료.",
+                        icon: "success",
+                        closeOnClickOutside : false,
+                        button: "확인"
+                    }).then(function(){
+                        location.href = "/Userinfo";
+                    })
                                 }else if(result.save == "0"){
                                     swal({
                                         text : "저장에 실패하였습니다.",

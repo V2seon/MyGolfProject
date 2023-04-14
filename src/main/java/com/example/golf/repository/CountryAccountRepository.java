@@ -22,6 +22,9 @@ public interface CountryAccountRepository extends JpaRepository<CountryAccountEn
     @Query(value = "SELECT * FROM test_club_account" , nativeQuery = true)
     Page<CountryAccountEntity> findAll(Pageable pageable);
 
+    @Query(value = "SELECT * FROM test_club_account WHERE CA_NO =:no" , nativeQuery = true)
+    Optional<CountryAccountEntity> findCAdata(Long no);
+
     @Query(value = "SELECT COUNT(CA_UI_NO) FROM test_club_account WHERE CA_CC_NO=:no" , nativeQuery = true)
     int findCnt(Long no);
 
@@ -33,6 +36,10 @@ public interface CountryAccountRepository extends JpaRepository<CountryAccountEn
     @Transactional
     @Query(value = "DELETE FROM test_club_account WHERE CA_NO =:no", nativeQuery = true)
     void deleteData(Long no);
+
+    // CA 데이터 확인(cano)
+    @Query(value = "SELECT COUNT(CA_NO) FROM test_club_account WHERE CA_NO =:cano", nativeQuery = true)
+    int checkCano(Long cano);
 
     Optional<CountryAccountEntity>  findByCauinoAndCaccno(Long Cauino, Long Caccno);
 

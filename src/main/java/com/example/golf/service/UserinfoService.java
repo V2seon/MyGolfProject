@@ -1,5 +1,6 @@
 package com.example.golf.service;
 
+import com.example.golf.dto.CountryAccountDto;
 import com.example.golf.dto.UserinfoDto;
 import com.example.golf.entity.CountryAccountEntity;
 import com.example.golf.entity.UserinfoEntity;
@@ -49,5 +50,12 @@ public class UserinfoService {
     @Transactional
     public Page <CountryAccountEntity> selectALLCountryAccount(String selectKey, String titleText, Pageable pageable){
         return countryAccountRepository.findAll(ViewUserInfoPredicate.CAsearch(selectKey, titleText),pageable);
+    }
+
+    @Transactional
+    public Long CASave(CountryAccountDto caDto){
+        CountryAccountEntity caEntity = caDto.toEntity();
+        countryAccountRepository.save(caEntity);
+        return caDto.getCano();
     }
 }

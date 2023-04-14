@@ -69,7 +69,7 @@
                                             <div class="offset-md-9 form-group top_search">
                                                 <div class="input-group">
                                                     <div style="width:100%; padding-left:10px;">
-                                                        <button class="Cc ccbtn" onclick="searchingall()">전체</button>
+                                                        <button class="Cc ccbtn" onclick="userinfoCClist()">전체</button>
                                                         <button th:if="${country}!=null" th:each="Co : ${country}"
                                                                 onclick="searching1(this)" class="Cc ccbtn"
                                                                 th:value="${Co.Ccname}" th:text="${Co.Ccname} +' : '+ ${ccuicnt[Co.Ccno]} +'명'">
@@ -121,7 +121,7 @@
                                                                 <td th:if="${Co.Cauino}!= null" th:text="${uinames[Co.Cauino]}"></td>
                                                                 <td th:if="${Co.Caid}!= null" th:text="${Co.Caid}"></td>
                                                                 <td th:if="${Co.Capassword}!= null" th:text="${Co.Capassword}"></td>
-                                                                <td th:if="${Co.Castate}!= null" th:text="${Co.Castate == 1 ? '성공':'실패'}"></td>
+                                                                <td th:if="${Co.Castate}!= null" th:text="${Co.Castate == 1 ? '성공' : (Co.Castate == 0 ? '실패' : (Co.Castate == 2 ? '확인전' : ''))}"></td>
                                                                 <td>
                                                                     <button th:onclick="|javascript:uiccedit(${Co.Cano})|" class="btn btn-primary" type="button">수정</button>
                                                                 </td>
@@ -215,6 +215,8 @@
         </table>
     </div>
 </div>
+<div id="load"><img src="/admin/images/spinner.gif" alt="loading"></div>
+
 <script src="/vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
