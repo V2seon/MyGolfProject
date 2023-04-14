@@ -29,7 +29,7 @@
 
     <!-- jQuery custom content scroller -->
     <link href="/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet"/>
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
     <!-- Custom Theme Style -->
     <link href="/css/custom.min.css" rel="stylesheet">
     <style>
@@ -111,7 +111,7 @@
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="alarmtime">알림시간설정*
                                         </label>
                                         <div class="col-md-6 col-sm-6 ">
-                                            <input class="form-control" type="time" id="alarmtime">
+                                            <input class="form-control" type="text" readonly id="alarmtime" style="background-color: white;">
                                         </div>
                                     </div>
                                     <div id="kb">
@@ -141,7 +141,7 @@
                                             <label class="col-form-label col-md-3 col-sm-3 label-align"> 이메일
                                             </label>
                                             <div class="col-md-6 col-sm-6">
-                                                <input id="emailtext" class="form-control" type="text" onkeyup="onkeyemail()">
+                                                <input id="emailtext" class="form-control" type="email" onkeyup="onkeyemail()">
                                             </div>
                                             <div>
                                                 <button onclick="emailtext()" class="btn btn-primary" style="margin:auto;">추가</button>
@@ -242,4 +242,17 @@
 <script src="/js/custom.min.js"></script>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#alarmtime').timepicker({
+                timeFormat: 'HH:mm',
+                startTime: '00:00',
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true
+            });
+    });
+</script>
 </body></html>
