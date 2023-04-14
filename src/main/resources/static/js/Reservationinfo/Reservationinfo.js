@@ -145,8 +145,10 @@ function chCC(){
                             $("#course").append(
                                 "<option class='chcourse' value='"+result.course[i].cno+"'>"+result.course[i].cname+"</option>"
                             )
-                            $("#idlist").append(
-                                "<option class='chid' value='"+result.id[i].cano+"'>"+result.id[i].caid+"</option>"
+                        }
+                        for(var i=0; i<result.ccid.length; i++){
+                            $("#id").append(
+                                "<option class='chid' value='"+result.ccid[i].cano+"'>"+result.ccid[i].caid+"</option>"
                             )
                         }
                         document.getElementById('cctip').innerText = result.cctip[0];
