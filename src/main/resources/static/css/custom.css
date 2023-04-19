@@ -4398,11 +4398,11 @@ fieldset {
   vertical-align: top; }
 
 .cropper .tooltip-inner {
-  white-space: normal; }
+  white-space: pre-wrap; }
 
 .cropper .btn-upload .tooltip-inner,
 .cropper .btn-toggle .tooltip-inner {
-  white-space: nowrap; }
+  white-space: pre-wrap; }
 
 .cropper .btn-toggle {
   padding: 6px; }

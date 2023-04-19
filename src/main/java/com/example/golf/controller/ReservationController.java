@@ -2,9 +2,7 @@ package com.example.golf.controller;
 
 import com.example.golf.common.Pagination;
 import com.example.golf.common.SessionCheck;
-import com.example.golf.dto.ReservationInfoBundleDto;
-import com.example.golf.dto.ReservationInfoDto;
-import com.example.golf.dto.ReservationStateDto;
+import com.example.golf.dto.*;
 import com.example.golf.entity.*;
 import com.example.golf.repository.*;
 import com.example.golf.service.ReservationInfoService;
@@ -66,6 +64,22 @@ public class ReservationController {
 
             pageable = PageRequest.of(page, 10,Sort.by("rino").descending());
             Page<ViewReservationInfoEntity> s1 = reservationInfoService.selectALLTable0(pageable);
+            List l1 = new ArrayList<>();
+            String idlist = "";
+            for(int i=0; i<s1.getContent().size(); i++){
+                List <ReservationInfoBundleEntity> s2 = reservationInfoBundleRepository.findByRibribundle(s1.getContent().get(i).getRibundle());
+                idlist = "";
+                for(int j=0; j<s2.size(); j++){
+                    Optional<CountryAccountEntity> s3 = countryAccountRepository.findById(s2.get(j).getRibcano());
+                    idlist += s3.get().getCaid() + "\n";
+                }
+
+                VIdlistRIDto vIdlistRIDto = new VIdlistRIDto(s1.getContent().get(i).getRino(),s1.getContent().get(i).getRichoice(),s1.getContent().get(i).getRicano(),
+                        s1.getContent().get(i).getRiuino(), s1.getContent().get(i).getRiccno(),s1.getContent().get(i).getRicaid(),
+                        s1.getContent().get(i).getRicapassword(),s1.getContent().get(i).getRibundle(),s1.getContent().get(i).getRiperson(),s1.getContent().get(i).getRistartdate(),
+                        s1.getContent().get(i).getRienddate(),s1.getContent().get(i).getRistarttime(),s1.getContent().get(i).getRiendtime(),s1.getContent().get(i).getRistate(),s1.getContent().get(i).getRicourse(),idlist);
+                l1.add(vIdlistRIDto);
+            }
 
             Pagination pagination = new Pagination(s1.getTotalPages(), page);
 
@@ -76,7 +90,7 @@ public class ReservationController {
             model.addAttribute("lastBtnIndex", pagination.getLastBtnIndex()); //섹션 변경 위함
             model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
 
-            model.addAttribute("userlist", s1); //페이지 객체 리스트
+            model.addAttribute("userlist", l1); //페이지 객체 리스트
             model.addAttribute("nowurl0","/Reservation");
 
             returnValue = "/Reservation/WaitInfoList";
@@ -97,6 +111,26 @@ public class ReservationController {
         int totalPages = reservationInfoService.seALLTable(selectKey, titleText, pageable).getTotalPages();
         Pagination pagination = new Pagination(totalPages, page);
 
+        Page<ViewReservationInfoEntity> s1 = reservationInfoService.seALLTable(selectKey, titleText, pageable);
+
+        List l1 = new ArrayList<>();
+        String idlist = "";
+        for(int i=0; i<s1.getContent().size(); i++){
+            List <ReservationInfoBundleEntity> s2 = reservationInfoBundleRepository.findByRibribundle(s1.getContent().get(i).getRibundle());
+            idlist = "";
+            for(int j=0; j<s2.size(); j++){
+                Optional<CountryAccountEntity> s3 = countryAccountRepository.findById(s2.get(j).getRibcano());
+                idlist += s3.get().getCaid() + "\n";
+            }
+
+            VIdlistRIDto vIdlistRIDto = new VIdlistRIDto(s1.getContent().get(i).getRino(),s1.getContent().get(i).getRichoice(),s1.getContent().get(i).getRicano(),
+                    s1.getContent().get(i).getRiuino(), s1.getContent().get(i).getRiccno(),s1.getContent().get(i).getRicaid(),
+                    s1.getContent().get(i).getRicapassword(),s1.getContent().get(i).getRibundle(),s1.getContent().get(i).getRiperson(),s1.getContent().get(i).getRistartdate(),
+                    s1.getContent().get(i).getRienddate(),s1.getContent().get(i).getRistarttime(),s1.getContent().get(i).getRiendtime(),s1.getContent().get(i).getRistate(),s1.getContent().get(i).getRicourse(),idlist);
+            l1.add(vIdlistRIDto);
+        }
+
+
         model.addAttribute("thisPage", pagination.getPage()); //현재 몇 페이지에 있는지 확인하기 위함
         model.addAttribute("isNextSection", pagination.isNextSection()); //다음버튼 유무 확인하기 위함
         model.addAttribute("isPrevSection", pagination.isPrevSection()); //이전버튼 유무 확인하기 위함
@@ -105,9 +139,8 @@ public class ReservationController {
         model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
 
         //서비스 엔티티 추가후 주석 풀고 사용
-        Page<ViewReservationInfoEntity> pageList = reservationInfoService.seALLTable(selectKey, titleText, pageable);
 
-        model.addAttribute("userlist", pageList); //페이지 객체 리스트
+        model.addAttribute("userlist", l1); //페이지 객체 리스트
         model.addAttribute("nowurl0","/Reservation");
 
         return "/Reservation/WaitInfoList :: #intable";
@@ -136,6 +169,7 @@ public class ReservationController {
             DateTimeFormatter sdf1= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             DateTimeFormatter sdf2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm (E)");
             LocalDate nowDate = LocalDate.now();
+
             for(int j=0; j<s1.getContent().size(); j++){
                 LocalDate startDate = LocalDate.parse(s1.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
                 LocalDateTime date1 = startDate.atStartOfDay();
@@ -146,7 +180,22 @@ public class ReservationController {
                 s1.getContent().get(j).setRsitime(date3.format(sdf2));
             }
 
-            model.addAttribute("userlist", s1); //페이지 객체 리스트
+            List l1 = new ArrayList<>();
+            String idlist = "";
+            for(int i=0; i<s1.getContent().size(); i++){
+                List<BgenEntity> s2 = bgenRepository.findByBgenrsino(s1.getContent().get(i).getRsino());
+                idlist = "";
+                for(int j=0; j<s2.size(); j++){
+                    idlist += s2.get(j).getBgennickname() + "\n";
+                }
+                VIdlistRSIDto vIdlistRSIDto = new VIdlistRSIDto(s1.getContent().get(i).getRsino(),s1.getContent().get(i).getRsicano(),s1.getContent().get(i).getRsiuino(),
+                        s1.getContent().get(i).getRsiccno(), s1.getContent().get(i).getRsicaid(),s1.getContent().get(i).getRsitime(),
+                        s1.getContent().get(i).getRsicno(),s1.getContent().get(i).getRsistate(),s1.getContent().get(i).getRsicanceldate(),s1.getContent().get(i).getRsiidatetime(),
+                        s1.getContent().get(i).getRsibandstate(),s1.getContent().get(i).getBandnicknamecount(),idlist);
+                l1.add(vIdlistRSIDto);
+            }
+
+            model.addAttribute("userlist", l1); //페이지 객체 리스트
             model.addAttribute("nowurl0","/Reservation");
 
             List<CountryClubEntity> s2 = countryClubRepository.findAll1();
@@ -193,32 +242,61 @@ public class ReservationController {
         DateTimeFormatter sdf1= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         DateTimeFormatter sdf2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm (E)");
         if(!set.equals("0")){
-            Page<ViewReservationStateInfoEntity> pageList = reservationStateService.seALLTable("CC", set, pageable);
-            for(int j=0; j<pageList.getContent().size(); j++){
-                LocalDate startDate = LocalDate.parse(pageList.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
+            Page<ViewReservationStateInfoEntity> s1 = reservationStateService.seALLTable("CC", set, pageable);
+            for(int j=0; j<s1.getContent().size(); j++){
+                LocalDate startDate = LocalDate.parse(s1.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
                 LocalDateTime date1 = startDate.atStartOfDay();
                 LocalDateTime date2 = nowDate.atStartOfDay();
                 Long betweenDays = (Long) Duration.between(date2,date1).toDays();
-                pageList.getContent().get(j).setRsiuino(betweenDays);
-                LocalDateTime date3 = LocalDateTime.parse(pageList.getContent().get(j).getRsitime(), sdf1);
-                pageList.getContent().get(j).setRsitime(date3.format(sdf2));
+                s1.getContent().get(j).setRsiuino(betweenDays);
+                LocalDateTime date3 = LocalDateTime.parse(s1.getContent().get(j).getRsitime(), sdf1);
+                s1.getContent().get(j).setRsitime(date3.format(sdf2));
             }
-
-            model.addAttribute("userlist", pageList); //페이지 객체 리스트
+            List l1 = new ArrayList<>();
+            String idlist = "";
+            for(int i=0; i<s1.getContent().size(); i++){
+                List<BgenEntity> s2 = bgenRepository.findByBgenrsino(s1.getContent().get(i).getRsino());
+                idlist = "";
+                for(int j=0; j<s2.size(); j++){
+                    idlist += s2.get(j).getBgennickname() + "\n";
+                }
+                VIdlistRSIDto vIdlistRSIDto = new VIdlistRSIDto(s1.getContent().get(i).getRsino(),s1.getContent().get(i).getRsicano(),s1.getContent().get(i).getRsiuino(),
+                        s1.getContent().get(i).getRsiccno(), s1.getContent().get(i).getRsicaid(),s1.getContent().get(i).getRsitime(),
+                        s1.getContent().get(i).getRsicno(),s1.getContent().get(i).getRsistate(),s1.getContent().get(i).getRsicanceldate(),s1.getContent().get(i).getRsiidatetime(),
+                        s1.getContent().get(i).getRsibandstate(),s1.getContent().get(i).getBandnicknamecount(),idlist);
+                l1.add(vIdlistRSIDto);
+            }
+            model.addAttribute("userlist", l1); //페이지 객체 리스트
         }else {
-            Page<ViewReservationStateInfoEntity> pageList = reservationStateService.seALLTable(selectKey, titleText, pageable);
-            for(int j=0; j<pageList.getContent().size(); j++){
-                LocalDate startDate = LocalDate.parse(pageList.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
+            Page<ViewReservationStateInfoEntity> s1 = reservationStateService.seALLTable(selectKey, titleText, pageable);
+            for(int j=0; j<s1.getContent().size(); j++){
+                LocalDate startDate = LocalDate.parse(s1.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
                 LocalDateTime date1 = startDate.atStartOfDay();
                 LocalDateTime date2 = nowDate.atStartOfDay();
                 Long betweenDays = (Long) Duration.between(date2,date1).toDays();
-                pageList.getContent().get(j).setRsiuino(betweenDays);
-                LocalDateTime date3 = LocalDateTime.parse(pageList.getContent().get(j).getRsitime(), sdf1);
-                pageList.getContent().get(j).setRsitime(date3.format(sdf2));
+                s1.getContent().get(j).setRsiuino(betweenDays);
+                LocalDateTime date3 = LocalDateTime.parse(s1.getContent().get(j).getRsitime(), sdf1);
+                s1.getContent().get(j).setRsitime(date3.format(sdf2));
+            }
+            List l1 = new ArrayList<>();
+            String idlist = "";
+            for(int i=0; i<s1.getContent().size(); i++){
+                List<BgenEntity> s2 = bgenRepository.findByBgenrsino(s1.getContent().get(i).getRsino());
+                idlist = "";
+                for(int j=0; j<s2.size(); j++){
+                    idlist += s2.get(j).getBgennickname() + "\n";
+                }
+                VIdlistRSIDto vIdlistRSIDto = new VIdlistRSIDto(s1.getContent().get(i).getRsino(),s1.getContent().get(i).getRsicano(),s1.getContent().get(i).getRsiuino(),
+                        s1.getContent().get(i).getRsiccno(), s1.getContent().get(i).getRsicaid(),s1.getContent().get(i).getRsitime(),
+                        s1.getContent().get(i).getRsicno(),s1.getContent().get(i).getRsistate(),s1.getContent().get(i).getRsicanceldate(),s1.getContent().get(i).getRsiidatetime(),
+                        s1.getContent().get(i).getRsibandstate(),s1.getContent().get(i).getBandnicknamecount(),idlist);
+                l1.add(vIdlistRSIDto);
             }
 
-            model.addAttribute("userlist", pageList); //페이지 객체 리스트
+            model.addAttribute("userlist", l1); //페이지 객체 리스트
         }
+
+
 
 
         model.addAttribute("nowurl0","/Reservation");
@@ -858,6 +936,7 @@ public class ReservationController {
             Optional<CountryAccountEntity> s2 = countryAccountRepository.findById(s1.get(i).getRibcano());
             s3.add(s2.get().getCaid());
         }
+
         msg.put("blist",s3);
 
         return msg;

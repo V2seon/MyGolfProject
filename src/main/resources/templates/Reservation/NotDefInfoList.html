@@ -14,6 +14,8 @@
     <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+
+    <link href="/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
     
     <link href="/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet"/>
 
@@ -157,7 +159,9 @@
                                                                     <span th:if="${Co.Rsibandstate} == 1">작성됨</span>
                                                                 </td>
                                                                 <td>
-                                                                    <button name="ckuser" th:value="${Co.Rsino}" class="btn btn-success ckuser" type="button" th:text="${Co.Bandnicknamecount} +' 명'"></button>
+                                                                    <button name="ckuser" th:value="${Co.Rsino}" class="btn btn-success ckuser" type="button"
+                                                                            data-toggle="tooltip" data-placement="bottom" title="" th:data-original-title="${Co.Idlist}"
+                                                                            th:text="${Co.Bandnicknamecount} +' 명'"></button>
                                                                 </td>
                                                                 <td>
                                                                     <button th:onclick="|javascript:Defno(${Co.Rsino})|" class="btn btn-success" type="button">확정</button>
@@ -272,30 +276,36 @@
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function() {
+<script src="/vendors/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom Theme Scripts -->
+<!--<script src="/build/js/custom.min.js"></script>-->
 
-    $(document).on("mouseover",".ckuser", function() {
-        var seq = $(this).val();
+<!--<script type="text/javascript">-->
+<!--$(document).ready(function() {-->
 
-        w1 = $(this).offset().left;
-        h1 = $(this).offset().top;
+<!--    $(document).on("mouseover",".ckuser", function() {-->
+<!--        var seq = $(this).val();-->
 
-        w1center = w1;
-        h1center = h1 - 210;
+<!--        w1 = $(this).offset().left;-->
+<!--        h1 = $(this).offset().top;-->
 
-        view(seq);
-        $('.popupLayer').css({
-            "top": h1center,
-            "left": w1center,
-            "position": "absolute"
-        }).show();
-    });
+<!--        w1center = w1;-->
+<!--        h1center = h1 - 210;-->
 
-    $(document).on("mouseout",".ckuser", function() {
-        $('tr.nickid').remove();
-        $('.popupLayer').hide();
-    });
-});
-</script>
+<!--        view(seq);-->
+<!--        $('.popupLayer').css({-->
+<!--            "top": h1center,-->
+<!--            "left": w1center,-->
+<!--            "position": "absolute"-->
+<!--        }).show();-->
+<!--    });-->
+
+<!--    $(document).on("mouseout",".ckuser", function() {-->
+<!--        $('tr.nickid').remove();-->
+<!--        $('.popupLayer').hide();-->
+<!--    });-->
+<!--});-->
+<!--</script>-->
 </body></html>

@@ -61,6 +61,7 @@ public class ViewReservationInfoEntity {
     @Column(name = "RI_COURSE")
     private String ricourse;
 
+
     @Builder
     public ViewReservationInfoEntity(Long Ri_no,Long Ri_choice, Long Ri_ca_no, Long Ri_ui_no, String Ri_cc_no, String Ri_ca_id,
                                      String Ri_ca_password,Long Ri_bundle,Long Ri_person, String Ri_start_date, String Ri_end_date,
