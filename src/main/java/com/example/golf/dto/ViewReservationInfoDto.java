@@ -15,6 +15,8 @@ public class ViewReservationInfoDto {
     private String riccno;
     private String ricaid;
     private String ricapassword;
+    private Long ribundle;
+    private Long riperson;
     private String ristartdate;
     private String rienddate;
     private int ristarttime;
@@ -25,8 +27,8 @@ public class ViewReservationInfoDto {
 
     @Builder
     public ViewReservationInfoDto(Long Ri_no,Long Ri_choice, Long Ri_ca_no, Long Ri_ui_no, String Ri_cc_no, String Ri_ca_id,
-                                  String Ri_ca_password, String Ri_start_date, String Ri_end_date, int Ri_start_time, int Ri_end_time,
-                                  int Ri_state ,String Ri_course) {
+                                  String Ri_ca_password,Long Ri_bundle,Long Ri_person, String Ri_start_date, String Ri_end_date,
+                                  int Ri_start_time, int Ri_end_time, int Ri_state ,String Ri_course) {
         rino = Ri_no;
         richoice = Ri_choice;
         ricano = Ri_ca_no;
@@ -34,6 +36,8 @@ public class ViewReservationInfoDto {
         riccno = Ri_cc_no;
         ricaid = Ri_ca_id;
         ricapassword = Ri_ca_password;
+        ribundle = Ri_bundle;
+        riperson = Ri_person;
         ristartdate = Ri_start_date;
         rienddate = Ri_end_date;
         ristarttime = Ri_start_time;
@@ -51,6 +55,8 @@ public class ViewReservationInfoDto {
                 .Ri_cc_no(riccno)
                 .Ri_ca_id(ricaid)
                 .Ri_ca_password(ricapassword)
+                .Ri_bundle(ribundle)
+                .Ri_person(riperson)
                 .Ri_start_date(ristartdate)
                 .Ri_end_date(rienddate)
                 .Ri_start_time(ristarttime)

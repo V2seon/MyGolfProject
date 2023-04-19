@@ -21,6 +21,7 @@ public class ReservationInfoService {
     private CountryAccountRepository countryAccountRepository;
     private ViewReservationInfoRepository viewReservationInfoRepository;
     private ReservationStateRepository reservationStateRepository;
+    private ReservationInfoBundleRepository reservationInfoBundleRepository;
 
     @Transactional
     public Long insertData1(ReservationInfoDto reservationInfoDto){
@@ -55,6 +56,11 @@ public class ReservationInfoService {
     @Transactional
     public Page<ViewReservationInfoEntity> seALLTable(String selectKey, String titleText, Pageable pageable){
         return viewReservationInfoRepository.findAll(ViewReservationinfoPredicate.search0(selectKey, titleText),pageable);
+    }
+
+    @Transactional
+    public Long insertBundle1(ReservationInfoBundleDto reservationInfoBundleDto){
+        return reservationInfoBundleRepository.save(reservationInfoBundleDto.toEntity()).getRibseq();
     }
 
 //    @Transactional

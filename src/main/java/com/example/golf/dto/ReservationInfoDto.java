@@ -10,6 +10,7 @@ import lombok.*;
 public class ReservationInfoDto {
 
     private Long rino;
+    private Long ribundle;
     private Long ricano;
     private Long riuino;
     private Long riccno;
@@ -33,10 +34,11 @@ public class ReservationInfoDto {
     private String riudatetime;
 
     @Builder
-    public ReservationInfoDto(Long Ri_no, Long Ri_ca_no, Long Ri_ui_no, Long Ri_cc_no, String Ri_ca_id, String Ri_ca_password,
+    public ReservationInfoDto(Long Ri_no,Long Ri_bundle, Long Ri_ca_no, Long Ri_ui_no, Long Ri_cc_no, String Ri_ca_id, String Ri_ca_password,
                                  String Ri_startdate, String Ri_enddate, int Ri_start_time, int Ri_end_time, int Ri_hall, int Ri_course, int Ri_person, int Ri_sex,
                                  int Ri_type, int Ri_state, String Ri_resdatetime, int Ri_choice, String Ri_cancel_day, String Ri_pid, String Ri_idatetime, String Ri_udatetime) {
         rino = Ri_no;
+        ribundle = Ri_bundle;
         ricano = Ri_ca_no;
         riuino = Ri_ui_no;
         riccno = Ri_cc_no;
@@ -63,6 +65,7 @@ public class ReservationInfoDto {
     public ReservationInfoEntity toEntity(){
         ReservationInfoEntity entity = ReservationInfoEntity.builder()
                 .Ri_no(rino)
+                .Ri_bundle(ribundle)
                 .Ri_ca_no(ricano)
                 .Ri_ui_no(riuino)
                 .Ri_cc_no(riccno)

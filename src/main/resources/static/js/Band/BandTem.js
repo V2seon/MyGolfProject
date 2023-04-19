@@ -186,6 +186,7 @@ let sendData = {
             $('#load').hide();
             if(e.checked == false){
                 document.getElementById("Bts"+seq).innerText="대기";
+
             }else{
                 document.getElementById("Bts"+seq).innerText="사용";
             }

@@ -1,8 +1,10 @@
 package com.example.golf.controller;
 
 import com.example.golf.common.SessionCheck;
-import com.example.golf.dto.ReservationInfoDto;
-import com.example.golf.entity.*;
+import com.example.golf.entity.CountryAccountEntity;
+import com.example.golf.entity.CountryClubEntity;
+import com.example.golf.entity.ReservationInfoEntity;
+import com.example.golf.entity.UserinfoEntity;
 import com.example.golf.repository.*;
 import com.example.golf.service.CountryclubService;
 import com.example.golf.service.ReservationInfoService;
@@ -142,17 +144,11 @@ public class MainController {
         return returnValue;
     }
 
-    @GetMapping("/formRI40")
+    @GetMapping("/tooltip")
     public String formRI40(Model model, HttpServletRequest request){
         String returnValue = "";
-        HttpSession session = request.getSession();
-        if(new SessionCheck().loginSessionCheck(request)){
-            model.addAttribute("nowurl0","/formRI");
-            returnValue = "/formRI/formRI40";
-        }else{
-            returnValue = "login";
-        }
-        return returnValue;
+        return "general_elements.html";
+
     }
 
     @PostMapping("/golftest2")
@@ -291,8 +287,8 @@ public class MainController {
         String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         Optional<CountryClubEntity> c1 = countryClubRepository.findByCcno(mountin);
         String canday = String.valueOf(c1.get().getCccancelday());
-        ReservationInfoDto reservationInfoDto = new ReservationInfoDto(null, cano, uino, mountin, caid, capw, startdate, enddate, hope_t1, hope_t2, hope_h, hope_c, 0, 0, 0,0, null, type, canday,null, sdf1, null);
-        reservationInfoService.insertData1(reservationInfoDto);
+//        ReservationInfoDto reservationInfoDto = new ReservationInfoDto(null, cano, uino, mountin, caid, capw, startdate, enddate, hope_t1, hope_t2, hope_h, hope_c, 0, 0, 0,0, null, type, canday,null, sdf1, null);
+//        reservationInfoService.insertData1(reservationInfoDto);
         String ipmsg = cano+"/"+uino+"/"+uino;
         System.out.println(ipmsg);
 

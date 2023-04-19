@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReservationInfoRepository extends JpaRepository<ReservationInfoEntity, Long>, QuerydslPredicateExecutor<ReservationInfoEntity> {
 
@@ -31,7 +32,8 @@ public interface ReservationInfoRepository extends JpaRepository<ReservationInfo
     @Query(value = "SELECT * FROM test_reservation_info where RI_STATE=2" , nativeQuery = true)
     Page<ReservationInfoEntity> findAll2(Pageable pageable);
 
-
+    @Query(value = "SELECT * FROM test_reservation_info where RI_BUNDLE=(SELECT MAX(RI_BUNDLE) FROM test_reservation_info)" , nativeQuery = true)
+    Optional<ReservationInfoEntity> findmaxbundle();
 
 
 

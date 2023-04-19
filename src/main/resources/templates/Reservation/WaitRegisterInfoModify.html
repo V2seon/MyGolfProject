@@ -90,16 +90,30 @@
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="id">아이디
                                     </label>
                                     <div class="col-md-6 col-sm-6 ">
-                                        <input th:value="${Ricaid}" class="form-control" type="text" id="id">
+                                        <select id="id" class="form-control">
+                                            <option th:selected="${RiCano} == ${Co.cano}" class="chid" th:if="${id}!=null" th:each="Co : ${id}" th:value="${Co.caid} +'/'+ ${Co.cano}" th:text="${Co.caid}"></option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <button onclick="idplus()" class="btn btn-primary" style="margin:auto;">추가</button>
                                     </div>
                                 </div>
-<!--                                <div class="item form-group">-->
-<!--                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="pw">비밀번호-->
-<!--                                    </label>-->
-<!--                                    <div class="col-md-6 col-sm-6 ">-->
-<!--                                        <input class="form-control" type="password" id="pw">-->
-<!--                                    </div>-->
-<!--                                </div>-->
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <div id='idlist' class='form-control' style="height: auto; min-height: 76px;max-height: 250px;overflow-x: hidden;overflow-y: scroll;">
+                                            <div th:if="${idlist}!=null" class="idlist" th:each="Co : ${idlist}" name='idlist' style='margin-bottom:10px;'>
+                                                <span class='ccid' name='ccid'  th:value='${Co.key}'  th:text='${Co.value}'>
+                                                </span>&nbsp&nbsp
+                                                <button onclick='delid(this)' class='btn btn-primary' style='margin:auto;'>
+                                                    <a>삭제</a>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" >코스정보
                                     </label>

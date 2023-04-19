@@ -37,6 +37,12 @@ public class ViewReservationInfoEntity {
     @Column(name = "RI_CA_PASSWORD")
     private String ricapassword;
 
+    @Column(name = "RI_BUNDLE")
+    private Long ribundle;
+
+    @Column(name = "RI_PERSON")
+    private Long riperson;
+
     @Column(name = "RI_START_DATE")
     private String ristartdate;
 
@@ -57,8 +63,8 @@ public class ViewReservationInfoEntity {
 
     @Builder
     public ViewReservationInfoEntity(Long Ri_no,Long Ri_choice, Long Ri_ca_no, Long Ri_ui_no, String Ri_cc_no, String Ri_ca_id,
-                                  String Ri_ca_password, String Ri_start_date, String Ri_end_date, int Ri_start_time, int Ri_end_time,
-                                  int Ri_state,String Ri_course) {
+                                     String Ri_ca_password,Long Ri_bundle,Long Ri_person, String Ri_start_date, String Ri_end_date,
+                                     int Ri_start_time, int Ri_end_time, int Ri_state,String Ri_course) {
         rino = Ri_no;
         richoice = Ri_choice;
         ricano = Ri_ca_no;
@@ -66,6 +72,8 @@ public class ViewReservationInfoEntity {
         riccno = Ri_cc_no;
         ricaid = Ri_ca_id;
         ricapassword = Ri_ca_password;
+        ribundle = Ri_bundle;
+        riperson = Ri_person;
         ristartdate = Ri_start_date;
         rienddate = Ri_end_date;
         ristarttime = Ri_start_time;

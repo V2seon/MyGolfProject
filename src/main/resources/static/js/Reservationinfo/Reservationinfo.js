@@ -148,7 +148,7 @@ function chCC(){
                         }
                         for(var i=0; i<result.ccid.length; i++){
                             $("#id").append(
-                                "<option class='chid' value='"+result.ccid[i].cano+"'>"+result.ccid[i].caid+"</option>"
+                                "<option class='chid' value='"+result.ccid[i].caid+'/'+result.ccid[i].cano+"'>"+result.ccid[i].caid+"</option>"
                             )
                         }
                         document.getElementById('cctip').innerText = result.cctip[0];
@@ -166,7 +166,7 @@ function chCC(){
 function Ininfo(){
 const ccname = document.getElementById("ccname").value;
 const type = $('input[name=choice]:checked').val();
-const id = document.getElementById("id").value;
+const idlist = document.getElementsByName("ccid");
 const course = document.getElementById("course").value;
 const startdate = document.getElementById("startdate").value;
 const enddate = document.getElementById("enddate").value;
@@ -177,6 +177,11 @@ const t2 = document.getElementById("t2").value;
 //const c = document.getElementById("c").value;
 const cc = document.getElementById("cc").value;
 
+var id = idlist[0].getAttribute('value');
+for(var i=1; i<idlist.length; i++){
+    id = id+"/"+idlist[i].getAttribute('value');
+}
+
 if(ccname === null || ccname === "") {
         swal({
             title: "골프장을 선택하세요.",
@@ -184,7 +189,7 @@ if(ccname === null || ccname === "") {
             button: "확인"
         });
         return false;
-}else if(type === null || type === "") {
+}else if($('input[name=choice]').is(":checked") === false) {
         swal({
             title: "예약타입을 선택하세요.",
             icon: "info",
@@ -276,26 +281,53 @@ let sendData = {
 }
 
 function Editinfo(seq){
- let sendData = {
-        "seq" : seq
-    }
+location.href="/ReservationModify/"+seq+""
+}
 
-    $.ajax({
-                url      : "/Reservationgo",
+function Delinfo(seq){
+swal({
+        title: "예약 종료",
+          text: "해당 예약을 종료하시겠습니까?",
+          icon: "warning",
+          closeOnClickOutside : false,
+          buttons : ["취소", "삭제"],
+          dangerMode: true
+    }).then((result) => {
+    if(result){
+        const sendData = {
+                    'seq' : seq
+                    };
+        $.ajax({
+                url      : "/DelWaitReservation",
                 data     : sendData,
-                type     : "GET",
+                type     : "POST",
                 success : function(result) {
-                    location.href = "/ReservationModifygo";
+                    $('#load').hide();
+                    swal({
+                            text: "삭제완료.",
+                            icon: "success",
+                            closeOnClickOutside : false,
+                            button: "확인"
+                        }).then(function(){
+                            location.href = "/Reservation";
+                        })
                 },
                 error:function(request,status,error){
+                    $('#load').hide();
+                    swal({
+                        text: "서버에 문제가 발생했습니다.",
+                        icon: "warning" //"info,success,warning,error" 중 택1
+                    });
                 }
             });
+    }
+    });
 }
 
 function Modifyinfo(seq){
 const ccname = document.getElementById("ccname").value;
 const type = $('input[name=choice]:checked').val();
-const id = document.getElementById("id").value;
+const idlist = document.getElementsByName("ccid");
 const course = document.getElementById("course").value;
 const startdate = document.getElementById("startdate").value;
 const enddate = document.getElementById("enddate").value;
@@ -306,7 +338,71 @@ const t2 = document.getElementById("t2").value;
 //const c = document.getElementById("c").value;
 const cc = document.getElementById("cc").value;
 
+var id = idlist[0].getAttribute('value');
+for(var i=1; i<idlist.length; i++){
+    id = id+"/"+idlist[i].getAttribute('value');
+}
 
+if(ccname === null || ccname === "") {
+        swal({
+            title: "골프장을 선택하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}else if($('input[name=choice]').is(":checked") === false) {
+        swal({
+            title: "예약타입을 선택하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}else if(id === null || id === ""){
+        swal({
+            title: "해당 골프장 아이디를 입력하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}else if(startdate === null || startdate === ""){
+        swal({
+            title: "예약시작일를 입력하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}else if(enddate === null || enddate === ""){
+        swal({
+            title: "예약종료일을 입력하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}
+else if(choice === null || choice === ""){
+        swal({
+            title: "예약일을 선택하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}
+else if(t1 === null || t1 === ""){
+        swal({
+            title: "희망시간을 선택하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}
+else if(t2 === null || t2 === ""){
+        swal({
+            title: "희망시간을 선택하세요.",
+            icon: "info",
+            button: "확인"
+        });
+        return false;
+}else{
 let sendData = {
                 "seq":seq,
                 "mountin" : ccname,
@@ -342,40 +438,53 @@ let sendData = {
             });
         }
     });
+
+}
 }
 
 function idplus(){
 var id = document.getElementById("id").value;
 var idlist = id.split("/");
-if(id != null && id != ""){
-    const log = document.getElementById("idlist");
-    log.isScrollBottom = true;
-    log.addEventListener("scroll", (event) => {
-      if (event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight) {
-        log.isScrollBottom = true;
-      } else {
-        log.isScrollBottom = false;
-      }
-    });
 
-    $("#idlist").append(
-                        "<div name='idlist' class='idlist' style='margin-bottom:10px;'><span name='ccid' value='"+idlist[1]+"'>"+idlist[0]+
-                        "</span>&nbsp&nbsp<button onclick='delid(this)' class='btn btn-primary' style='margin:auto;'><a>삭제</a></button></div>"
-                    )
-    if (log.isScrollBottom) {
-        log.scrollTop = log.scrollHeight;
-      }
+var ccid = document.getElementsByName("ccid");
+var cl = ccid.length;
 
-}else{
-    swal({
-            text: "휴대폰 번호를 입력하세요",
-            icon: "info",
-            button: "확인"
-        })
+var id = "";
+for(var i=0; i<ccid.length; i++){
+    id = id+"/"+ccid[i].innerText;
 }
+
+if(id.indexOf(idlist[0]) == -1){
+$("#idlist").append(
+                    "<div name='idlist' class='idlist' style='margin-bottom:10px;'><span class='ccid' name='ccid' value='"+idlist[1]+"'>"+idlist[0]+
+                    "</span>&nbsp&nbsp<button onclick='delid(this)' class='btn btn-primary' style='margin:auto;'><a>삭제</a></button></div>"
+                )
+}else{
+swal({
+        text: "해당 아이디는 이미 추가된 아이디입니다.",
+        icon: "info",
+        closeOnClickOutside : false
+    })
+}
+
+const log = document.getElementById("idlist");
+log.isScrollBottom = true;
+log.addEventListener("scroll", (event) => {
+  if (event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight) {
+    log.isScrollBottom = true;
+  } else {
+    log.isScrollBottom = false;
+  }
+});
+
+if (log.isScrollBottom) {
+    log.scrollTop = log.scrollHeight;
+  }
+
 }
 
 function delid(con){
     var tagName = con.parentNode;
     tagName.remove();
 }
+

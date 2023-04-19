@@ -39,6 +39,7 @@ public class LoginController {
             msg.put("loginResult", "1");
             session.setAttribute("user_signature", userid);
             session.setAttribute("name",ggg.get().getUiname());
+            session.setAttribute("uino",ggg.get().getUino());
 //            String sessioninid = (String) session.getAttribute("user_signature");
 //            System.out.print(sessioninid);
         }else{

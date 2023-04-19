@@ -12,8 +12,11 @@
     <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
     <!-- NProgress -->
     <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!--tooltips-->
+    <link href="/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
     <!--    &lt;!&ndash; iCheck &ndash;&gt;-->
     <!--    <link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">-->
     <!--    &lt;!&ndash; bootstrap-wysiwyg &ndash;&gt;-->
@@ -41,8 +44,6 @@
             }
 
     </style>
-
-
 </head>
 
 <body class="nav-md">
@@ -137,8 +138,11 @@
                                                                     th:text="오픈"></td>
                                                                 <td th:if="${Co.Richoice}== 0"
                                                                     th:text="취소"></td>
-                                                                <td th:if="${Co.Ricaid}!= null"
-                                                                    th:text="${Co.Ricaid}"></td>
+                                                                <td th:if="${Co.Ricaid}!= null">
+                                                                    <span th:id="'ckuser'+${Co.Rino}" class="ckuser" th:text="${Co.Riperson > 0 ? Co.Ricaid +' 포함 '+Co.Riperson+'명' : Co.Ricaid}"
+                                                                          data-toggle="tooltip" data-placement="bottom" title="" th:value="${Co.Ribundle}">
+                                                                    </span>
+                                                                </td>
                                                                 <td th:if="${Co.Riccno}!= null"
                                                                     th:text="${Co.Riccno}"></td>
                                                                 <td th:if="${Co.Ricourse}!= null"
@@ -161,7 +165,7 @@
                                                                     <button th:onclick="|javascript:Editinfo(${Co.Rino})|" class="btn btn-success" type="button">수정</button>
                                                                 </td>
                                                                 <td>
-                                                                    <button th:onclick="|javascript:DelCCgo(${Co.Rino})|" class="btn btn-primary" type="button">예약종료</button>
+                                                                    <button th:onclick="|javascript:Delinfo(${Co.Rino})|" class="btn btn-primary" type="button">예약종료</button>
                                                                 </td>
                                                             </tr>
                                                             </tbody>
@@ -234,7 +238,6 @@
 
 </div>
 </div>
-
 <script src="/vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -245,11 +248,49 @@
 <!-- Custom Theme Scripts -->
 
 <script src="/js/Reservationinfo/Reservationinfo.js"></script>
-
-
 <script src="/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 <!-- Custom Theme Scripts -->
 <script src="/js/custom.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<!---->
+<script src="/vendors/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom Theme Scripts -->
+<script src="/build/js/custom.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $(document).on("mouseover",".ckuser", function() {
+        var seq = $(this)[0].getAttribute('value');
+        var id = $(this)[0].getAttribute('id');
+        let sendData = {
+                    'seq' : seq
+                    };
+
+        $.ajax({
+                url      : "/BundleUser",
+                data     : sendData,
+                type     : "POST",
+                success : function(result) {
+                    $('#load').hide();
+                    var data = result.blist[0];
+                    for(var i=1; i<result.blist.length; i++){
+                        data = data + "&#10;" + result.blist[i]
+                    }
+                    console.log(data);
+                    console.log(document.getElementById(id));
+                    document.getElementById(id).setAttribute('data-original-title', data);
+                },
+                error:function(request,status,error){
+                    $('#load').hide();
+
+                }
+            });
+
+    });
+});
+</script>
 </body></html>

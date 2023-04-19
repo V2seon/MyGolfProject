@@ -2,6 +2,7 @@ package com.example.golf.controller;
 
 import com.example.golf.common.Pagination;
 import com.example.golf.common.SessionCheck;
+import com.example.golf.dto.ReservationInfoBundleDto;
 import com.example.golf.dto.ReservationInfoDto;
 import com.example.golf.dto.ReservationStateDto;
 import com.example.golf.entity.*;
@@ -54,6 +55,7 @@ public class ReservationController {
     private BgenRepository bgenRepository;
     private ReservationInfoRepository reservationInfoRepository;
     private CountryAccountRepository countryAccountRepository;
+    private ReservationInfoBundleRepository reservationInfoBundleRepository;
 
     @GetMapping("/Reservation")
     public String Reservation(Model model, HttpServletRequest request, Pageable pageable,
@@ -696,19 +698,40 @@ public class ReservationController {
                                        @RequestParam(required = false, defaultValue = "", value = "hope_t1") int hope_t1,
                                        @RequestParam(required = false, defaultValue = "", value = "hope_t2") int hope_t2,
                                        @RequestParam(required = false, defaultValue = "", value = "hope_h") int hole){
-        Optional<CountryAccountEntity> s1 = countryAccountRepository.findByCaccnoAndCaid(ccname,id);
+//        Optional<CountryAccountEntity> s1 = countryAccountRepository.findByCaccnoAndCaid(ccname,id);
+        HttpSession session = request.getSession();
+        Long uino = (Long) session.getAttribute("uino");
         LocalDateTime localDateTime = LocalDateTime.now();
         String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        System.out.println(s1.get().getCano());
-        System.out.println(s1.get().getCauino());
-        System.out.println(s1.get().getCaccno());
-        Optional <CountryClubEntity> s2 = countryClubRepository.findById(s1.get().getCaccno());
+
+        Optional <ReservationInfoEntity> s3 = reservationInfoRepository.findmaxbundle();
+        Long bundlenum = 0L;
+        if(s3.isPresent()){
+            bundlenum = s3.get().getRibundle()+1;
+        }else {
+            bundlenum = 0L;
+        }
+        Optional <CountryClubEntity> s2 = countryClubRepository.findById(ccname);
         String cday = String.valueOf(s2.get().getCccancelday());
 
-        ReservationInfoDto reservationInfoDto = new ReservationInfoDto(null,s1.get().getCano(),s1.get().getCauino(),s1.get().getCaccno(),
-                id,s1.get().getCapassword(),startdate,enddate,hope_t1,hope_t2,hole,course,0,0,choice,0,null,type,cday,
+        String idlist[] = id.split("/");
+        Long cano = Long.valueOf(idlist[0]);
+        Optional<CountryAccountEntity> s1 = countryAccountRepository.findById(cano);
+        ReservationInfoDto reservationInfoDto = new ReservationInfoDto(null,bundlenum,cano,s1.get().getCauino(),ccname,
+                s1.get().getCaid(),null,startdate,enddate,hope_t1,hope_t2,hole,course,idlist.length,0,choice,0,null,type,cday,
                 null,sdf1,null);
-//        reservationInfoService.insertData1(reservationInfoDto);
+        if(idlist.length > 1){
+            for(int i=0; i<idlist.length; i++){
+                Long idnum = Long.valueOf(idlist[i]);
+                ReservationInfoBundleDto reservationInfoBundleDto = new ReservationInfoBundleDto(null,bundlenum,idnum,sdf1,null);
+                System.out.println(idlist[i]);
+                reservationInfoService.insertBundle1(reservationInfoBundleDto);
+            }
+        }
+
+        reservationInfoService.insertData1(reservationInfoDto);
+
+
 //        reservationStateRepository.deleteById(seq);
         return "redirect:";
     }
@@ -727,47 +750,57 @@ public class ReservationController {
                                        @RequestParam(required = false, defaultValue = "", value = "hope_t2") int hope_t2,
                                        @RequestParam(required = false, defaultValue = "", value = "hope_h") int hole){
 
-        Optional<CountryAccountEntity> s1 = countryAccountRepository.findByCaccnoAndCaid(ccname,id);
+        HttpSession session = request.getSession();
+        Long uino = (Long) session.getAttribute("uino");
         LocalDateTime localDateTime = LocalDateTime.now();
         String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        System.out.println(s1.get().getCano());
-        System.out.println(s1.get().getCauino());
-        System.out.println(s1.get().getCaccno());
-        Optional <CountryClubEntity> s2 = countryClubRepository.findById(s1.get().getCaccno());
+
         Optional <ReservationInfoEntity> s3 = reservationInfoRepository.findById(seq);
+        Long bundlenum = s3.get().getRibundle();
+
+        Optional <CountryClubEntity> s2 = countryClubRepository.findById(ccname);
         String cday = String.valueOf(s2.get().getCccancelday());
 
-        ReservationInfoDto reservationInfoDto = new ReservationInfoDto(seq,s1.get().getCano(),s1.get().getCauino(),s1.get().getCaccno(),
-                id,s1.get().getCapassword(),startdate,enddate,hope_t1,hope_t2,hole,course,0,0,choice,0,null,type,cday,
+        String idlist[] = id.split("/");
+        Long cano = Long.valueOf(idlist[0]);
+        Optional<CountryAccountEntity> s1 = countryAccountRepository.findById(cano);
+        ReservationInfoDto reservationInfoDto = new ReservationInfoDto(seq,bundlenum,cano,s1.get().getCauino(),ccname,
+                s1.get().getCaid(),null,startdate,enddate,hope_t1,hope_t2,hole,course,idlist.length,0,choice,0,null,type,cday,
                 null,s3.get().getRiidatetime(),sdf1);
+        List <ReservationInfoBundleEntity> s4 = reservationInfoBundleRepository.findByRibribundle(bundlenum);
+        reservationInfoBundleRepository.deletebundle(Math.toIntExact(bundlenum));
+        if(idlist.length > 1){
+            for(int i=0; i<idlist.length; i++){
+                Long idnum = Long.valueOf(idlist[i]);
+                ReservationInfoBundleDto reservationInfoBundleDto = new ReservationInfoBundleDto(null,bundlenum,idnum,sdf1,null);
+                System.out.println(idlist[i]);
+                reservationInfoService.insertBundle1(reservationInfoBundleDto);
+            }
+        }
+
         reservationInfoService.insertData1(reservationInfoDto);
-//        reservationStateRepository.deleteById(seq);
+        return "redirect:";
+    }
+
+    @PostMapping("/DelWaitReservation")
+    public String DelWaitReservation(Model model, HttpServletRequest request,
+                                @RequestParam(required = false ,defaultValue = "" , value="seq") Long seq){
+        Optional <ReservationInfoEntity> s1 = reservationInfoRepository.findById(seq);
+        reservationInfoBundleRepository.deletebundle(Math.toIntExact(s1.get().getRibundle()));
+        reservationInfoRepository.deleteById(seq);
         return "redirect:";
     }
 
 
-    @GetMapping("/Reservationgo")
-    public String Reservationgo(Model model, HttpServletRequest request,
-                         @RequestParam(required = false ,defaultValue = "" , value="seq") Long seq){
-        String returnValue = "";
-        HttpSession session = request.getSession();
-        if(new SessionCheck().loginSessionCheck(request)){
-            session.setAttribute("seq",seq);
-            model.addAttribute("nowurl0","/Reservation");
-            returnValue = "/Reservation/WaitRegisterInfoModify";
-        }else{
-            returnValue = "login";
-        }
-        return returnValue;
-    }
-
-    @GetMapping("/ReservationModifygo")
-    public String ReservationModifygo(Model model, HttpServletRequest request){
+    @GetMapping("/ReservationModify/{seq}")
+    public Object ReservationModifygo(Model model, HttpServletRequest request,
+                                      @PathVariable("seq") Long seq){
         HttpSession session = request.getSession();
         String returnValue = "";
         if(new SessionCheck().loginSessionCheck(request)){
-            Optional<ReservationInfoEntity> s1 = reservationInfoRepository.findById((Long) session.getAttribute("seq"));
+            Optional<ReservationInfoEntity> s1 = reservationInfoRepository.findById(seq);
             model.addAttribute("Rino",s1.get().getRino());
+            model.addAttribute("RiCano",s1.get().getRicano());
             model.addAttribute("Riccno",s1.get().getRiccno());
             model.addAttribute("Richoice",s1.get().getRichoice());
             model.addAttribute("Ricourse",s1.get().getRicourse());
@@ -779,6 +812,23 @@ public class ReservationController {
             model.addAttribute("Rihall",s1.get().getRihall());
             model.addAttribute("Ritype",s1.get().getRitype());
 
+            List<ReservationInfoBundleEntity> s6 = reservationInfoBundleRepository.findByRibribundle(s1.get().getRibundle());
+
+            List idlist = new ArrayList<>();
+            List idnumlist = new ArrayList<>();
+            HashMap<String,String> idall = new HashMap<String,String>();
+
+            for (int i=0; i<s6.size(); i++){
+                Optional<CountryAccountEntity> s7 = countryAccountRepository.findById(s6.get(i).getRibcano());
+                idall.put(String.valueOf(s7.get().getCano()),s7.get().getCaid());
+            }
+
+
+            model.addAttribute("idlist",idall);
+            model.addAttribute("idnumlist",idnumlist);
+
+            List<CountryAccountEntity> s5 = countryAccountRepository.findByCaccno(s1.get().getRiccno());
+            model.addAttribute("id",s5);
             List<CountryClubEntity> s2 = countryClubRepository.findAll1();
             model.addAttribute("country",s2);
             List<CourseEntity> s3 = courseRepository.findAll1(s1.get().getRiccno());
@@ -794,6 +844,24 @@ public class ReservationController {
         return returnValue;
     }
 
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/BundleUser")
+    public Object BundleUser(Model model, HttpServletRequest request,
+                                     @RequestParam(required = false ,defaultValue = "" , value="seq") Long seq){
+        HashMap<String, List> msg = new HashMap<String, List>();
+
+        List <ReservationInfoBundleEntity> s1 = reservationInfoBundleRepository.findByRibribundle(seq);
+        List<String> s3 = new ArrayList<>();
+
+        for(int i=0; i<s1.size(); i++){
+            Optional<CountryAccountEntity> s2 = countryAccountRepository.findById(s1.get(i).getRibcano());
+            s3.add(s2.get().getCaid());
+        }
+        msg.put("blist",s3);
+
+        return msg;
+    }
 
 
 }
