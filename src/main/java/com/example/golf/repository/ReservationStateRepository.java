@@ -26,6 +26,16 @@ public interface ReservationStateRepository extends JpaRepository<ReservationSta
     @Query(value = "UPDATE reservation_state_info rs SET rs.RSI_STATE = 1 WHERE rs.RSI_NO =:num" , nativeQuery = true)
     void updateState(int num);
 
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE reservation_state_info rs SET rs.RSI_CANCEL_AUTO = 0 WHERE rs.RSI_NO =:num" , nativeQuery = true)
+    void updateCancel0(int num);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE reservation_state_info rs SET rs.RSI_CANCEL_AUTO = 1 WHERE rs.RSI_NO =:num" , nativeQuery = true)
+    void updateCancel1(int num);
+
 }
 
 

@@ -17,6 +17,7 @@ public class VIdlistRSIDto {
     private String rsicno;
     private int rsistate;
     private String rsicanceldate;
+    private int rsicancelauto;
     private String rsiidatetime;
     private int rsibandstate;
     private Long bandnicknamecount;
@@ -24,8 +25,8 @@ public class VIdlistRSIDto {
 
     @Builder
     public VIdlistRSIDto(Long Rsi_no, Long Rsi_ca_no, Long Rsi_ui_no, String Rsi_cc_no, String Rsi_ca_id,
-                         String Rsi_time, String Rsi_c_no, int Rsi_state, String Rsi_canceldate, String Rsi_idatetime,
-                         int Rsi_band_state, Long Band_nickname_count, String idlist) {
+                         String Rsi_time, String Rsi_c_no, int Rsi_state, String Rsi_canceldate, int Rsi_cancelauto,
+                         String Rsi_idatetime, int Rsi_band_state, Long Band_nickname_count, String idlist) {
         rsino = Rsi_no;
         rsicano = Rsi_ca_no;
         rsiuino = Rsi_ui_no;
@@ -35,6 +36,7 @@ public class VIdlistRSIDto {
         rsicno = Rsi_c_no;
         rsistate = Rsi_state;
         rsicanceldate = Rsi_canceldate;
+        rsicancelauto = Rsi_cancelauto;
         rsiidatetime = Rsi_idatetime;
         rsibandstate = Rsi_band_state;
         bandnicknamecount = Band_nickname_count;
@@ -51,6 +53,7 @@ public class VIdlistRSIDto {
                 .Rsi_c_no(rsicno)
                 .Rsi_state(rsistate)
                 .Rsi_canceldate(rsicanceldate)
+                .Rsi_cancelauto(rsicancelauto)
                 .Rsi_idatetime(rsiidatetime)
                 .Rsi_band_state(rsibandstate)
                 .Band_nickname_count(bandnicknamecount)

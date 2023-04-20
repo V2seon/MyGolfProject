@@ -188,10 +188,11 @@ public class ReservationController {
                 for(int j=0; j<s2.size(); j++){
                     idlist += s2.get(j).getBgennickname() + "\n";
                 }
-                VIdlistRSIDto vIdlistRSIDto = new VIdlistRSIDto(s1.getContent().get(i).getRsino(),s1.getContent().get(i).getRsicano(),s1.getContent().get(i).getRsiuino(),
-                        s1.getContent().get(i).getRsiccno(), s1.getContent().get(i).getRsicaid(),s1.getContent().get(i).getRsitime(),
-                        s1.getContent().get(i).getRsicno(),s1.getContent().get(i).getRsistate(),s1.getContent().get(i).getRsicanceldate(),s1.getContent().get(i).getRsiidatetime(),
-                        s1.getContent().get(i).getRsibandstate(),s1.getContent().get(i).getBandnicknamecount(),idlist);
+                VIdlistRSIDto vIdlistRSIDto = new VIdlistRSIDto(s1.getContent().get(i).getRsino(), s1.getContent().get(i).getRsicano(),
+                        s1.getContent().get(i).getRsiuino(), s1.getContent().get(i).getRsiccno(), s1.getContent().get(i).getRsicaid(),
+                        s1.getContent().get(i).getRsitime(), s1.getContent().get(i).getRsicno(), s1.getContent().get(i).getRsistate(),
+                        s1.getContent().get(i).getRsicanceldate(), s1.getContent().get(i).getRsicancelauto(), s1.getContent().get(i).getRsiidatetime(),
+                        s1.getContent().get(i).getRsibandstate(), s1.getContent().get(i).getBandnicknamecount(), idlist);
                 l1.add(vIdlistRSIDto);
             }
 
@@ -260,10 +261,11 @@ public class ReservationController {
                 for(int j=0; j<s2.size(); j++){
                     idlist += s2.get(j).getBgennickname() + "\n";
                 }
-                VIdlistRSIDto vIdlistRSIDto = new VIdlistRSIDto(s1.getContent().get(i).getRsino(),s1.getContent().get(i).getRsicano(),s1.getContent().get(i).getRsiuino(),
-                        s1.getContent().get(i).getRsiccno(), s1.getContent().get(i).getRsicaid(),s1.getContent().get(i).getRsitime(),
-                        s1.getContent().get(i).getRsicno(),s1.getContent().get(i).getRsistate(),s1.getContent().get(i).getRsicanceldate(),s1.getContent().get(i).getRsiidatetime(),
-                        s1.getContent().get(i).getRsibandstate(),s1.getContent().get(i).getBandnicknamecount(),idlist);
+                VIdlistRSIDto vIdlistRSIDto = new VIdlistRSIDto(s1.getContent().get(i).getRsino(), s1.getContent().get(i).getRsicano(),
+                        s1.getContent().get(i).getRsiuino(), s1.getContent().get(i).getRsiccno(), s1.getContent().get(i).getRsicaid(),
+                        s1.getContent().get(i).getRsitime(), s1.getContent().get(i).getRsicno(), s1.getContent().get(i).getRsistate(),
+                        s1.getContent().get(i).getRsicanceldate(), s1.getContent().get(i).getRsicancelauto(), s1.getContent().get(i).getRsiidatetime(),
+                        s1.getContent().get(i).getRsibandstate(), s1.getContent().get(i).getBandnicknamecount(), idlist);
                 l1.add(vIdlistRSIDto);
             }
             model.addAttribute("userlist", l1); //페이지 객체 리스트
@@ -286,10 +288,11 @@ public class ReservationController {
                 for(int j=0; j<s2.size(); j++){
                     idlist += s2.get(j).getBgennickname() + "\n";
                 }
-                VIdlistRSIDto vIdlistRSIDto = new VIdlistRSIDto(s1.getContent().get(i).getRsino(),s1.getContent().get(i).getRsicano(),s1.getContent().get(i).getRsiuino(),
-                        s1.getContent().get(i).getRsiccno(), s1.getContent().get(i).getRsicaid(),s1.getContent().get(i).getRsitime(),
-                        s1.getContent().get(i).getRsicno(),s1.getContent().get(i).getRsistate(),s1.getContent().get(i).getRsicanceldate(),s1.getContent().get(i).getRsiidatetime(),
-                        s1.getContent().get(i).getRsibandstate(),s1.getContent().get(i).getBandnicknamecount(),idlist);
+                VIdlistRSIDto vIdlistRSIDto = new VIdlistRSIDto(s1.getContent().get(i).getRsino(), s1.getContent().get(i).getRsicano(),
+                        s1.getContent().get(i).getRsiuino(), s1.getContent().get(i).getRsiccno(), s1.getContent().get(i).getRsicaid(),
+                        s1.getContent().get(i).getRsitime(), s1.getContent().get(i).getRsicno(), s1.getContent().get(i).getRsistate(),
+                        s1.getContent().get(i).getRsicanceldate(), s1.getContent().get(i).getRsicancelauto(), s1.getContent().get(i).getRsiidatetime(),
+                        s1.getContent().get(i).getRsibandstate(), s1.getContent().get(i).getBandnicknamecount(), idlist);
                 l1.add(vIdlistRSIDto);
             }
 
@@ -598,15 +601,18 @@ public class ReservationController {
         return "redirect:";
     }
 
-    @ResponseBody
-    @RequestMapping(method = RequestMethod.POST, value = "/golfpt")
-    public Object golfpt(HttpServletRequest request, Model model,
-                         @RequestParam(required = false, defaultValue = "", value = "seq") Long seq){
+    @PostMapping("/Updatecancelauto")
+    public String Updatecancelauto(HttpServletRequest request, Model model,
+                         @RequestParam(required = false, defaultValue = "", value = "seq") Long seq,
+                         @RequestParam(required = false, defaultValue = "", value = "state") int state){
         HttpSession session = request.getSession();
         List<BgenEntity> s1 = bgenRepository.findByBgenrsino(seq);
-        HashMap<String, List> msg = new HashMap<String, List>();
-        msg.put("count", s1);
-        return msg;
+        if(state ==0){
+            reservationStateRepository.updateCancel0(Math.toIntExact(seq));
+        }else if(state == 1){
+            reservationStateRepository.updateCancel1(Math.toIntExact(seq));
+        }
+        return "redirect:";
     }
 
     @PostMapping("/DelReservation")

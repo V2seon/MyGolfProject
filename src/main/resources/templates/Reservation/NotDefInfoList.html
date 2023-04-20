@@ -167,6 +167,8 @@
                                                                     <button th:onclick="|javascript:Defno(${Co.Rsino})|" class="btn btn-success" type="button">확정</button>
                                                                 </td>
                                                                 <td>
+                                                                    <input style="zoom: 2;vertical-align: middle;margin-bottom: 2px;margin-right: 2px;" type="checkbox"
+                                                                           th:checked="${Co.Rsicancelauto} == 1" th:onchange="ckcancel(this)" th:value="${Co.Rsino}">
                                                                     <button th:onclick="|javascript:DelReservation(${Co.Rsino})|" class="btn btn-primary" type="button">연동삭제</button>
                                                                 </td>
                                                                 <td>

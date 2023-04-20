@@ -455,3 +455,29 @@ swal({
     }
     });
 }
+
+function ckcancel(e){
+var seq = e.value;
+var state = 0;
+if(e.checked == false){
+state =0;
+}else if(e.checked == true){
+state =1;
+}
+const sendData = {
+                    'seq' : seq,
+                    'state': state,
+                    };
+        $.ajax({
+                url      : "/Updatecancelauto",
+                data     : sendData,
+                type     : "POST",
+                success : function(result) {
+                    $('#load').hide();
+                },
+                error:function(request,status,error){
+                    $('#load').hide();
+
+                }
+            });
+}
