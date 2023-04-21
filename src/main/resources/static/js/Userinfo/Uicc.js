@@ -161,7 +161,7 @@ function addCASave(){
     var cauino = $("#cauino").val();
     var caid = $("#caid").val();
     var capassword = $("#capassword").val();
-    var castate = $("#castate").val();
+    var castate = document.getElementById("castate").getAttribute('value');
 
     if(caccno==null||caccno==""){
         swal({
@@ -246,7 +246,8 @@ function editCASave(seq){
     var cauino = $("#cauino").val();
     var caid = $("#caid").val();
     var capassword = $("#capassword").val();
-    var castate = $("#castate").val();
+    var castate = document.getElementById("castate").getAttribute('value');
+    console.log(castate);
 
     if(caccno==null||caccno==""){
         swal({

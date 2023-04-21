@@ -256,7 +256,7 @@ public class UserinfoController {
                                                @RequestParam(required = false, defaultValue = "", value = "cano") Long cano,
                                                @RequestParam(required = false, defaultValue = "", value = "ccno") Long ccno,
                                                @RequestParam(required = false, defaultValue = "", value = "caid") String caid) {
-        log.info("!!!!!!!!! in idcheck"+ccno+"/"+caid);
+        log.info("!!!!!!!!! in idcheck "+ccno+"/"+caid);
         HashMap<String, String> msg = new HashMap<String, String>();
         if(countryAccountRepository.checkidedit(cano, ccno, caid) == 0){
             msg.put("save", "1");
