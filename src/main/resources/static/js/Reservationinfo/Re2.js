@@ -93,6 +93,7 @@ swal({
           dangerMode: true
     }).then((result) => {
     if(result){
+        $('#load').show();
         const sendData = {
                     'seq' : seq
                     };
@@ -131,7 +132,7 @@ function searching1(ppp){
     if(titleText == null){
             titleText = "";
     }
-
+    $('#load').show();
     const params = {
         page: 0,
         selectKey: "CC",
@@ -154,6 +155,7 @@ function searching1(ppp){
         data: querydata,
         type:"POST",
     }).done(function (fragment) {
+        $('#load').hide();
         $("#set").text(ppp.value);
         $("#intable").replaceWith(fragment);
     });

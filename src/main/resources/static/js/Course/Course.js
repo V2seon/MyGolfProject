@@ -1,4 +1,5 @@
 function ModifyCgo(seq){
+    $('#load').show();
     let sendData = {
             "seq" : seq
         }
@@ -27,6 +28,7 @@ swal({
           dangerMode: true
     }).then((result) => {
     if(result){
+        $('#load').show();
         const sendData = {
                     'ccseq' : seq
                     };
@@ -83,6 +85,7 @@ if(ccnum === null || ccnum === "") {
               buttons : ["취소", "수정"]
         }).then((result) => {
         if(result){
+            $('#load').show();
             let sendData = {
                 "seq" : seq,
                 "ccseq" : ccnum.value,
@@ -114,10 +117,12 @@ if(ccnum === null || ccnum === "") {
 }
 
 function inCourse(){
+    $('#load').show();
     location.href = "/CourseRegister";
 }
 
 function Course(){
+    $('#load').show();
     location.href = "/Course";
 }
 

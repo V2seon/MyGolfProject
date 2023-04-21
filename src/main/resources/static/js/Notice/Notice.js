@@ -1,8 +1,10 @@
 function Notice(){
+$('#load').show();
     location.href="/Notice";
 }
 
 function NoticeRe(){
+$('#load').show();
     location.href="/NoticeRegister";
 }
 
@@ -34,7 +36,7 @@ function inNotice(){
 }
 
 function ModifyNoticego(seq){
-
+$('#load').show();
     let sendData = {
         "seq" : seq
     }
@@ -44,6 +46,7 @@ function ModifyNoticego(seq){
                 data     : sendData,
                 type     : "GET",
                 success : function(result) {
+                $('#load').hide();
                     location.href = "/NoticeModifygo";
                 },
                 error:function(request,status,error){
@@ -52,6 +55,7 @@ function ModifyNoticego(seq){
 }
 
 function EditNotice(seq){
+    $('#load').show();
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
 
@@ -66,6 +70,7 @@ function EditNotice(seq){
                 data     : sendData,
                 type     : "POST",
                 success : function(result) {
+                    $('#load').hide();
                     swal({
                           title : "수정되었습니다.",
                           closeOnClickOutside : false,

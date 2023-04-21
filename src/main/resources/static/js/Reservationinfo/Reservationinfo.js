@@ -83,7 +83,7 @@ function paging(pageValue){
 }
 
 function searching1(Ccname){
-
+    $('#load').show();
     var titleText = $('#titleText').val();
     var selectKey = $('#selectKey').val();
 
@@ -114,19 +114,23 @@ function searching1(Ccname){
         data: querydata,
         type:"POST",
     }).done(function (fragment) {
+        $('#load').hide();
         $("#intable").replaceWith(fragment);
     });
 
 }
 
 function Waitinfoin(){
+$('#load').show();
 location.href="/WaitRegisterInfo"
 }
 function move(){
+$('#load').show();
 location.href="/Reservation"
 }
 
 function chCC(){
+    $('#load').show();
     $('option.chcourse').remove();
     $('option.chid').remove();
     $('div.idlist').remove();
@@ -242,6 +246,7 @@ else if(t2 === null || t2 === ""){
         });
         return false;
 }else{
+$('#load').show();
 let sendData = {
                 "mountin" : ccname,
                 "type" : type,
@@ -281,6 +286,7 @@ let sendData = {
 }
 
 function Editinfo(seq){
+$('#load').show();
 location.href="/ReservationModify/"+seq+""
 }
 
@@ -294,6 +300,7 @@ swal({
           dangerMode: true
     }).then((result) => {
     if(result){
+        $('#load').show();
         const sendData = {
                     'seq' : seq
                     };
@@ -403,6 +410,7 @@ else if(t2 === null || t2 === ""){
         });
         return false;
 }else{
+    $('#load').show();
 let sendData = {
                 "seq":seq,
                 "mountin" : ccname,
@@ -443,6 +451,7 @@ let sendData = {
 }
 
 function idplus(){
+$('#load').show();
 var id = document.getElementById("id").value;
 var idlist = id.split("/");
 
@@ -459,7 +468,9 @@ $("#idlist").append(
                     "<div name='idlist' class='idlist' style='margin-bottom:10px;'><span class='ccid' name='ccid' value='"+idlist[1]+"'>"+idlist[0]+
                     "</span>&nbsp&nbsp<button onclick='delid(this)' class='btn btn-primary' style='margin:auto;'><a>삭제</a></button></div>"
                 )
+                $('#load').hide();
 }else{
+$('#load').hide();
 swal({
         text: "해당 아이디는 이미 추가된 아이디입니다.",
         icon: "info",
@@ -484,7 +495,9 @@ if (log.isScrollBottom) {
 }
 
 function delid(con){
+$('#load').show();
     var tagName = con.parentNode;
     tagName.remove();
+    $('#load').hide();
 }
 

@@ -87,22 +87,73 @@ function uiccdel(no){
     });
 }
 
-//function loginCheckGo(){
-//    var ccno = $("#caccno").val();
-//    var ccid = $("#caid").val();
-//    var ccpw = $("#capassword").val();
-//
-//    if(ccno=="17" or ccno=="40" or ccno=="41"){
-//        // 로그인 시도 기능 작성
-//    }else{
-//        swal({
-//            text: "로그인 확인이 불가능한 골프장입니다.",
-//            icon: "info"
-//        }).then(function(){
-//            location.href = "/UserInfoCCList";
-//        });
-//    }
-//}
+function loginCheckGo(){
+var ccno = $("#caccno").val();
+var ccid = $("#caid").val();
+var ccpw = $("#capassword").val();
+
+if(ccno==null||ccno==""){
+    swal({
+        text: "골프장을 선택해주세요.",
+        icon: "info"
+    });
+}else if(caid==null||caid==""){
+    swal({
+        text: "아이디를 입력해주세요.",
+        icon: "info"
+    });
+}else if(ccpw==null||ccpw==""){
+    swal({
+        text: "아이디를 입력해주세요.",
+        icon: "info"
+    });
+}else {
+    if(ccno=="17" || ccno=="40" || ccno=="41"){
+            $('#load').show();
+            // 로그인 시도 기능 작성
+            const sendData = {
+                                'ccno' : ccno,
+                                'ccid': ccid,
+                                'ccpw':ccpw
+                                };
+                    $.ajax({
+                            url      : "/cklogin",
+                            data     : sendData,
+                            type     : "POST",
+                            success : function(result) {
+                                $('#load').hide();
+                                console.log(result.data);
+                                if(result.data == "0"){
+                                    swal({
+                                            text: "로그인 성공",
+                                            icon: "success" //"info,success,warning,error" 중 택1
+                                        });
+                                    $("#castate").attr("value","1");
+                                    document.getElementById('castate').innerText = "성공";
+                                }else if(result.data == "1"){
+                                    swal({
+                                            text: "로그인 실패",
+                                            icon: "error" //"info,success,warning,error" 중 택1
+                                        });
+                                    $("#castate").attr("value","0");
+                                    document.getElementById('castate').innerText = "실패";
+                                }
+                            },
+                            error:function(request,status,error){
+                                $('#load').hide();
+
+                            }
+                        });
+        }else{
+            swal({
+                text: "로그인 확인이 불가능한 골프장입니다.",
+                icon: "info"
+            }).then(function(){
+                location.href = "/UserInfoCCList";
+            });
+        }
+}
+}
 
 // CC계정 등록 저장
 function addCASave(){
@@ -110,7 +161,7 @@ function addCASave(){
     var cauino = $("#cauino").val();
     var caid = $("#caid").val();
     var capassword = $("#capassword").val();
-//    var castate = $("#castate").val();
+    var castate = $("#castate").val();
 
     if(caccno==null||caccno==""){
         swal({
@@ -145,7 +196,7 @@ function addCASave(){
                             'cauino':cauino,
                             'caid':caid,
                             'capassword':capassword,
-//                            'castate':castate
+                            'castate':castate
                         }
                         $.ajax({
                             url     : "/ccacount_addsave",
@@ -155,6 +206,92 @@ function addCASave(){
                                 $('#load').hide();
                                 swal({
                                     text: "등록완료.",
+                                    icon: "success",
+                                    closeOnClickOutside : false,
+                                    button: "확인"
+                                }).then(function(){
+                                    location.href = "/UserInfoCCList";
+                                });
+                            }, error: function(request, status, error){
+                                $('#load').hide();
+                                    swal({
+                                    text: "서버에 문제가 발생했습니다.",
+                                    icon: "warning" //"info,success,warning,error" 중 택1
+                                });
+                            }
+                        });
+                }else if(result.save == "0"){
+                    $("#load").hide();
+                    swal({
+                        text: "중복된 아이디입니다.",
+                        icon: "warning"
+                    });
+                }
+            }, error:function(request, status, error){
+                $("#load").hide();
+                swal({
+                    text: "통신 오류",
+                    icon: "warning"
+                }).then(function(){
+                    location.href = "/Userinfo";
+                });
+            }
+        });
+    }
+}
+
+// CC계정 등록 수정
+function editCASave(seq){
+    var caccno = $("#caccno").val();
+    var cauino = $("#cauino").val();
+    var caid = $("#caid").val();
+    var capassword = $("#capassword").val();
+    var castate = $("#castate").val();
+
+    if(caccno==null||caccno==""){
+        swal({
+            text: "골프장을 선택해주세요.",
+            icon: "info"
+        });
+    }else if(cauino==null||cauino==""){
+        swal({
+            text: "사용자정보를 선택해주세요.",
+            icon: "info"
+        });
+    }else if(caid==null||caid==""){
+        swal({
+            text: "아이디를 입력해주세요.",
+            icon: "info"
+        });
+    }else if(capassword==null||capassword==""){
+        swal({
+            text: "비밀번호를 입력해주세요.",
+            icon: "info"
+        });
+    }else{
+        $('#load').show();
+        $.ajax({
+            url : "/uicc_idcheck_edit",
+            data : {"cano":seq,"ccno" : caccno, "caid" : caid},
+            type : "POST",
+            success : function(result){
+                if(result.save == "1"){ // 1:동일아이디 없음, 0: 동일있음
+                        let sendData = {
+                            'cano':seq,
+                            'caccno':caccno,
+                            'cauino':cauino,
+                            'caid':caid,
+                            'capassword':capassword,
+                            'castate':castate
+                        }
+                        $.ajax({
+                            url     : "/ccacount_editsave",
+                            data    : sendData,
+                            type    : "POST",
+                            success : function(){
+                                $('#load').hide();
+                                swal({
+                                    text: "수정완료.",
                                     icon: "success",
                                     closeOnClickOutside : false,
                                     button: "확인"

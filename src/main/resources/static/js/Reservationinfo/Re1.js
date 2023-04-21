@@ -90,6 +90,7 @@ swal({
         buttons : ["취소", "확정"]
     }).then((result) => {
     if(result){
+        $('#load').show();
         const sendData = {
                         'seq' : seq
                     };
@@ -127,6 +128,7 @@ swal({
       icon: "success"
     }).then((result) => {
     if(result){
+    $('#load').show();
         const data = {
                     'seq' : seq
                     };
@@ -135,6 +137,7 @@ swal({
                 data : data,
                 type : "POST",
                 success : function (result){
+                    $('#load').hide();
                     location.href="/Reservation1"
                 },
                 error : function (request,status,error){
@@ -154,6 +157,7 @@ swal({
           dangerMode: true
     }).then((result) => {
     if(result){
+    $('#load').show();
         const sendData = {
                     'seq' : seq
                     };
@@ -260,6 +264,7 @@ function searchingall(){
 }
 
 function infoin(){
+$('#load').show();
 location.href="/RegisterInfo"
 }
 
@@ -349,6 +354,7 @@ swal({
 }
 
 function chCC(){
+$('#load').show();
     $('option.chcourse').remove();
     var cname = document.getElementById('ccname').value;
     const sendData = {
@@ -379,10 +385,12 @@ function chCC(){
 }
 
 function info(){
+$('#load').show();
 location.href="/Reservation1"
 }
 
 function view(seq) {
+$('#load').show();
     const sendData = {
                         'seq' : seq
                 }
@@ -426,6 +434,7 @@ swal({
           dangerMode: true
     }).then((result) => {
     if(result){
+    $('#load').show();
         const sendData = {
                     'seq' : seq
                     };
@@ -457,6 +466,7 @@ swal({
 }
 
 function ckcancel(e){
+$('#load').show();
 var seq = e.value;
 var state = 0;
 if(e.checked == false){

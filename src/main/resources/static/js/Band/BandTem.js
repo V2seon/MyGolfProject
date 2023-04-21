@@ -1,7 +1,9 @@
 function inTem(){
+$('#load').show();
 location.href="/BandTemplateRegister";
 }
 function Temgo(){
+$('#load').show();
 location.href="/Bandtemplate";
 }
 

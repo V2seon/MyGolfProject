@@ -57,6 +57,7 @@ let sendData = {
 }
 
 function move(){
+    $('#load').show();
     location.href="/Reservation";
 }
 

@@ -118,14 +118,14 @@
                                             <input type="text" id="capassword" required="required" class="form-control">
                                         </div>
                                     </div>
-<!--                                    <div class="form-group row">-->
-<!--                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="loginCheck"> 로그인확인-->
-<!--                                        </label>-->
-<!--                                        <div class="col-md-6 col-sm-6 ">-->
-<!--                                            <button type="text" id="loginCheck" th:onclick="loginCheckGo()" class="btn btn-secondary btn-sm">로그인시도</button>-->
-<!--                                            <span style="color:red; font-weight:bold;" id="castate" value="2">&nbsp;확인전</span>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="loginCheck"> 로그인확인
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 ">
+                                            <button type="text" id="loginCheck" onclick="loginCheckGo()" class="btn btn-secondary btn-sm">로그인시도</button>
+                                            <span style="color:red; font-weight:bold;" id="castate" value="2">&nbsp;확인전</span>
+                                        </div>
+                                    </div>
                                     <div class="ln_solid"></div>
                                 </div>
                                 <div class="item form-group">
@@ -154,17 +154,17 @@
 
 </div>
 </div>
-<div id="load"><img src="/admin/images/spinner.gif" alt="loading"></div>
+<div id="load"><img src="/images/spinner.gif" alt="loading"></div>
 
 <script type="text/javascript">
-var login = $("#castate").val();
-if(login == "0"){
-    $("#castate").text("&nbsp;실패");
-}else if(login == "1"){
-    $("#castate").text("&nbsp;성공");
-}else if(login == "2"){
-    $("#castate").text("&nbsp;확인전");
-}
+<!--var login = $("#castate").val();-->
+<!--if(login == "0"){-->
+<!--    $("#castate").text("&nbsp;실패");-->
+<!--}else if(login == "1"){-->
+<!--    $("#castate").text("&nbsp;성공");-->
+<!--}else if(login == "2"){-->
+<!--    $("#castate").text("&nbsp;확인전");-->
+<!--}-->
 </script>
 
 <script src="/vendors/jquery/dist/jquery.min.js"></script>
@@ -182,5 +182,17 @@ if(login == "0"){
 <script src="/js/custom.min.js"></script>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+<script type="text/javascript">
+    window.onbeforeunload = function () {
+        $('#load').show();
+    }
+    $(window).on('load', function () {
+        $("#load").hide();
+    });
+    window.onpageshow = function(event) {
+        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            $('#load').hide();
+        }
+    }
+</script>
 </body></html>

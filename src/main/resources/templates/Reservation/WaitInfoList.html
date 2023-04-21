@@ -238,6 +238,7 @@
 
 </div>
 </div>
+<div id="load"><img src="/images/spinner.gif" alt="loading"></div>
 <script src="/vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -254,42 +255,21 @@
 
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+<script type="text/javascript">
+    window.onbeforeunload = function () {
+        $('#load').show();
+    }
+    $(window).on('load', function () {
+        $("#load").hide();
+    });
+    window.onpageshow = function(event) {
+        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            $('#load').hide();
+        }
+    }
+</script>
 <!---->
 <script src="/vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Custom Theme Scripts -->
-<!--<script type="text/javascript">-->
-<!--$(document).ready(function() {-->
-<!--    $(document).on("mouseover",".ckuser", function() {-->
-<!--        var seq = $(this)[0].getAttribute('value');-->
-<!--        var id = $(this)[0].getAttribute('id');-->
-<!--        let sendData = {-->
-<!--                    'seq' : seq-->
-<!--                    };-->
-
-<!--        $.ajax({-->
-<!--                url      : "/BundleUser",-->
-<!--                data     : sendData,-->
-<!--                type     : "POST",-->
-<!--                success : function(result) {-->
-<!--                    $('#load').hide();-->
-<!--                    var data = result.blist[0];-->
-<!--                    for(var i=1; i<result.blist.length; i++){-->
-<!--                        data = data + '\n' + result.blist[i]-->
-<!--                    }-->
-<!--                    console.log(data);-->
-<!--                    console.log(document.getElementById(id));-->
-<!--                    document.getElementById(id).setAttribute('data-original-title', data);-->
-<!--                },-->
-<!--                error:function(request,status,error){-->
-<!--                    $('#load').hide();-->
-
-<!--                }-->
-<!--            });-->
-
-<!--    });-->
-<!--});-->
-<!--</script>-->
 </body></html>

@@ -601,6 +601,8 @@ public class ReservationController {
         return "redirect:";
     }
 
+
+
     @PostMapping("/Updatecancelauto")
     public String Updatecancelauto(HttpServletRequest request, Model model,
                          @RequestParam(required = false, defaultValue = "", value = "seq") Long seq,

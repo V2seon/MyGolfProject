@@ -1,12 +1,15 @@
 function CC(){
+    $('#load').show();
     location.href = "/Countryclub";
 }
 
 function inCC(){
+    $('#load').show();
     location.href = "/CountryclubRegister";
 }
 
 function ModifyCCgo(seq){
+    $('#load').show();
 let sendData = {
         "seq" : seq
     }
@@ -16,6 +19,7 @@ $.ajax({
         data     : sendData,
         type     : "GET",
         success : function(result) {
+            $('#load').hide();
             location.href = "/CountryclubModify";
         },
         error:function(request,status,error){
@@ -82,6 +86,7 @@ if(name === null || name === "") {
         });
         return false;
 }else{
+    $('#load').show();
     let sendData = {
         "name" : name,
         "address" : address,
@@ -97,6 +102,7 @@ if(name === null || name === "") {
                 data     : sendData,
                 type     : "POST",
                 success : function(result) {
+                    $('#load').hide();
                     swal({
                           title : "등록되었습니다.",
                           closeOnClickOutside : false,
@@ -122,6 +128,7 @@ swal({
   dangerMode: true
 }).then((result) => {
   if (result) {
+        $('#load').show();
         let sendData = {
             "seq" : seq
         };
@@ -130,6 +137,7 @@ swal({
             data : sendData,
             type : "POST",
             success : function(result){
+                $('#load').hide();
                 swal({
                       title : "삭제되었습니다.",
                       closeOnClickOutside : false,
@@ -204,6 +212,7 @@ if(name === null || name === "") {
         });
         return false;
 }else{
+        $('#load').show();
         let sendData = {
             "seq" : seq,
             "name" : name,
@@ -221,6 +230,7 @@ if(name === null || name === "") {
                     data     : sendData,
                     type     : "POST",
                     success : function(result) {
+                            $('#load').hide();
                         swal({
                               title : "수정되었습니다.",
                               closeOnClickOutside : false,

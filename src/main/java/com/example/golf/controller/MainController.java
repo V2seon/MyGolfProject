@@ -10,8 +10,6 @@ import com.example.golf.service.CountryclubService;
 import com.example.golf.service.ReservationInfoService;
 import com.example.golf.service.ReservationStateService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -95,60 +93,6 @@ public class MainController {
             returnValue = "formLI";
         }
         return returnValue;
-    }
-
-    @GetMapping("/formRI")
-    public String formRI(Model model, HttpServletRequest request, Pageable pageable,
-                              @RequestParam(required = false, defaultValue = "0", value = "page") int page) {
-        String returnValue = "";
-        if (new SessionCheck().loginSessionCheck(request)) {
-            HttpSession session = request.getSession();
-
-            pageable = PageRequest.of(page, 10);
-            List<CountryClubEntity> s1 = countryClubRepository.findAll();
-
-            model.addAttribute("userlist", s1); //페이지 객체 리스트
-            model.addAttribute("nowurl0","/formRI");
-            returnValue = "/formRI/formRI1";
-        } else {
-            returnValue = "login";
-        }
-        return returnValue;
-    }
-
-    @GetMapping("/formRIgo")
-    public String formRIgo(Model model, HttpServletRequest request,
-                           @RequestParam(required = false ,defaultValue = "" , value="seq") Long seq){
-        String returnValue = "";
-        HttpSession session = request.getSession();
-        if(new SessionCheck().loginSessionCheck(request)){
-            session.setAttribute("seq",seq);
-            model.addAttribute("nowurl0","/formRI");
-            returnValue = "redirect:";
-        }else{
-            returnValue = "login";
-        }
-        return returnValue;
-    }
-
-    @GetMapping("/formRI17")
-    public String formRI17(Model model, HttpServletRequest request){
-        String returnValue = "";
-        HttpSession session = request.getSession();
-        if(new SessionCheck().loginSessionCheck(request)){
-            model.addAttribute("nowurl0","/formRI");
-            returnValue = "/formRI/formRI17";
-        }else{
-            returnValue = "login";
-        }
-        return returnValue;
-    }
-
-    @GetMapping("/tooltip")
-    public String formRI40(Model model, HttpServletRequest request){
-        String returnValue = "";
-        return "general_elements.html";
-
     }
 
     @PostMapping("/golftest2")

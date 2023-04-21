@@ -1,8 +1,10 @@
 function inAlarm(){
+$('#load').show();
 location.href="BandAlarmRegister";
 }
 
 function Alarmgo(){
+$('#load').show();
 location.href="/Bandalarm";
 }
 
