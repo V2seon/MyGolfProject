@@ -37,6 +37,9 @@ public class ViewReservationStateInfoEntity {
     @Column(name = "RSI_STATE")
     private int rsistate;
 
+    @Column(name = "RSI_OPT_2")
+    private int rsiopt2;
+
     @Column(name = "RSI_CANCEL_DATE")
     private String rsicanceldate;
 
@@ -54,7 +57,7 @@ public class ViewReservationStateInfoEntity {
 
     @Builder
     public ViewReservationStateInfoEntity(Long Rsi_no, Long Rsi_ca_no, Long Rsi_ui_no, String Rsi_cc_no, String Rsi_ca_id,
-                                     String Rsi_time, String Rsi_c_no, int Rsi_state, String Rsi_canceldate, String Rsi_idatetime
+                                     String Rsi_time, String Rsi_c_no, int Rsi_state, int Rsi_opt_2, String Rsi_canceldate, String Rsi_idatetime
                                         ,int Rsi_cancelauto,  int Rsi_band_state, Long Band_nickname_count) {
         rsino = Rsi_no;
         rsicano = Rsi_ca_no;
@@ -64,6 +67,7 @@ public class ViewReservationStateInfoEntity {
         rsitime = Rsi_time;
         rsicno = Rsi_c_no;
         rsistate = Rsi_state;
+        rsiopt2 = Rsi_opt_2;
         rsicanceldate = Rsi_canceldate;
         rsicancelauto = Rsi_cancelauto;
         rsiidatetime = Rsi_idatetime;

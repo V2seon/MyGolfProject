@@ -54,7 +54,7 @@ color:orange;
 }
 
 .Tt41{
-color:yellow;
+color:black;
 }
 
 .Tt42{
@@ -180,4 +180,8 @@ color:red;
     top: 40%;
     left: 50%;
     z-index: 100;
+}
+
+.ckbox1{
+accent-color: red;
 }

@@ -491,3 +491,44 @@ const sendData = {
                 }
             });
 }
+
+function chopt(e){
+var seq = e.value;
+var text = e.innerText;
+var state = 0;
+if(text == "대기"){
+e.innerText = "밴올";
+state = 1;
+}else if(text == "밴올"){
+e.innerText = "밴성";
+state = 2;
+}else if(text == "밴성"){
+e.innerText = "양올";
+state = 3;
+}else if(text == "양올"){
+e.innerText = "양완";
+state = 4;
+}else if(text == "양완"){
+e.innerText = "취소";
+state = 5;
+}else if(text == "취소"){
+e.innerText = "대기";
+state = 0;
+}
+const sendData = {
+                    'seq' : seq,
+                    'state': state,
+                    };
+        $.ajax({
+                url      : "/Updateopt2",
+                data     : sendData,
+                type     : "POST",
+                success : function(result) {
+                    $('#load').hide();
+                },
+                error:function(request,status,error){
+                    $('#load').hide();
+
+                }
+            });
+}

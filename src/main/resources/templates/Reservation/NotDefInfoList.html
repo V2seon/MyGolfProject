@@ -106,6 +106,7 @@
                                                             <thead>
                                                             <tr>
                                                                 <th>No</th>
+                                                                <th>상태정보</th>
                                                                 <th>CC</th>
                                                                 <th>코스정보</th>
                                                                 <th>예약일</th>
@@ -124,6 +125,15 @@
                                                                 th:classappend="${Co.Rsiuino < 4 ? 'ctx' : ''}">
                                                                 <td th:if="${Co.Rsino}!= null"
                                                                     th:text="${Co.Rsino}"></td>
+                                                                <td th:if="${Co.Rsiopt2}!= null">
+                                                                    <button th:if="${Co.Rsibandstate} == 0" th:onclick="|javascript:chopt(this)|" class="btn btn-primary" type="button" th:value="${Co.Rsino}"
+                                                                            th:text="${(Co.Rsiopt2 == 0 ? '대기': '') +
+                                                                                (Co.Rsiopt2 == 1 ? '밴올': '')+
+                                                                                (Co.Rsiopt2 == 2 ? '밴성': '')+
+                                                                                (Co.Rsiopt2 == 3 ? '양올': '')+
+                                                                                (Co.Rsiopt2 == 4 ? '양완': '')+
+                                                                                (Co.Rsiopt2 == 5 ? '취소': '')}"></button>
+                                                                </td>
                                                                 <td th:if="${Co.Rsiccno}!= null" th:class="${Co.Rsiuino < 4 ? 'ctx' : ''}"
                                                                     th:text="${Co.Rsiccno}"  th:classappend="${(Co.Rsiccno =='어등산' ? 'Tt17': '') +
                                                                                                                 (Co.Rsiccno =='해피니스' ? 'Tt40': '')+
@@ -167,7 +177,7 @@
                                                                     <button th:onclick="|javascript:Defno(${Co.Rsino})|" class="btn btn-success" type="button">확정</button>
                                                                 </td>
                                                                 <td>
-                                                                    <input style="zoom: 2;vertical-align: middle;margin-bottom: 2px;margin-right: 2px;" type="checkbox"
+                                                                    <input th:classappend="${Co.Rsiuino == 0 ? 'ckbox1' : ''}" style="zoom: 2;vertical-align: middle;margin-bottom: 2px;margin-right: 2px;" type="checkbox"
                                                                            th:checked="${Co.Rsicancelauto} == 1" th:onchange="ckcancel(this)" th:value="${Co.Rsino}">
                                                                     <button th:onclick="|javascript:DelReservation(${Co.Rsino})|" class="btn btn-primary" type="button">연동삭제</button>
                                                                 </td>

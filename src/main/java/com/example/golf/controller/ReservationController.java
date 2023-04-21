@@ -190,7 +190,7 @@ public class ReservationController {
                 }
                 VIdlistRSIDto vIdlistRSIDto = new VIdlistRSIDto(s1.getContent().get(i).getRsino(), s1.getContent().get(i).getRsicano(),
                         s1.getContent().get(i).getRsiuino(), s1.getContent().get(i).getRsiccno(), s1.getContent().get(i).getRsicaid(),
-                        s1.getContent().get(i).getRsitime(), s1.getContent().get(i).getRsicno(), s1.getContent().get(i).getRsistate(),
+                        s1.getContent().get(i).getRsitime(), s1.getContent().get(i).getRsicno(), s1.getContent().get(i).getRsistate(),s1.getContent().get(i).getRsiopt2(),
                         s1.getContent().get(i).getRsicanceldate(), s1.getContent().get(i).getRsicancelauto(), s1.getContent().get(i).getRsiidatetime(),
                         s1.getContent().get(i).getRsibandstate(), s1.getContent().get(i).getBandnicknamecount(), idlist);
                 l1.add(vIdlistRSIDto);
@@ -263,7 +263,7 @@ public class ReservationController {
                 }
                 VIdlistRSIDto vIdlistRSIDto = new VIdlistRSIDto(s1.getContent().get(i).getRsino(), s1.getContent().get(i).getRsicano(),
                         s1.getContent().get(i).getRsiuino(), s1.getContent().get(i).getRsiccno(), s1.getContent().get(i).getRsicaid(),
-                        s1.getContent().get(i).getRsitime(), s1.getContent().get(i).getRsicno(), s1.getContent().get(i).getRsistate(),
+                        s1.getContent().get(i).getRsitime(), s1.getContent().get(i).getRsicno(), s1.getContent().get(i).getRsistate(),s1.getContent().get(i).getRsiopt2(),
                         s1.getContent().get(i).getRsicanceldate(), s1.getContent().get(i).getRsicancelauto(), s1.getContent().get(i).getRsiidatetime(),
                         s1.getContent().get(i).getRsibandstate(), s1.getContent().get(i).getBandnicknamecount(), idlist);
                 l1.add(vIdlistRSIDto);
@@ -290,7 +290,7 @@ public class ReservationController {
                 }
                 VIdlistRSIDto vIdlistRSIDto = new VIdlistRSIDto(s1.getContent().get(i).getRsino(), s1.getContent().get(i).getRsicano(),
                         s1.getContent().get(i).getRsiuino(), s1.getContent().get(i).getRsiccno(), s1.getContent().get(i).getRsicaid(),
-                        s1.getContent().get(i).getRsitime(), s1.getContent().get(i).getRsicno(), s1.getContent().get(i).getRsistate(),
+                        s1.getContent().get(i).getRsitime(), s1.getContent().get(i).getRsicno(), s1.getContent().get(i).getRsistate(),s1.getContent().get(i).getRsiopt2(),
                         s1.getContent().get(i).getRsicanceldate(), s1.getContent().get(i).getRsicancelauto(), s1.getContent().get(i).getRsiidatetime(),
                         s1.getContent().get(i).getRsibandstate(), s1.getContent().get(i).getBandnicknamecount(), idlist);
                 l1.add(vIdlistRSIDto);
@@ -474,7 +474,7 @@ public class ReservationController {
         LocalDateTime localDateTime = LocalDateTime.now();
         String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         String sdf2 = localDateTime1.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-        ReservationStateDto reservationStateDto = new ReservationStateDto(null,0L,11L,9L,cname,id,sdf2,course,0,1,cancel,sdf1,0);
+        ReservationStateDto reservationStateDto = new ReservationStateDto(null,0L,11L,9L,cname,id,sdf2,course,0,0,0,1,cancel,sdf1,0);
         reservationInfoService.StateSave(reservationStateDto);
         return "redirect:";
     }
@@ -489,7 +489,7 @@ public class ReservationController {
     @PostMapping("/Delstate")
     public String Delstate(HttpServletRequest request, Model model,
                           @RequestParam(required = false, defaultValue = "", value = "seq") Long seq){
-        reservationStateRepository.deleteById(seq);
+        reservationStateRepository.updateState2(Math.toIntExact(seq));
         return "redirect:";
     }
 
@@ -600,8 +600,6 @@ public class ReservationController {
         }
         return "redirect:";
     }
-
-
 
     @PostMapping("/Updatecancelauto")
     public String Updatecancelauto(HttpServletRequest request, Model model,
@@ -948,6 +946,14 @@ public class ReservationController {
         msg.put("blist",s3);
 
         return msg;
+    }
+
+    @PostMapping("/Updateopt2")
+    public String Updateopt2(Model model, HttpServletRequest request,
+                             @RequestParam(required = false ,defaultValue = "" , value="seq") Long seq,
+                             @RequestParam(required = false ,defaultValue = "" , value="state") Long state){
+        reservationStateRepository.updateOPT2(Math.toIntExact(seq), Math.toIntExact(state));
+        return "redirect:";
     }
 
 
