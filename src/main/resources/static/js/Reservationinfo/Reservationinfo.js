@@ -124,6 +124,7 @@ function Waitinfoin(){
 $('#load').show();
 location.href="/WaitRegisterInfo"
 }
+
 function move(){
 $('#load').show();
 location.href="/Reservation"

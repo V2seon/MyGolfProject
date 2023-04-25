@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ViewReservationStateInfoRepository extends JpaRepository<ViewReservationStateInfoEntity, Long> , QuerydslPredicateExecutor<ViewReservationStateInfoEntity> {
@@ -24,6 +25,11 @@ public interface ViewReservationStateInfoRepository extends JpaRepository<ViewRe
 
     @Query(value = "SELECT * FROM view_reservation_state_info where RSI_CC_NO = :Rsiccno and RSI_STATE = 1", nativeQuery = true)
     List<ViewReservationStateInfoEntity> findByRsiccno1 (String Rsiccno);
+
+    @Query(value = "SELECT COUNT(*) FROM view_reservation_state_info WHERE RSI_STATE = 0 AND RSI_TIME LIKE CONCAT('%', :day, '%')", nativeQuery = true)
+    int countT(LocalDate day);
+
+
 
 
 }

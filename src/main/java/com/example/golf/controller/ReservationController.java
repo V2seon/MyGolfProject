@@ -27,14 +27,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.time.format.TextStyle;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -954,6 +953,24 @@ public class ReservationController {
                              @RequestParam(required = false ,defaultValue = "" , value="state") Long state){
         reservationStateRepository.updateOPT2(Math.toIntExact(seq), Math.toIntExact(state));
         return "redirect:";
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/SelPerson")
+    public Object SelPerson(Model model, HttpServletRequest request,
+                             @RequestParam(required = false ,defaultValue = "" , value="day") String day){
+        HashMap<String, Long> msg = new HashMap<String, Long>();
+
+        LocalDate thisday = LocalDate.parse(day);
+
+        for(int i=0; i<7; i++){
+            int Tcount = viewReservationStateInfoRepository.countT(thisday.plusDays(i));
+            DayOfWeek dayOfWeek = thisday.plusDays(i).getDayOfWeek();
+            System.out.println(thisday.plusDays(i) +" "+ dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.US)+" : "+ Tcount);
+            msg.put(dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.US), (long) Tcount);
+        }
+
+        return msg;
     }
 
 

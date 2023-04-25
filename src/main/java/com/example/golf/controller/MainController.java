@@ -56,6 +56,11 @@ public class MainController {
         return "login";
     }
 
+    @GetMapping("/cal")
+    public String cal(){
+        return "rvcheck.html";
+    }
+
     @GetMapping("/Main")
     public String main(Model m, HttpServletRequest request){
         String returnValue = "";
