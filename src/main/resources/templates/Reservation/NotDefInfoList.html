@@ -18,7 +18,9 @@
     <link href="/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
     
     <link href="/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet"/>
-
+    <link rel="stylesheet" type="text/css" href="/css/calendar.css" />
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="/js/calendar.js"></script>
     <!-- Custom Theme Style -->
     <link href="/css/custom.min.css" rel="stylesheet">
     <style>
@@ -70,6 +72,22 @@
                                         <div class="title_right">
                                             <div class="offset-md-9 form-group top_search">
                                                 <div class="input-group">
+                                                    <div class="calendar">
+                                                        <div class="calendar-header">
+                                                            <span class="calendar-yearmonth"></span>
+                                                            <div class="calendar-controls">
+                                                                <button type="button" class="calendar-prev">&lt;</button>
+                                                                <button type="button" class="calendar-next">&gt;</button>
+                                                                <button type="button" class="calendar-today">오늘</button>
+                                                            </div>
+                                                            <div class="calendar-views">
+                                                                <!--            <button type="button" class="calendar-view-year">년간</button>-->
+                                                                <!--            <button type="button" class="calendar-view-month">월간</button>-->
+                                                                <!--            <button type="button" class="calendar-view-week">주간</button>-->
+                                                            </div>
+                                                        </div>
+                                                        <div id="calendar"></div>
+                                                    </div>
                                                     <div style="width:100%; padding-left:10px;">
                                                         <button class="Cc ccbtn" onclick="searchingall()">전체</button>
                                                         <button th:if="${country}!=null" th:each="Co : ${country}"
@@ -305,5 +323,164 @@
             $('#load').hide();
         }
     }
+</script>
+<!-- 달력생성 스크립트 -->
+<script>
+// 달력 요일
+var calendarDays = ["일", "월", "화", "수", "목", "금", "토"];
+
+var date = new Date();
+
+// 해시맵(HashMap)
+var hashmapTemporaryHoliday = [];
+hashmapTemporaryHoliday["2022-3-9"] = {"title" : "20대 대통령 선거일"};
+hashmapTemporaryHoliday["1-1"] = {"title" : "새해"};
+hashmapTemporaryHoliday["3-1"] = {"title" : "삼일절"};
+hashmapTemporaryHoliday["5-5"] = {"title" : "어린이날"};
+hashmapTemporaryHoliday["6-6"] = {"title" : "현충일"};
+hashmapTemporaryHoliday["8-15"] = {"title" : "광복절"};
+hashmapTemporaryHoliday["10-3"] = {"title" : "개천절"};
+hashmapTemporaryHoliday["10-9"] = {"title" : "한글날"};
+hashmapTemporaryHoliday["12-25"] = {"title" : "성탄절"};
+
+// 날짜값을 저장 하기위해 사용하는 변수
+var calendardata ="";
+
+function calendarMonth(date) {
+	$(".calendar").removeClass("year");
+	$(".calendar").addClass("month");
+	// 년월
+	$(".calendar-yearmonth").html(date.getFullYear() + "년 " + (date.getMonth() + 1) + "월");
+
+	var options = {
+		showDay : true,
+		showFullDayName : true,
+		showToday : true,
+		arHoliday : hashmapTemporaryHoliday
+	};
+
+	var html = calendarHTML(date, options);
+	$("#calendar").attr("data-date", date.getFullYear() + "-" + (date.getMonth() + 1));
+	$("#calendar").html(html);
+}
+
+function calendarYear(date) {
+	$(".calendar").removeClass("month");
+	$(".calendar").addClass("year");
+	// 년
+	$(".calendar-yearmonth").html(date.getFullYear() + "년");
+
+	var options = {
+		showDay : true,
+		showToday : true,
+		arHoliday : hashmapTemporaryHoliday
+	};
+
+	var html = "";
+	html += "<table>";
+	html += "<tbody>";
+	for (var index1 = 0; index1 < 4; index1++) {
+		html += "<tr>";
+		for (var index2 = 0; index2 < 3; index2++) {
+			html += "<td>";
+			html += "<div class=\"calendar-month\">" + (index1 * 3 + index2 + 1) + "월</div>";
+			html += calendarHTML(new Date(date.getFullYear(), (index1 * 3 + index2), 1), options);
+			html += "</td>";
+		}
+		html += "</tr>";
+	}
+	html += "</tbody>";
+	html += "</table>";
+
+	$("#calendar").attr("data-date", date.getFullYear());
+	$("#calendar").html(html);
+}
+
+function calendarWeek(date) {
+	$(".calendar").removeClass("month").removeClass("year");
+	$(".calendar").addClass("week");
+	// 년월
+	$(".calendar-yearmonth").html(date.getFullYear() + "년 " + (date.getMonth() + 1) + "월");
+
+	var options = {
+		showDay : true,
+		showFullDayName : true,
+		showToday : true,
+		arHoliday : hashmapTemporaryHoliday
+	};
+
+	var html = weekHTML(date, options);
+	$("#calendar").attr("data-date", date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+	$("#calendar").html(html);
+}
+
+calendarWeek(new Date());
+
+// 달력 뷰 버튼
+$(".calendar-views > button").on("click", function(event) {
+	$(".calendar-views > button").each(function() {
+		$(this).removeClass("active");
+	});
+	if ($(event.target).hasClass("calendar-view-year")) {
+		calendarYear(new Date());
+	} else if ($(event.target).hasClass("calendar-view-month")) {
+		calendarMonth(new Date());
+	} else if ($(event.target).hasClass("calendar-view-week")) {
+		calendarWeek(new Date());
+	}
+	$(event.target).addClass("active");
+});
+
+// 이전 이동 버튼
+$(".calendar-controls > .calendar-prev").on("click", function() {
+	if ($(".calendar").hasClass("year")) {
+		var year = $("#calendar").attr("data-date");
+		calendarYear(new Date(parseInt(year) - 1, 1, 1));
+	} else if ($(".calendar").hasClass("month")) {
+		var yearmonth = $("#calendar").attr("data-date").split("-");
+		calendarMonth(new Date(parseInt(yearmonth[0]), parseInt(yearmonth[1]) - 2, 1));
+	} else if ($(".calendar").hasClass("week")) {
+		var yearmonthday = $("#calendar").attr("data-date").split("-");
+		calendarWeek(new Date(parseInt(yearmonthday[0]), parseInt(yearmonthday[1]) - 1, parseInt(yearmonthday[2]) - 7));
+	    calendardata = document.getElementsByName("day")[0].getAttribute('data-date');
+        seRec(calendardata);
+	}
+});
+
+// 다음 이동 버튼
+$(".calendar-controls > .calendar-next").on("click", function() {
+	if ($(".calendar").hasClass("year")) {
+		var year = $("#calendar").attr("data-date");
+		calendarYear(new Date(parseInt(year) + 1, 1, 1));
+	} else if ($(".calendar").hasClass("month")) {
+		var yearmonth = $("#calendar").attr("data-date").split("-");
+		calendarMonth(new Date(parseInt(yearmonth[0]), parseInt(yearmonth[1]), 1));
+	} else if ($(".calendar").hasClass("week")) {
+		var yearmonthday = $("#calendar").attr("data-date").split("-");
+		calendarWeek(new Date(parseInt(yearmonthday[0]), parseInt(yearmonthday[1]) - 1, parseInt(yearmonthday[2]) + 7));
+	    calendardata = document.getElementsByName("day")[0].getAttribute('data-date');
+        seRec(calendardata);
+	}
+});
+
+// 오늘 이동 버튼
+$(".calendar-controls > .calendar-today").on("click", function() {
+	if ($(".calendar").hasClass("year")) {
+		calendarYear(new Date());
+	} else if ($(".calendar").hasClass("month")) {
+		calendarMonth(new Date());
+	} else if ($(".calendar").hasClass("week")) {
+		calendarWeek(new Date());
+		calendardata = document.getElementsByName("day")[0].getAttribute('data-date');
+        seRec(calendardata);
+	}
+});
+
+$(document).ready(function(){
+    calendardata = document.getElementsByName("day")[0].getAttribute('data-date');
+    seRec(calendardata);
+});
+
+
 </script>
 </body></html>

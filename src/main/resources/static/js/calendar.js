@@ -74,7 +74,7 @@ function weekHTML(date, options) {
 		html += ">" + day + "</span>";
 		html += "</td>";
 	}
-	html += "<tr><td id='sunp'></td><td id='monp'></td><td id='tuep'></td><td id='wedp'></td><td id='thup'></td><td id='frip'></td><td id='satp'></td></tr>";
+	html += "<tr><td style='color: red;' id='sunp'>&nbsp;</td><td id='monp'>&nbsp;</td><td id='tuep'>&nbsp;</td><td id='wedp'>&nbsp;</td><td id='thup'>&nbsp;</td><td id='frip'>&nbsp;</td><td  style='color: blue;' id='satp'>&nbsp;</td></tr>";
 	html += "</tbody>";
 	html += "</table>";
 	return html;

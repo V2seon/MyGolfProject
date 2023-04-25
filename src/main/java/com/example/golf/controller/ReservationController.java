@@ -874,7 +874,6 @@ public class ReservationController {
         return "redirect:";
     }
 
-
     @GetMapping("/ReservationModify/{seq}")
     public Object ReservationModifygo(Model model, HttpServletRequest request,
                                       @PathVariable("seq") Long seq){
@@ -927,7 +926,6 @@ public class ReservationController {
         return returnValue;
     }
 
-
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/BundleUser")
     public Object BundleUser(Model model, HttpServletRequest request,
@@ -941,9 +939,7 @@ public class ReservationController {
             Optional<CountryAccountEntity> s2 = countryAccountRepository.findById(s1.get(i).getRibcano());
             s3.add(s2.get().getCaid());
         }
-
         msg.put("blist",s3);
-
         return msg;
     }
 
@@ -960,18 +956,13 @@ public class ReservationController {
     public Object SelPerson(Model model, HttpServletRequest request,
                              @RequestParam(required = false ,defaultValue = "" , value="day") String day){
         HashMap<String, Long> msg = new HashMap<String, Long>();
-
         LocalDate thisday = LocalDate.parse(day);
 
         for(int i=0; i<7; i++){
             int Tcount = viewReservationStateInfoRepository.countT(thisday.plusDays(i));
             DayOfWeek dayOfWeek = thisday.plusDays(i).getDayOfWeek();
-            System.out.println(thisday.plusDays(i) +" "+ dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.US)+" : "+ Tcount);
             msg.put(dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.US), (long) Tcount);
         }
-
         return msg;
     }
-
-
 }
