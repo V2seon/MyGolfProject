@@ -26,5 +26,5 @@
 .calendar table > tbody > tr > td > span.sunday { color: red; }
 .calendar table > tbody > tr > td > span.holiday { color: red; }
 /* calendar month */
-/* .calendar table > tbody > tr > td > span.today { border: 1px solid red; border-radius: 50%; color: white; background-color: red; } */
+.calendar table > tbody > tr > td > span.today { border: 1px solid red; border-radius: 50%; color: white; background-color: red; }
 

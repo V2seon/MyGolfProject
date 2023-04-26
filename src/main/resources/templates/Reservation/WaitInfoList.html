@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Android Golf</title>
+    <title>투어플레이</title>
 
     <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -139,7 +139,7 @@
                                                                 <td th:if="${Co.Richoice}== 0"
                                                                     th:text="취소"></td>
                                                                 <td th:if="${Co.Ricaid}!= null">
-                                                                    <span th:id="'ckuser'+${Co.Rino}" class="ckuser" th:text="${Co.Riperson > 0 ? Co.Ricaid +' 포함 '+Co.Riperson+'명' : Co.Ricaid}"
+                                                                    <span th:id="'ckuser'+${Co.Rino}" class="ckuser" th:text="${Co.Riperson > 1 ? Co.Ricaid +' 포함 '+Co.Riperson+'명' : Co.Ricaid}"
                                                                           data-toggle="tooltip" data-placement="bottom" title="" th:data-original-title="${Co.Riperson > 0 ? Co.Idlist : ''}" th:value="${Co.Ribundle}">
                                                                     </span>
                                                                 </td>
