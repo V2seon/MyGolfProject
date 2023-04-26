@@ -874,6 +874,7 @@ public class ReservationController {
         return "redirect:";
     }
 
+
     @GetMapping("/ReservationModify/{seq}")
     public Object ReservationModifygo(Model model, HttpServletRequest request,
                                       @PathVariable("seq") Long seq){
@@ -939,7 +940,9 @@ public class ReservationController {
             Optional<CountryAccountEntity> s2 = countryAccountRepository.findById(s1.get(i).getRibcano());
             s3.add(s2.get().getCaid());
         }
+
         msg.put("blist",s3);
+
         return msg;
     }
 
@@ -956,6 +959,7 @@ public class ReservationController {
     public Object SelPerson(Model model, HttpServletRequest request,
                              @RequestParam(required = false ,defaultValue = "" , value="day") String day){
         HashMap<String, Long> msg = new HashMap<String, Long>();
+
         LocalDate thisday = LocalDate.parse(day);
 
         for(int i=0; i<7; i++){
@@ -963,6 +967,9 @@ public class ReservationController {
             DayOfWeek dayOfWeek = thisday.plusDays(i).getDayOfWeek();
             msg.put(dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.US), (long) Tcount);
         }
+
         return msg;
     }
+
+
 }

@@ -234,7 +234,7 @@ $.ajax({
                 document.getElementById('wedp').innerText = result.Wed ;
                 document.getElementById('thup').innerText = result.Thu ;
                 document.getElementById('frip').innerText = result.Fri ;
-                document.getElementById('satp').innerText = result.Sun ;
+                document.getElementById('satp').innerText = result.Sat ;
             },
             error: function (e) {
             }
