@@ -195,6 +195,7 @@ public class ReservationController {
                 l1.add(vIdlistRSIDto);
             }
 
+            model.addAttribute("today", nowDate);
             model.addAttribute("userlist", l1); //페이지 객체 리스트
             model.addAttribute("nowurl0","/Reservation");
 
@@ -298,8 +299,8 @@ public class ReservationController {
             model.addAttribute("userlist", l1); //페이지 객체 리스트
         }
 
-
-
+        String daytext = String.valueOf(nowDate);
+        model.addAttribute("today", daytext);
 
         model.addAttribute("nowurl0","/Reservation");
 

@@ -152,13 +152,16 @@
                                                                                 (Co.Rsiopt2 == 4 ? '양완': '')+
                                                                                 (Co.Rsiopt2 == 5 ? '취소': '')}"></button>
                                                                 </td>
-                                                                <td th:if="${Co.Rsiccno}!= null" th:class="${Co.Rsiuino < 4 ? 'ctx' : ''}"
-                                                                    th:text="${Co.Rsiccno}"  th:classappend="${(Co.Rsiccno =='어등산' ? 'Tt17': '') +
+                                                                <td th:if="${Co.Rsiccno}!= null" >
+                                                                    <span style="color:red;" th:if="${#strings.substring(Co.Rsiidatetime,0,10)} == ${today}">NEW</span>
+                                                                    <br th:if="${#strings.substring(Co.Rsiidatetime,0,10)} == ${today}">
+                                                                    <span th:text="${Co.Rsiccno}"  th:classappend="${(Co.Rsiccno =='어등산' ? 'Tt17': '') +
                                                                                                                 (Co.Rsiccno =='해피니스' ? 'Tt40': '')+
                                                                                                                 (Co.Rsiccno =='광주컨트리클럽' ? 'Tt39': '')+
                                                                                                                 (Co.Rsiccno =='무안컨트리클럽' ? 'Tt41': '')+
                                                                                                                 (Co.Rsiccno =='아크로컨트리클럽' ? 'Tt42': '')+
-                                                                                                                (Co.Rsiccno =='무안클린밸리' ? 'Tt45': '')}"></td>
+                                                                                                                (Co.Rsiccno =='무안클린밸리' ? 'Tt45': '')}"></span>
+                                                                </td>
                                                                 <td th:if="${Co.Rsicno}!= null"
                                                                     th:text="${Co.Rsicno}">
                                                                 </td>
