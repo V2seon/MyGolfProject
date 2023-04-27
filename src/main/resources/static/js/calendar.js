@@ -73,7 +73,7 @@ function weekHTML(date, options) {
 		if (holidayInfo != undefined && holidayInfo != null) {
 			html += " title=\"" + holidayInfo.title + "\"";
 		}
-		html += ">" + day + "</span>";
+		html += ">" + day + "일</span>";
 		html += "</td>";
 	}
 	html += "<tr><td class='dayT' onclick='serchT(this)' data-date=\"" + datedayarr[0] +  "\" style='color: red;' id='sunp'>&nbsp;</td>"

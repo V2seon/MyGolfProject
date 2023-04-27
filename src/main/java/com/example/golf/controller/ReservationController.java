@@ -185,7 +185,6 @@ public class ReservationController {
                 LocalDateTime date4 = startDate1.atStartOfDay();
                 Long betweenDays1 = (Long) Duration.between(date2,date4).toDays();
                 s1.getContent().get(j).setRsiidatetime(String.valueOf(betweenDays1));
-                System.out.println(betweenDays1);
             }
 
             List l1 = new ArrayList<>();
