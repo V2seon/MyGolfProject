@@ -9,6 +9,7 @@ public class ViewReservationStetePredicate {
         QViewReservationStateInfoEntity qViewReservationStateInfoEntity = QViewReservationStateInfoEntity.viewReservationStateInfoEntity;
 
         BooleanBuilder builder = new BooleanBuilder();
+        System.out.println(selectKey);
         System.out.println(titleText);
         if(!selectKey.equals("전체")){
             if(selectKey.equals("No")){
@@ -27,6 +28,10 @@ public class ViewReservationStetePredicate {
                 builder.and(qViewReservationStateInfoEntity.rsicno.contains(titleText)).and
                         (qViewReservationStateInfoEntity.rsistate.eq(0));
             }
+            else if(selectKey.equals("day")){
+                builder.and(qViewReservationStateInfoEntity.rsitime.contains(titleText)).and
+                        (qViewReservationStateInfoEntity.rsistate.eq(0));
+            }
         }
         else if(selectKey.equals("전체")){
             try{
@@ -36,14 +41,15 @@ public class ViewReservationStetePredicate {
             catch (Exception e){
                 builder.and(qViewReservationStateInfoEntity.rsicaid.contains(titleText)).or
                         (qViewReservationStateInfoEntity.rsiccno.contains(titleText)).or
-                        (qViewReservationStateInfoEntity.rsicno.contains(titleText)).and
+                        (qViewReservationStateInfoEntity.rsicno.contains(titleText)).or
+                        (qViewReservationStateInfoEntity.rsitime.contains(titleText)).and
                         (qViewReservationStateInfoEntity.rsistate.eq(0));
 //                .or
 //                        (qViewUserInfoEntity.uiphone.contains(titleText))
             }
 
         }
-
+        System.out.println(builder);
         return builder;
     }
 

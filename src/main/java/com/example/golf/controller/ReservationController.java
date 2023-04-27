@@ -165,6 +165,7 @@ public class ReservationController {
             model.addAttribute("totalPage", pagination.getTotalPages()); //끝 버튼 위함
 
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 년-월-일로만 Format되게 구현
+            DateTimeFormatter dateTimeFormatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             DateTimeFormatter sdf1= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             DateTimeFormatter sdf2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm (E)");
             LocalDate nowDate = LocalDate.now();
@@ -173,10 +174,18 @@ public class ReservationController {
                 LocalDate startDate = LocalDate.parse(s1.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
                 LocalDateTime date1 = startDate.atStartOfDay();
                 LocalDateTime date2 = nowDate.atStartOfDay();
+                // 취소가능일 계산
                 Long betweenDays = (Long) Duration.between(date2,date1).toDays();
                 s1.getContent().get(j).setRsiuino(betweenDays);
+                // 예약일 포매팅
                 LocalDateTime date3 = LocalDateTime.parse(s1.getContent().get(j).getRsitime(), sdf1);
                 s1.getContent().get(j).setRsitime(date3.format(sdf2));
+                // new 표시를 띄우기위한 날짜 계산
+                LocalDate startDate1 = LocalDate.parse(s1.getContent().get(j).getRsiidatetime(), dateTimeFormatter1);
+                LocalDateTime date4 = startDate1.atStartOfDay();
+                Long betweenDays1 = (Long) Duration.between(date2,date4).toDays();
+                s1.getContent().get(j).setRsiidatetime(String.valueOf(betweenDays1));
+                System.out.println(betweenDays1);
             }
 
             List l1 = new ArrayList<>();
@@ -195,7 +204,10 @@ public class ReservationController {
                 l1.add(vIdlistRSIDto);
             }
 
+            LocalDate yesterday = nowDate.minusDays(1);
+            model.addAttribute("yesterday", yesterday);
             model.addAttribute("today", nowDate);
+
             model.addAttribute("userlist", l1); //페이지 객체 리스트
             model.addAttribute("nowurl0","/Reservation");
 
@@ -222,9 +234,19 @@ public class ReservationController {
                         @RequestParam(required = false ,defaultValue = "0" , value="set") String set){
         HttpSession session = request.getSession();
         Pageable pageable = PageRequest.of(page, 10,Sort.by("rsitime").ascending());
+        System.out.println(set);
         int totalPages = 0;
         if(!set.equals("0")){
-            totalPages = reservationStateService.seALLTable("CC", set, pageable).getTotalPages();
+            Optional<CountryClubEntity> ss = countryClubRepository.findByCcname(set);
+            if(!ss.isPresent()){
+                if(!set.equals("1")){
+                    totalPages = reservationStateService.seALLTable("day", set, pageable).getTotalPages();
+                }else {
+                    totalPages = reservationStateService.seALLTable("day", titleText, pageable).getTotalPages();
+                }
+            }else {
+                totalPages = reservationStateService.seALLTable("CC", set, pageable).getTotalPages();
+            }
         }else {
             totalPages = reservationStateService.seALLTable(selectKey, titleText, pageable).getTotalPages();
         }
@@ -240,35 +262,110 @@ public class ReservationController {
         //서비스 엔티티 추가후 주석 풀고 사용
         LocalDate nowDate = LocalDate.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 년-월-일로만 Format되게 구현
+        DateTimeFormatter dateTimeFormatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         DateTimeFormatter sdf1= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         DateTimeFormatter sdf2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm (E)");
         if(!set.equals("0")){
-            Page<ViewReservationStateInfoEntity> s1 = reservationStateService.seALLTable("CC", set, pageable);
-            for(int j=0; j<s1.getContent().size(); j++){
-                LocalDate startDate = LocalDate.parse(s1.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
-                LocalDateTime date1 = startDate.atStartOfDay();
-                LocalDateTime date2 = nowDate.atStartOfDay();
-                Long betweenDays = (Long) Duration.between(date2,date1).toDays();
-                s1.getContent().get(j).setRsiuino(betweenDays);
-                LocalDateTime date3 = LocalDateTime.parse(s1.getContent().get(j).getRsitime(), sdf1);
-                s1.getContent().get(j).setRsitime(date3.format(sdf2));
-            }
-            List l1 = new ArrayList<>();
-            String idlist = "";
-            for(int i=0; i<s1.getContent().size(); i++){
-                List<BgenEntity> s2 = bgenRepository.findByBgenrsino(s1.getContent().get(i).getRsino());
-                idlist = "";
-                for(int j=0; j<s2.size(); j++){
-                    idlist += s2.get(j).getBgennickname() + "\n";
+            Optional<CountryClubEntity> ss = countryClubRepository.findByCcname(set);
+            if(!ss.isPresent()){
+                if(!set.equals("1")){
+                    Page<ViewReservationStateInfoEntity> s1 = reservationStateService.seALLTable("day", set, pageable);
+                    for(int j=0; j<s1.getContent().size(); j++){
+                        LocalDate startDate = LocalDate.parse(s1.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
+                        LocalDateTime date1 = startDate.atStartOfDay();
+                        LocalDateTime date2 = nowDate.atStartOfDay();
+                        Long betweenDays = (Long) Duration.between(date2,date1).toDays();
+                        s1.getContent().get(j).setRsiuino(betweenDays);
+                        LocalDateTime date3 = LocalDateTime.parse(s1.getContent().get(j).getRsitime(), sdf1);
+                        s1.getContent().get(j).setRsitime(date3.format(sdf2));
+                        // new 표시를 띄우기위한 날짜 계산
+                        LocalDate startDate1 = LocalDate.parse(s1.getContent().get(j).getRsiidatetime(), dateTimeFormatter1);
+                        LocalDateTime date4 = startDate1.atStartOfDay();
+                        Long betweenDays1 = (Long) Duration.between(date2,date4).toDays();
+                        s1.getContent().get(j).setRsiidatetime(String.valueOf(betweenDays1));
+                    }
+                    List l1 = new ArrayList<>();
+                    String idlist = "";
+                    for(int i=0; i<s1.getContent().size(); i++){
+                        List<BgenEntity> s2 = bgenRepository.findByBgenrsino(s1.getContent().get(i).getRsino());
+                        idlist = "";
+                        for(int j=0; j<s2.size(); j++){
+                            idlist += s2.get(j).getBgennickname() + "\n";
+                        }
+                        VIdlistRSIDto vIdlistRSIDto = new VIdlistRSIDto(s1.getContent().get(i).getRsino(), s1.getContent().get(i).getRsicano(),
+                                s1.getContent().get(i).getRsiuino(), s1.getContent().get(i).getRsiccno(), s1.getContent().get(i).getRsicaid(),
+                                s1.getContent().get(i).getRsitime(), s1.getContent().get(i).getRsicno(), s1.getContent().get(i).getRsistate(),s1.getContent().get(i).getRsiopt2(),
+                                s1.getContent().get(i).getRsicanceldate(), s1.getContent().get(i).getRsicancelauto(), s1.getContent().get(i).getRsiidatetime(),
+                                s1.getContent().get(i).getRsibandstate(), s1.getContent().get(i).getBandnicknamecount(), idlist);
+                        l1.add(vIdlistRSIDto);
+                    }
+                    model.addAttribute("userlist", l1); //페이지 객체 리스트
+                }else {
+                    Page<ViewReservationStateInfoEntity> s1 = reservationStateService.seALLTable("day", titleText, pageable);
+                    for(int j=0; j<s1.getContent().size(); j++){
+                        LocalDate startDate = LocalDate.parse(s1.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
+                        LocalDateTime date1 = startDate.atStartOfDay();
+                        LocalDateTime date2 = nowDate.atStartOfDay();
+                        Long betweenDays = (Long) Duration.between(date2,date1).toDays();
+                        s1.getContent().get(j).setRsiuino(betweenDays);
+                        LocalDateTime date3 = LocalDateTime.parse(s1.getContent().get(j).getRsitime(), sdf1);
+                        s1.getContent().get(j).setRsitime(date3.format(sdf2));
+                        // new 표시를 띄우기위한 날짜 계산
+                        LocalDate startDate1 = LocalDate.parse(s1.getContent().get(j).getRsiidatetime(), dateTimeFormatter1);
+                        LocalDateTime date4 = startDate1.atStartOfDay();
+                        Long betweenDays1 = (Long) Duration.between(date2,date4).toDays();
+                        s1.getContent().get(j).setRsiidatetime(String.valueOf(betweenDays1));
+                    }
+                    List l1 = new ArrayList<>();
+                    String idlist = "";
+                    for(int i=0; i<s1.getContent().size(); i++){
+                        List<BgenEntity> s2 = bgenRepository.findByBgenrsino(s1.getContent().get(i).getRsino());
+                        idlist = "";
+                        for(int j=0; j<s2.size(); j++){
+                            idlist += s2.get(j).getBgennickname() + "\n";
+                        }
+                        VIdlistRSIDto vIdlistRSIDto = new VIdlistRSIDto(s1.getContent().get(i).getRsino(), s1.getContent().get(i).getRsicano(),
+                                s1.getContent().get(i).getRsiuino(), s1.getContent().get(i).getRsiccno(), s1.getContent().get(i).getRsicaid(),
+                                s1.getContent().get(i).getRsitime(), s1.getContent().get(i).getRsicno(), s1.getContent().get(i).getRsistate(),s1.getContent().get(i).getRsiopt2(),
+                                s1.getContent().get(i).getRsicanceldate(), s1.getContent().get(i).getRsicancelauto(), s1.getContent().get(i).getRsiidatetime(),
+                                s1.getContent().get(i).getRsibandstate(), s1.getContent().get(i).getBandnicknamecount(), idlist);
+                        l1.add(vIdlistRSIDto);
+                    }
+                    model.addAttribute("userlist", l1); //페이지 객체 리스트
                 }
-                VIdlistRSIDto vIdlistRSIDto = new VIdlistRSIDto(s1.getContent().get(i).getRsino(), s1.getContent().get(i).getRsicano(),
-                        s1.getContent().get(i).getRsiuino(), s1.getContent().get(i).getRsiccno(), s1.getContent().get(i).getRsicaid(),
-                        s1.getContent().get(i).getRsitime(), s1.getContent().get(i).getRsicno(), s1.getContent().get(i).getRsistate(),s1.getContent().get(i).getRsiopt2(),
-                        s1.getContent().get(i).getRsicanceldate(), s1.getContent().get(i).getRsicancelauto(), s1.getContent().get(i).getRsiidatetime(),
-                        s1.getContent().get(i).getRsibandstate(), s1.getContent().get(i).getBandnicknamecount(), idlist);
-                l1.add(vIdlistRSIDto);
+            }else {
+                Page<ViewReservationStateInfoEntity> s1 = reservationStateService.seALLTable("CC", set, pageable);
+                for(int j=0; j<s1.getContent().size(); j++){
+                    LocalDate startDate = LocalDate.parse(s1.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
+                    LocalDateTime date1 = startDate.atStartOfDay();
+                    LocalDateTime date2 = nowDate.atStartOfDay();
+                    Long betweenDays = (Long) Duration.between(date2,date1).toDays();
+                    s1.getContent().get(j).setRsiuino(betweenDays);
+                    LocalDateTime date3 = LocalDateTime.parse(s1.getContent().get(j).getRsitime(), sdf1);
+                    s1.getContent().get(j).setRsitime(date3.format(sdf2));
+                    // new 표시를 띄우기위한 날짜 계산
+                    LocalDate startDate1 = LocalDate.parse(s1.getContent().get(j).getRsiidatetime(), dateTimeFormatter1);
+                    LocalDateTime date4 = startDate1.atStartOfDay();
+                    Long betweenDays1 = (Long) Duration.between(date2,date4).toDays();
+                    s1.getContent().get(j).setRsiidatetime(String.valueOf(betweenDays1));
+                }
+                List l1 = new ArrayList<>();
+                String idlist = "";
+                for(int i=0; i<s1.getContent().size(); i++){
+                    List<BgenEntity> s2 = bgenRepository.findByBgenrsino(s1.getContent().get(i).getRsino());
+                    idlist = "";
+                    for(int j=0; j<s2.size(); j++){
+                        idlist += s2.get(j).getBgennickname() + "\n";
+                    }
+                    VIdlistRSIDto vIdlistRSIDto = new VIdlistRSIDto(s1.getContent().get(i).getRsino(), s1.getContent().get(i).getRsicano(),
+                            s1.getContent().get(i).getRsiuino(), s1.getContent().get(i).getRsiccno(), s1.getContent().get(i).getRsicaid(),
+                            s1.getContent().get(i).getRsitime(), s1.getContent().get(i).getRsicno(), s1.getContent().get(i).getRsistate(),s1.getContent().get(i).getRsiopt2(),
+                            s1.getContent().get(i).getRsicanceldate(), s1.getContent().get(i).getRsicancelauto(), s1.getContent().get(i).getRsiidatetime(),
+                            s1.getContent().get(i).getRsibandstate(), s1.getContent().get(i).getBandnicknamecount(), idlist);
+                    l1.add(vIdlistRSIDto);
+                }
+                model.addAttribute("userlist", l1); //페이지 객체 리스트
             }
-            model.addAttribute("userlist", l1); //페이지 객체 리스트
         }else {
             Page<ViewReservationStateInfoEntity> s1 = reservationStateService.seALLTable(selectKey, titleText, pageable);
             for(int j=0; j<s1.getContent().size(); j++){
@@ -279,6 +376,11 @@ public class ReservationController {
                 s1.getContent().get(j).setRsiuino(betweenDays);
                 LocalDateTime date3 = LocalDateTime.parse(s1.getContent().get(j).getRsitime(), sdf1);
                 s1.getContent().get(j).setRsitime(date3.format(sdf2));
+                // new 표시를 띄우기위한 날짜 계산
+                LocalDate startDate1 = LocalDate.parse(s1.getContent().get(j).getRsiidatetime(), dateTimeFormatter1);
+                LocalDateTime date4 = startDate1.atStartOfDay();
+                Long betweenDays1 = (Long) Duration.between(date2,date4).toDays();
+                s1.getContent().get(j).setRsiidatetime(String.valueOf(betweenDays1));
             }
             List l1 = new ArrayList<>();
             String idlist = "";
@@ -299,13 +401,15 @@ public class ReservationController {
             model.addAttribute("userlist", l1); //페이지 객체 리스트
         }
 
-        String daytext = String.valueOf(nowDate);
-        model.addAttribute("today", daytext);
+        LocalDate yesterday = nowDate.minusDays(1);
+        model.addAttribute("yesterday", yesterday);
+        model.addAttribute("today", nowDate);
 
         model.addAttribute("nowurl0","/Reservation");
 
         return "/Reservation/NotDefInfoList :: #intable";
     }
+
 
     @GetMapping("/Reservation3")
     public String Reservation3(Model model, HttpServletRequest request, Pageable pageable,

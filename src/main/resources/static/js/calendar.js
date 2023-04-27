@@ -42,12 +42,14 @@ function weekHTML(date, options) {
 	}
 	html += "<tbody>";
 	html += "<tr>";
+	var datedayarr = [];
 	for (var index = 0; index < 7; index++) {
 		var year = arWeek[index].getFullYear();
 		var month = arWeek[index].getMonth() + 1;
 		var day = arWeek[index].getDate();
-		html += "<td name='day' data-date=\"" + year + "-" + (month < 10 ? "0" : "") + month + "-" + (day < 10 ? "0" : "") + day +  "\">";
-
+		var dateday = year + "-" + (month < 10 ? "0" : "") + month + "-" + (day < 10 ? "0" : "") + day ;
+		html += "<td onclick='serchT(this)' name='day' class='day' data-date=\"" + dateday +  "\">";
+        datedayarr[index] = dateday;
 		html += "<span";
 		if (options.showToday && year == today.getFullYear() && month == today.getMonth() + 1
 			&& day == today.getDate()) {
@@ -74,7 +76,13 @@ function weekHTML(date, options) {
 		html += ">" + day + "</span>";
 		html += "</td>";
 	}
-	html += "<tr><td style='color: red;' id='sunp'>&nbsp;</td><td id='monp'>&nbsp;</td><td id='tuep'>&nbsp;</td><td id='wedp'>&nbsp;</td><td id='thup'>&nbsp;</td><td id='frip'>&nbsp;</td><td  style='color: blue;' id='satp'>&nbsp;</td></tr>";
+	html += "<tr><td class='dayT' onclick='serchT(this)' data-date=\"" + datedayarr[0] +  "\" style='color: red;' id='sunp'>&nbsp;</td>"
+	html += "<td class='dayT' onclick='serchT(this)' data-date=\"" + datedayarr[1] +  "\" id='monp'>&nbsp;</td>"
+	html += "<td class='dayT' onclick='serchT(this)' data-date=\"" + datedayarr[2] +  "\" id='tuep'>&nbsp;</td>"
+	html += "<td class='dayT' onclick='serchT(this)' data-date=\"" + datedayarr[3] +  "\" id='wedp'>&nbsp;</td>"
+	html += "<td class='dayT' onclick='serchT(this)' data-date=\"" + datedayarr[4] +  "\" id='thup'>&nbsp;</td>"
+	html += "<td class='dayT' onclick='serchT(this)' data-date=\"" + datedayarr[5] +  "\" id='frip'>&nbsp;</td>"
+	html += "<td class='dayT' onclick='serchT(this)' data-date=\"" + datedayarr[6] +  "\" style='color: blue;' id='satp'>&nbsp;</td></tr>";
 	html += "</tbody>";
 	html += "</table>";
 	return html;

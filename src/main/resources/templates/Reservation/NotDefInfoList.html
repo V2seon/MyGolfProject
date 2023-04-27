@@ -153,8 +153,8 @@
                                                                                 (Co.Rsiopt2 == 5 ? '취소': '')}"></button>
                                                                 </td>
                                                                 <td th:if="${Co.Rsiccno}!= null" >
-                                                                    <span style="color:red;" th:if="${#strings.substring(Co.Rsiidatetime,0,10)} == ${today}">NEW</span>
-                                                                    <br th:if="${#strings.substring(Co.Rsiidatetime,0,10)} == ${today}">
+                                                                    <span style="color:red;" th:if="${Co.Rsiidatetime} == -1 or ${Co.Rsiidatetime} == 0">NEW</span>
+                                                                    <br th:if="${Co.Rsiidatetime} == -1 or ${Co.Rsiidatetime} == 0">
                                                                     <span th:text="${Co.Rsiccno}"  th:classappend="${(Co.Rsiccno =='어등산' ? 'Tt17': '') +
                                                                                                                 (Co.Rsiccno =='해피니스' ? 'Tt40': '')+
                                                                                                                 (Co.Rsiccno =='광주컨트리클럽' ? 'Tt39': '')+

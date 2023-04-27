@@ -28,3 +28,10 @@
 /* calendar month */
 .calendar table > tbody > tr > td > span.today { border: 1px solid red; border-radius: 50%; color: white; background-color: red; }
 
+.day:hover{
+cursor:pointer;
+}
+
+.dayT:hover{
+cursor:pointer;
+}
