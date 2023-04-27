@@ -52,7 +52,6 @@ public class UserinfoController {
     private UserinfoService userinfoService;
     private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName()); // log찍기용
 
-
     @GetMapping("/Userinfo")
     public String gjoin(Model model, HttpServletRequest request, Pageable pageable,
                         @RequestParam(required = false, defaultValue = "0", value = "page") int page){

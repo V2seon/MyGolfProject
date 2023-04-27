@@ -40,11 +40,13 @@ function addccacount(){
     $("#load").show();
     location.href="/ccacount_add";
 }
+
 // CC계정 수정페이지로 이동
 function uiccedit(no){
     $("#load").show();
     location.href="/ccacount_edit?no="+no;
 }
+
 // CC계정 삭제
 function uiccdel(no){
     swal({
@@ -87,6 +89,7 @@ function uiccdel(no){
     });
 }
 
+// CC로그인 시도 함수
 function loginCheckGo(){
 var ccno = $("#caccno").val();
 var ccid = $("#caid").val();

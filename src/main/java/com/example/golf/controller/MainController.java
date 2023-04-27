@@ -56,11 +56,6 @@ public class MainController {
         return "login";
     }
 
-    @GetMapping("/cal")
-    public String cal(){
-        return "rvcheck.html";
-    }
-
     @GetMapping("/Main")
     public String main(Model m, HttpServletRequest request){
         String returnValue = "";
@@ -208,6 +203,8 @@ public class MainController {
         return "golfchoice";
     }
 
+    // 위에 있는 맵핑들 메인 빼놓고 전부 사용안함!
+    // 셀레니움으로 예약할 때 사용하던 맵핑 준호씨가 만들었음
     @PostMapping("/golftest3")
     public String golftest3(HttpServletRequest request, Model model,
                             @RequestParam(required = false, defaultValue = "", value = "mountin") Long mountin,

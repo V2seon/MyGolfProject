@@ -1,3 +1,5 @@
+// 여기는 미확정 예약정보 스크립트 파일
+
 // 검색필터
 function searching(){
 
@@ -81,6 +83,7 @@ function paging(pageValue){
 
 }
 
+// 예약확정
 function Defno(seq){
 console.log(seq);
 swal({
@@ -121,6 +124,7 @@ swal({
     });
 }
 
+// 밴드 글 작성
 function band(seq){
 swal({
       title : "글을 작성하시겠습니까?.",
@@ -147,6 +151,7 @@ swal({
     });
 }
 
+// 예약 내역 삭제
 function Delinfo(seq){
 swal({
         title: "예약 내역 삭제",
@@ -188,6 +193,7 @@ swal({
     });
 }
 
+// CC 별 검색기능
 function searching1(ppp){
     var set = document.getElementById('set').innerText;
     var titleText = $('#titleText').val();
@@ -225,6 +231,7 @@ function searching1(ppp){
 
 }
 
+// 일자별 검색기능
 function serchT(ppp){
     var set = document.getElementById('set').innerText;
     var titleText = $('#titleText').val();
@@ -262,6 +269,7 @@ function serchT(ppp){
 
 }
 
+// CC 전체 검색기능
 function searchingall(){
 
     var titleText = $('#titleText').val();
@@ -305,6 +313,7 @@ $('#load').show();
 location.href="/RegisterInfo"
 }
 
+// 미확정 예약 등록기능
 function Saveinfo(){
     var cname = document.getElementById('ccname').value;
     var id = document.getElementById('id').value;
@@ -390,6 +399,7 @@ swal({
 }
 }
 
+// 미확정 예약 등록 페이지 CC 변경시 코스 데이터 변경
 function chCC(){
 $('#load').show();
     $('option.chcourse').remove();
@@ -426,41 +436,13 @@ $('#load').show();
 location.href="/Reservation1"
 }
 
-function view(seq) {
-$('#load').show();
-    const sendData = {
-                        'seq' : seq
-                }
-    $.ajax({
-                url      : "/golfpt",
-                data     : sendData,
-                type     : "POST",
-                success : function(result) {
-                    $('#load').hide();
-
-                    for(var i=0; i<result.count.length; i++){
-                        $("#golfptc").append(
-                            "<tr class='nickid'><td>"+result.count[i].bgennickname+"</td></tr>"
-                        )
-                    }
-                },
-                error:function(request,status,error){
-                    $('#load').hide();
-                    swal({
-                        text: "서버에 문제가 발생했습니다.",
-                        icon: "warning" //"info,success,warning,error" 중 택1
-                    });
-                }
-            });
-
-
-};
-//팝업 Close 기능
+// 팝업 Close 기능
 function close_pop3(flag) {
      $('#myModal3').hide();
      $('tr.nickid').remove();
 };
 
+// 예약 연동 삭제
 function DelReservation(seq){
 swal({
         title: "예약 연동 삭제",
@@ -502,6 +484,7 @@ swal({
     });
 }
 
+// 연동 auto 체크값 변경
 function ckcancel(e){
 $('#load').show();
 var seq = e.value;
@@ -529,6 +512,7 @@ const sendData = {
             });
 }
 
+// 미확정 예약정보 상태정보 변경
 function chopt(e){
 var seq = e.value;
 var text = e.innerText;

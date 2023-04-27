@@ -1,3 +1,4 @@
+// 여기는 확정 예약정보 함수
 
 // 검색필터
 function searching(){
@@ -83,6 +84,7 @@ function paging(pageValue){
 
 }
 
+// 예약내역삭제
 function Delinfo(seq){
 swal({
         title: "예약 내역 삭제",

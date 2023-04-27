@@ -26,6 +26,7 @@ public interface ViewReservationStateInfoRepository extends JpaRepository<ViewRe
     @Query(value = "SELECT * FROM view_reservation_state_info where RSI_CC_NO = :Rsiccno and RSI_STATE = 1", nativeQuery = true)
     List<ViewReservationStateInfoEntity> findByRsiccno1 (String Rsiccno);
 
+    // 달력 클릭시 해당일 예약건수 카운트
     @Query(value = "SELECT COUNT(*) FROM view_reservation_state_info WHERE RSI_STATE = 0 AND RSI_TIME LIKE CONCAT('%', :day, '%')", nativeQuery = true)
     int countT(LocalDate day);
 

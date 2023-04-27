@@ -298,6 +298,7 @@ public class BandController {
         return "/Band/BandMember :: #bmtable";
     }
 
+    // 밴드 템플릿 리스트 페이지 맵핑
     @GetMapping("/Bandtemplate")
     public String Bandtemplate(Model model, HttpServletRequest request, Pageable pageable,
                                 @RequestParam(required = false, defaultValue = "0", value = "page") int page){
@@ -327,6 +328,7 @@ public class BandController {
         return returnValue;
     }
 
+    // 밴드 템플릿 리스트 페이지 검색 및 페이징 맵핑
     @RequestMapping(value = "/search_Bandtemplate", method = RequestMethod.POST)
     public String search_Bandtemplate(Model model, HttpServletRequest request,
                                      @RequestParam(required = false ,defaultValue = "0" , value="page") int page,
@@ -354,6 +356,7 @@ public class BandController {
         return "/Band/BandtemplateList :: #intable";
     }
 
+    // 밴드 템플릿 등록 페이지
     @GetMapping("/BandTemplateRegister")
     public String BandTemplateRegister(Model model, HttpServletRequest request){
         String returnValue = "";
@@ -369,6 +372,7 @@ public class BandController {
         return returnValue;
     }
 
+    // 밴드 템플릿 등록
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/inBandTemplate")
     public HashMap<String, String> inBandTemplate(Model m, HttpServletRequest request,
@@ -393,7 +397,7 @@ public class BandController {
         return msg;
     }
 
-
+    // 밴드 템플릿 수정 페이지
     @GetMapping("/BttemModify/{seq}")
     public String BttemModify(@PathVariable("seq") Long seq,Model model, HttpServletRequest request){
         String returnValue = "";
@@ -417,6 +421,7 @@ public class BandController {
         return returnValue;
     }
 
+    // 밴드 템플릿 수정
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/EditBandTemplate")
     public HashMap<String, String> EditBandTemplate(Model m, HttpServletRequest request,
@@ -431,6 +436,7 @@ public class BandController {
         Optional <BandTemplateEntity> s1 = bandTemplateRepository.findById(seq);
         Optional <BandTemplateEntity> s2 = bandTemplateRepository.findByBttemcode(temcode);
         HashMap<String, String> msg = new HashMap<String, String>();
+        // 동일한 템플릿 명이 있는지 확인
         if(!s2.isPresent()){
             LocalDateTime localDateTime = LocalDateTime.now();
             String sdf1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -451,6 +457,7 @@ public class BandController {
         return msg;
     }
 
+    // 밴드 템플릿 사용가능 여부 변경 맵핑
     @PostMapping("/EditBandTemuse")
     public String EditBandTemuse(Model m, HttpServletRequest request,
                                  @RequestParam(required = false, defaultValue = "", value = "seq") Long seq,
@@ -459,6 +466,7 @@ public class BandController {
         return "redirect:";
     }
 
+    // 밴드 연동설정 리스트 페이지
     @GetMapping("/Bandalarm")
     public String Bandalarm(Model model, HttpServletRequest request, Pageable pageable,
                                @RequestParam(required = false, defaultValue = "0", value = "page") int page){
@@ -488,6 +496,7 @@ public class BandController {
         return returnValue;
     }
 
+    // 밴드 연동설정 리스트 검색 및 페이징 맵핑
     @RequestMapping(value = "/search_Bandalarm", method = RequestMethod.POST)
     public String search_Bandalarm(Model model, HttpServletRequest request,
                                       @RequestParam(required = false ,defaultValue = "0" , value="page") int page,
@@ -515,6 +524,7 @@ public class BandController {
         return "/Band/BandAlarmList :: #intable";
     }
 
+    // 밴드 연동설정 등록 페이지 맵핑
     @GetMapping("/BandAlarmRegister")
     public String BandAlarmRegister(Model model, HttpServletRequest request, Pageable pageable){
         String returnValue = "";
@@ -537,6 +547,7 @@ public class BandController {
         return returnValue;
     }
 
+    // 템플릿 변경시 사용가능한 템플릿 기능 확인 맵핑
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/chTem")
     public Object chTem(HttpServletRequest request, Model model,
@@ -548,6 +559,7 @@ public class BandController {
         return msg;
     }
 
+    // 연동설정 등록 맵핑
     @PostMapping("/inBandalarm")
     public String inBandalarm(Model m, HttpServletRequest request,
                               @RequestParam(required = false, defaultValue = "", value = "bandname") int bandname,
@@ -569,6 +581,7 @@ public class BandController {
         return "redirect:";
     }
 
+    // 연동설정 수정 페이지 맵핑
     @GetMapping("/EditAl/{seq}")
     public String EditAl(HttpServletRequest request, Model model,
                          @PathVariable("seq") Long seq){
@@ -603,6 +616,7 @@ public class BandController {
         return "/Band/BandAlarmModify.html";
     }
 
+    // 연동설정 수정 맵핑
     @PostMapping("/EditBandalarm")
     public String EditBandalarm(Model m, HttpServletRequest request,
                               @RequestParam(required = false, defaultValue = "", value = "seq") Long seq,
@@ -626,6 +640,7 @@ public class BandController {
         return "redirect:";
     }
 
+    // 연동설정 삭제 맵핑
     @PostMapping("/DelAlarm")
     public String DelAlarm(HttpServletRequest request, Model model,
                            @RequestParam(required = false, defaultValue = "", value = "seq") Long seq){

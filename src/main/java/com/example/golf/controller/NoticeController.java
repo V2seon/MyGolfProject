@@ -95,23 +95,10 @@ public class NoticeController {
         return returnValue;
     }
 
-    @GetMapping("/NoticeModify")
-    public String Modify(Model model, HttpServletRequest request){
-        String returnValue = "";
-        HttpSession session = request.getSession();
-        if(new SessionCheck().loginSessionCheck(request)){
-            model.addAttribute("nowurl0","/Notice");
-            returnValue = "/Notice/NoticeModify";
-        }else{
-            returnValue = "login";
-        }
-        return returnValue;
-    }
-
     @PostMapping("/inNotice")
     public String inNotice(Model m, HttpServletRequest request,
-                            @RequestParam(required = false, defaultValue = "", value = "title") String title,
-                            @RequestParam(required = false, defaultValue = "", value = "content") String content){
+                           @RequestParam(required = false, defaultValue = "", value = "title") String title,
+                           @RequestParam(required = false, defaultValue = "", value = "content") String content){
         LocalDateTime sdf1 = LocalDateTime.now();
         System.out.println(sdf1);
         NoticeDto noticeDto = new NoticeDto(null,title,content,sdf1,null);
@@ -119,27 +106,13 @@ public class NoticeController {
         return "redirect:";
     }
 
-    @GetMapping("/Noticego")
-    public String Noticego(Model model, HttpServletRequest request,
-                                    @RequestParam(required = false ,defaultValue = "" , value="seq") Long seq){
-        String returnValue = "";
-        HttpSession session = request.getSession();
-        if(new SessionCheck().loginSessionCheck(request)){
-            session.setAttribute("seq",seq);
-            model.addAttribute("nowurl0","/Notice");
-            returnValue = "redirect:";
-        }else{
-            returnValue = "login";
-        }
-        return returnValue;
-    }
-
-    @GetMapping("/NoticeModifygo")
-    public String NoticeModifygo(Model model, HttpServletRequest request){
+    @GetMapping("/NoticeModifygo/{seq}")
+    public String NoticeModifygo(Model model, HttpServletRequest request,
+                                 @PathVariable("seq") Long seq){
         HttpSession session = request.getSession();
         String returnValue = "";
         if(new SessionCheck().loginSessionCheck(request)){
-            Optional<NoticeEntity> s1 = noticeRepository.findById((Long) session.getAttribute("seq"));
+            Optional<NoticeEntity> s1 = noticeRepository.findById(seq);
             model.addAttribute("title",s1.get().getNtitle());
             model.addAttribute("content",s1.get().getNcontent());
             model.addAttribute("seq",s1.get().getNno());

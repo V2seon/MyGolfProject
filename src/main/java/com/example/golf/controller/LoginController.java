@@ -56,11 +56,13 @@ public class LoginController {
         return "redirect:/";
     }
 
+    // 사용안함
     @GetMapping("/golfchoice")
     public String gchoice(Model m, HttpServletRequest request){
         return "golfchoice";
     }
 
+    // 사용하는지 모르겠음
     @PostMapping("/golfjoin")
     public String golfjoin(HttpServletRequest request, Model model,
                            @RequestParam(required = false, defaultValue = "", value = "uid") String uid,

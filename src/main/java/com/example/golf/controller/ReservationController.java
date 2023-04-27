@@ -54,6 +54,7 @@ public class ReservationController {
     private CountryAccountRepository countryAccountRepository;
     private ReservationInfoBundleRepository reservationInfoBundleRepository;
 
+    // 구장별 타겟팅 정보 리스트 페이지 맵핑
     @GetMapping("/Reservation")
     public String Reservation(Model model, HttpServletRequest request, Pageable pageable,
                         @RequestParam(required = false, defaultValue = "0", value = "page") int page){
@@ -65,8 +66,10 @@ public class ReservationController {
             Page<ViewReservationInfoEntity> s1 = reservationInfoService.selectALLTable0(pageable);
             List l1 = new ArrayList<>();
             String idlist = "";
+            // 함께 예약한 인원이 있는지 확인 하는 소스코드
             for(int i=0; i<s1.getContent().size(); i++){
                 List <ReservationInfoBundleEntity> s2 = reservationInfoBundleRepository.findByRibribundle(s1.getContent().get(i).getRibundle());
+                // 함께 예약한 인원이 있을시 idlist에 해당 cc id추가
                 idlist = "";
                 for(int j=0; j<s2.size(); j++){
                     Optional<CountryAccountEntity> s3 = countryAccountRepository.findById(s2.get(j).getRibcano());
@@ -99,6 +102,7 @@ public class ReservationController {
         return returnValue;
     }
 
+    // 구장별 타겟팅 정보 리스트 검색 및 페이징 맵핑
     @RequestMapping(value = "/search_Reservation", method = RequestMethod.POST)
     public String search_Reservation(Model model, HttpServletRequest request,
                         @RequestParam(required = false ,defaultValue = "0" , value="page") int page,
@@ -113,9 +117,11 @@ public class ReservationController {
         Page<ViewReservationInfoEntity> s1 = reservationInfoService.seALLTable(selectKey, titleText, pageable);
 
         List l1 = new ArrayList<>();
+        // 함께 예약한 인원이 있는지 확인 하는 소스코드
         String idlist = "";
         for(int i=0; i<s1.getContent().size(); i++){
             List <ReservationInfoBundleEntity> s2 = reservationInfoBundleRepository.findByRibribundle(s1.getContent().get(i).getRibundle());
+            // 함께 예약한 인원이 있을시 idlist에 해당 cc id추가
             idlist = "";
             for(int j=0; j<s2.size(); j++){
                 Optional<CountryAccountEntity> s3 = countryAccountRepository.findById(s2.get(j).getRibcano());
@@ -145,6 +151,7 @@ public class ReservationController {
         return "/Reservation/WaitInfoList :: #intable";
     }
 
+    // 미확정 예약 리스트 페이지 맵핑
     @GetMapping("/Reservation1")
     public String Reservation1(Model model, HttpServletRequest request, Pageable pageable,
                         @RequestParam(required = false, defaultValue = "0", value = "page") int page){
@@ -171,6 +178,7 @@ public class ReservationController {
             LocalDate nowDate = LocalDate.now();
 
             for(int j=0; j<s1.getContent().size(); j++){
+                // 날짜 계산을 위한 포매팅
                 LocalDate startDate = LocalDate.parse(s1.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
                 LocalDateTime date1 = startDate.atStartOfDay();
                 LocalDateTime date2 = nowDate.atStartOfDay();
@@ -192,6 +200,7 @@ public class ReservationController {
             for(int i=0; i<s1.getContent().size(); i++){
                 List<BgenEntity> s2 = bgenRepository.findByBgenrsino(s1.getContent().get(i).getRsino());
                 idlist = "";
+                // 참가자 리스트 만들기
                 for(int j=0; j<s2.size(); j++){
                     idlist += s2.get(j).getBgennickname() + "\n";
                 }
@@ -204,8 +213,6 @@ public class ReservationController {
             }
 
             LocalDate yesterday = nowDate.minusDays(1);
-            model.addAttribute("yesterday", yesterday);
-            model.addAttribute("today", nowDate);
 
             model.addAttribute("userlist", l1); //페이지 객체 리스트
             model.addAttribute("nowurl0","/Reservation");
@@ -225,6 +232,7 @@ public class ReservationController {
         return returnValue;
     }
 
+    // 미확정 예약 리스트 검색 및 페이징 맵핑 복잡함;;
     @RequestMapping(value = "/search_Reservation1", method = RequestMethod.POST)
     public String search_Reservation1(Model model, HttpServletRequest request,
                         @RequestParam(required = false ,defaultValue = "0" , value="page") int page,
@@ -233,20 +241,28 @@ public class ReservationController {
                         @RequestParam(required = false ,defaultValue = "0" , value="set") String set){
         HttpSession session = request.getSession();
         Pageable pageable = PageRequest.of(page, 10,Sort.by("rsitime").ascending());
-        System.out.println(set);
+        // set 는 달력으로 검색할때, CC 버튼 클릭해서 검색할 때 그냥 검색창에 검색할 때 텍스트 값을 사용하기 위해 넘겨주는 파라미터 값
+        // ex) 달력버튼 클릭스 set = 2023-04-27
+        // ex) CC 버튼 클릭시 set = 어등산
+        // ex) 그냥 검색시 set = 0
         int totalPages = 0;
+        // 그냥 검색이 아니고 달력 클릭 및 CC버튼 클릭하여 검색시
         if(!set.equals("0")){
             Optional<CountryClubEntity> ss = countryClubRepository.findByCcname(set);
+            // 달력클릭하여 검색했는지 CC 버튼 클릭해서 검색했는지 구별 하기 위해 set 데이터와 CC 이름과 동일한 데이터가 있는지 확인함
             if(!ss.isPresent()){
+                // 검색하지 않고 달력 클릭시 set는 0이기 때문에 구분함
                 if(!set.equals("1")){
                     totalPages = reservationStateService.seALLTable("day", set, pageable).getTotalPages();
                 }else {
                     totalPages = reservationStateService.seALLTable("day", titleText, pageable).getTotalPages();
                 }
             }else {
+                // CC버튼 으로 검색하였을때
                 totalPages = reservationStateService.seALLTable("CC", set, pageable).getTotalPages();
             }
         }else {
+            // 그냥 검색하였을 때
             totalPages = reservationStateService.seALLTable(selectKey, titleText, pageable).getTotalPages();
         }
         Pagination pagination = new Pagination(totalPages, page);
@@ -268,6 +284,7 @@ public class ReservationController {
             Optional<CountryClubEntity> ss = countryClubRepository.findByCcname(set);
             if(!ss.isPresent()){
                 if(!set.equals("1")){
+                    // 달력 버튼으로 검색했을때
                     Page<ViewReservationStateInfoEntity> s1 = reservationStateService.seALLTable("day", set, pageable);
                     for(int j=0; j<s1.getContent().size(); j++){
                         LocalDate startDate = LocalDate.parse(s1.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
@@ -366,6 +383,7 @@ public class ReservationController {
                 model.addAttribute("userlist", l1); //페이지 객체 리스트
             }
         }else {
+            // 그냥 검색시
             Page<ViewReservationStateInfoEntity> s1 = reservationStateService.seALLTable(selectKey, titleText, pageable);
             for(int j=0; j<s1.getContent().size(); j++){
                 LocalDate startDate = LocalDate.parse(s1.getContent().get(j).getRsicanceldate(), dateTimeFormatter);
@@ -409,7 +427,7 @@ public class ReservationController {
         return "/Reservation/NotDefInfoList :: #intable";
     }
 
-
+    // 확정 예약 페이지 리스트 맵핑
     @GetMapping("/Reservation3")
     public String Reservation3(Model model, HttpServletRequest request, Pageable pageable,
                         @RequestParam(required = false, defaultValue = "0", value = "page") int page){
@@ -474,6 +492,7 @@ public class ReservationController {
         return returnValue;
     }
 
+    // 확정 예약 페이지 검색 및 페이징 맵핑
     @RequestMapping(value = "/search_Reservation3", method = RequestMethod.POST)
     public String search_Reservation3(Model model, HttpServletRequest request,
                         @RequestParam(required = false ,defaultValue = "0" , value="page") int page,
@@ -530,6 +549,7 @@ public class ReservationController {
         return "/Reservation/DefInfoList :: #intable";
     }
 
+    // 미확정 예약 등록 페이지 맵핑
     @GetMapping("/RegisterInfo")
     public String RegisterInfo(Model model, HttpServletRequest request, Pageable pageable){
         String returnValue = "";
@@ -549,6 +569,7 @@ public class ReservationController {
         return returnValue;
     }
 
+    // 미확정 예약 등록 페이지 CC 변경시 코스 데이터 변경
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/chCC")
     public Object chCC(HttpServletRequest request, Model model,
@@ -566,6 +587,7 @@ public class ReservationController {
         return msg;
     }
 
+    // 미확정 예약 등록 기능
     @PostMapping("/SaveInfo")
     public String SaveInfo(HttpServletRequest request, Model model,
                            @RequestParam(required = false, defaultValue = "", value = "cname") Long cname,
@@ -582,6 +604,7 @@ public class ReservationController {
         return "redirect:";
     }
 
+    // 미확정 예약 리스트 예약확정 맵핑
     @PostMapping("/clearrs")
     public String clearrs(HttpServletRequest request, Model model,
                             @RequestParam(required = false, defaultValue = "", value = "seq") int seq){
@@ -589,6 +612,7 @@ public class ReservationController {
         return "redirect:";
     }
 
+    // 미확정 예약 삭제 -> 안보이게 하기
     @PostMapping("/Delstate")
     public String Delstate(HttpServletRequest request, Model model,
                           @RequestParam(required = false, defaultValue = "", value = "seq") Long seq){
@@ -596,6 +620,7 @@ public class ReservationController {
         return "redirect:";
     }
 
+    // 밴드 글 작성 맵핑
     @PostMapping("/bandup")
     public String bandup(HttpServletRequest request, Model model,
                             @RequestParam(required = false, defaultValue = "", value = "seq") Long seq){
@@ -704,6 +729,7 @@ public class ReservationController {
         return "redirect:";
     }
 
+    // 자동연동삭제 값 변경 맵핑
     @PostMapping("/Updatecancelauto")
     public String Updatecancelauto(HttpServletRequest request, Model model,
                          @RequestParam(required = false, defaultValue = "", value = "seq") Long seq,
@@ -718,6 +744,7 @@ public class ReservationController {
         return "redirect:";
     }
 
+    // 타겟팅 정보 삭제 맵핑
     @PostMapping("/DelReservation")
     public String DelReservation(HttpServletRequest request, Model model,
                          @RequestParam(required = false, defaultValue = "", value = "seq") Long seq){
@@ -850,6 +877,7 @@ public class ReservationController {
         return "redirect:";
     }
 
+    // 타겟팅 정보 등록 페이지 맵핑
     @GetMapping("/WaitRegisterInfo")
     public String WaitRegisterInfo(Model model, HttpServletRequest request, Pageable pageable){
         String returnValue = "";
@@ -873,6 +901,7 @@ public class ReservationController {
         return returnValue;
     }
 
+    // 타겟팅 정보 저장 맵핑
     @PostMapping("/SaveWaitRegisterInfo")
     public String SaveWaitRegisterInfo(HttpServletRequest request, Model model,
                                        @RequestParam(required = false, defaultValue = "", value = "mountin") Long ccname,
@@ -922,7 +951,7 @@ public class ReservationController {
 //        reservationStateRepository.deleteById(seq);
         return "redirect:";
     }
-
+    // 타겟팅 정보 수정 맵핑
     @PostMapping("/EditWaitRegisterInfo")
     public String EditWaitRegisterInfo(HttpServletRequest request, Model model,
                                        @RequestParam(required = false, defaultValue = "", value = "seq") Long seq,
@@ -969,6 +998,8 @@ public class ReservationController {
         return "redirect:";
     }
 
+    // 타겟팅 정보 삭제 맵핑
+    // 번들로 같이 예약한 정보도 삭제됨
     @PostMapping("/DelWaitReservation")
     public String DelWaitReservation(Model model, HttpServletRequest request,
                                 @RequestParam(required = false ,defaultValue = "" , value="seq") Long seq){
@@ -978,7 +1009,7 @@ public class ReservationController {
         return "redirect:";
     }
 
-
+    // 타겟팅 정보 수정 페이지 맵핑
     @GetMapping("/ReservationModify/{seq}")
     public Object ReservationModifygo(Model model, HttpServletRequest request,
                                       @PathVariable("seq") Long seq){
@@ -1031,6 +1062,7 @@ public class ReservationController {
         return returnValue;
     }
 
+    // 같이 예약한 인원을 보여주는 맵핑 -사용안함-
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/BundleUser")
     public Object BundleUser(Model model, HttpServletRequest request,
@@ -1050,6 +1082,7 @@ public class ReservationController {
         return msg;
     }
 
+    // 미확정 예약정보 상태정보 변경 맵핑
     @PostMapping("/Updateopt2")
     public String Updateopt2(Model model, HttpServletRequest request,
                              @RequestParam(required = false ,defaultValue = "" , value="seq") Long seq,
@@ -1058,6 +1091,7 @@ public class ReservationController {
         return "redirect:";
     }
 
+    // 달력 인원수 검색 함수 맵핑
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/SelPerson")
     public Object SelPerson(Model model, HttpServletRequest request,

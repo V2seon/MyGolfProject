@@ -126,30 +126,16 @@ public class CourseController {
         return "redirect:";
     }
 
-    @GetMapping("/Coursego")
-    public String Coursego(Model model, HttpServletRequest request,
-                           @RequestParam(required = false ,defaultValue = "" , value="seq") Long seq){
+    @GetMapping("/CourseModifygo/{seq}")
+    public String CourseModifygo(Model model, HttpServletRequest request,
+                           @PathVariable("seq") Long seq){
         String returnValue = "";
         HttpSession session = request.getSession();
-        if(new SessionCheck().loginSessionCheck(request)){
-            session.setAttribute("seq",seq);
-            model.addAttribute("nowurl0","/Course");
-            returnValue = "redirect:";
-        }else{
-            returnValue = "login";
-        }
-        return returnValue;
-    }
-
-    @GetMapping("/CourseModifygo")
-    public String CourseModifygo(Model model, HttpServletRequest request){
-        HttpSession session = request.getSession();
-        String returnValue = "";
         if(new SessionCheck().loginSessionCheck(request)){
             List<CountryClubEntity> s2 = countryClubRepository.findAll1();
             model.addAttribute("country",s2);
-            Optional<CourseEntity> s1 = courseRepository.findById((Long) session.getAttribute("seq"));
-            model.addAttribute("seq",(Long) session.getAttribute("seq"));
+            Optional<CourseEntity> s1 = courseRepository.findById(seq);
+            model.addAttribute("seq",seq);
             model.addAttribute("cuname",s1.get().getCccname());
             model.addAttribute("cname",s1.get().getCname());
             model.addAttribute("nowurl0","/Course");

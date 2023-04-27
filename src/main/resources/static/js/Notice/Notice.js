@@ -37,22 +37,9 @@ function inNotice(){
 
 function ModifyNoticego(seq){
 $('#load').show();
-    let sendData = {
-        "seq" : seq
-    }
-
-    $.ajax({
-                url      : "/Noticego",
-                data     : sendData,
-                type     : "GET",
-                success : function(result) {
-                $('#load').hide();
-                    location.href = "/NoticeModifygo";
-                },
-                error:function(request,status,error){
-                }
-            });
+location.href="/NoticeModifygo/"+seq+""
 }
+
 
 function EditNotice(seq){
     $('#load').show();

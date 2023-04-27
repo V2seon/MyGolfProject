@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface BgenRepository extends JpaRepository<BgenEntity,Long>, QuerydslPredicateExecutor<BgenEntity> {
 
+    // 밴드에 참가신청한 인원 확인
     @Query(value = "SELECT * FROM band_golf_enter_nicknames WHERE BGEN_RSI_NO =:RSI_NO", nativeQuery = true)
     List<BgenEntity> findByBgenrsino(Long RSI_NO);
 }

@@ -1,3 +1,4 @@
+// 구장별 타겟팅 정보 스크립트
 
 // 검색필터
 function searching(){
@@ -82,6 +83,7 @@ function paging(pageValue){
 
 }
 
+// 현재 사용안하는 함수 CC별 검색기능임
 function searching1(Ccname){
     $('#load').show();
     var titleText = $('#titleText').val();
@@ -130,6 +132,7 @@ $('#load').show();
 location.href="/Reservation"
 }
 
+// 타겟팅 정보 등록시 CC 변경시 해당 코스 변경
 function chCC(){
     $('#load').show();
     $('option.chcourse').remove();
@@ -291,6 +294,7 @@ $('#load').show();
 location.href="/ReservationModify/"+seq+""
 }
 
+// 타겟팅 정보 삭제 함수
 function Delinfo(seq){
 swal({
         title: "예약 종료",
@@ -332,6 +336,7 @@ swal({
     });
 }
 
+// 타겟팅 정보 데이터 변경
 function Modifyinfo(seq){
 const ccname = document.getElementById("ccname").value;
 const type = $('input[name=choice]:checked').val();
@@ -451,6 +456,7 @@ let sendData = {
 }
 }
 
+// 아이디 추가시 div 박스에 추가되는 함수
 function idplus(){
 $('#load').show();
 var id = document.getElementById("id").value;
@@ -495,6 +501,7 @@ if (log.isScrollBottom) {
 
 }
 
+// div 박스 아이디 삭제 함수
 function delid(con){
 $('#load').show();
     var tagName = con.parentNode;

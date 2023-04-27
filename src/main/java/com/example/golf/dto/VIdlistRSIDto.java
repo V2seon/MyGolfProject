@@ -8,6 +8,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 public class VIdlistRSIDto {
+    // 뷰에서 사용하기 위한 Dto 미확정 예약 리스트
     private Long rsino;
     private Long rsicano;
     private Long rsiuino;

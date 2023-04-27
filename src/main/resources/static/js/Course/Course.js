@@ -1,23 +1,3 @@
-function ModifyCgo(seq){
-    $('#load').show();
-    let sendData = {
-            "seq" : seq
-        }
-
-        $.ajax({
-            url      : "/Coursego",
-            data     : sendData,
-            type     : "GET",
-            success : function(result) {
-                $('#load').hide();
-                location.href="/CourseModifygo"
-            },
-            error:function(request,status,error){
-                $('#load').hide();
-            }
-        });
-};
-
 function DelCgo(seq){
 swal({
         title: "코스 삭제",
@@ -114,6 +94,11 @@ if(ccnum === null || ccnum === "") {
         }
         });
     }
+}
+
+function ModifyCgo(seq){
+$('#load').show();
+location.href="/CourseModifygo/"+seq+""
 }
 
 function inCourse(){

@@ -117,7 +117,6 @@ if(name === null || name === "") {
 }
 }
 
-
 function DelCCgo(seq){
 swal({
   title: "CC정보 삭제",
@@ -244,7 +243,6 @@ if(name === null || name === "") {
                 });
 }
 }
-
 
 // 검색필터
 function searching(){

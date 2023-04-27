@@ -69,6 +69,7 @@ $.ajax({
 
 }
 
+// 숫자만 허용하는 정규식 함수
 function checkReg(event) {
   const regExp = /[^0-9]/g; // 숫자만 허용
 //  const regExp = /[^ㄱ-ㅎ|가-힣]/g; // 한글만 허용
@@ -81,6 +82,7 @@ function checkReg(event) {
   }
 };
 
+// 카카오 알림 번호 추가하는 함수
 function kakaophnum(){
 var kakaophnum = document.getElementById("kakaophnum").value;
 if(kakaophnum != null && kakaophnum != ""){
@@ -113,11 +115,13 @@ if(kakaophnum != null && kakaophnum != ""){
 }
 }
 
+// 카카오 알림 번호 삭제하는 함수
 function delkakao(con){
     var tagName = con.parentNode;
     tagName.remove();
 }
 
+// 이메일 추가하는 함수
 function emailtext(){
 var emailtext = document.getElementById("emailtext").value;
 if(emailtext != null && emailtext != ""){
@@ -150,6 +154,7 @@ if(emailtext != null && emailtext != ""){
 }
 }
 
+// 이메일 삭제하는 함수
 function delemail(con){
     var tagName = con.parentNode;
     tagName.remove();
@@ -173,6 +178,7 @@ function checkReg1(event) {
   }
 };
 
+// sms 번호 추가하는 함수
 function smsphnum(){
 var smsphnum = document.getElementById("smsphnum").value;
 if(smsphnum != null && smsphnum != ""){
@@ -205,11 +211,13 @@ if(smsphnum != null && smsphnum != ""){
 }
 }
 
+// sms 번호 삭제하는 함수
 function delsms(con){
     var tagName = con.parentNode;
     tagName.remove();
 }
 
+// 선택한 템플릿에 지원하는 알림 기능 확인기능
 function chtem(){
     var temname = document.getElementById('temname').value;
     document.getElementById("bandch").checked=false;
